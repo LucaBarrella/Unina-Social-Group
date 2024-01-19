@@ -6,7 +6,9 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+import java.awt.*;
 import java.io.IOException;
+import javax.imageio.ImageIO;
 
 public class HelloApplication extends Application {
     @Override
@@ -19,6 +21,12 @@ public class HelloApplication extends Application {
         stage.resizableProperty().setValue(false);
         stage.setScene(scene);
         stage.show();
+
+        // Set the dock icon (Mac OS)
+        if (Taskbar.isTaskbarSupported() && Taskbar.getTaskbar().isSupported(Taskbar.Feature.ICON_IMAGE)) {
+            java.awt.Image dockIcon = ImageIO.read(getClass().getResource("file:src/main/image/icon.png"));
+            Taskbar.getTaskbar().setIconImage(dockIcon);
+        }
     }
 
     public static void main(String[] args) {

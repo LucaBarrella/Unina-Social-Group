@@ -14,10 +14,11 @@ public class HelloApplication extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());//, 320, 240);
         stage.setTitle("Unina Social Group");
+        Image icon = new Image ("file:src/main/image/icon.png");
+        stage.getIcons().add(icon);
         stage.resizableProperty().setValue(false);
         stage.setScene(scene);
         stage.show();
-        stage.getIcons().add(new Image("file:src/main/resources/com/example/uninasocialgroup/icon.png"));
     }
 
     public static void main(String[] args) {

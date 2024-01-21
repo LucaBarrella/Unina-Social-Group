@@ -18,7 +18,7 @@ public class SignUpPageController {
 
     private void changeScene(ActionEvent event) {
         try {
-            SwitchScene.switchToScene(event, "/com/example/uninasocialgroup/LoginPage.fxml");
+            SwitchScene.switchToScene(event, "/com/example/uninasocialgroup/LoginPage.fxml", "rtl");
         } catch (IOException e) {
             e.printStackTrace();
         }

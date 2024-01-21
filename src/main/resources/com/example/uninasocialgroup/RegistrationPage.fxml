@@ -10,6 +10,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.uninasocialgroup.Controller.SignUpPageController">
    <children>
+      <StackPane layoutX="479.0" layoutY="-75.0" prefHeight="650.0" prefWidth="638.0" style="-fx-background-color: #09f;" />
       <VBox layoutX="450.0" prefHeight="500.0" prefWidth="300.0" style="-fx-background-color: #09F;">
          <children>
             <Button fx:id="SwitchToSignInButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="504.0" prefWidth="306.0" style="-fx-background-radius: 0; -fx-background-color: #09F;">

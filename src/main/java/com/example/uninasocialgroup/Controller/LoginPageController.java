@@ -18,7 +18,7 @@ public class LoginPageController {
 
     private void changeScene(ActionEvent event) {
         try {
-            SwitchScene.switchToScene(event, "/com/example/uninasocialgroup/RegistrationPage.fxml");
+            SwitchScene.switchToScene(event, "/com/example/uninasocialgroup/RegistrationPage.fxml", "ltr");
         } catch (IOException e) {
             e.printStackTrace();
         }

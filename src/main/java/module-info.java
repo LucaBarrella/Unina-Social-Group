@@ -6,4 +6,6 @@ module com.example.uninasocialgroup {
 
     opens com.example.uninasocialgroup to javafx.fxml;
     exports com.example.uninasocialgroup;
+    exports com.example.uninasocialgroup.Controller;
+    opens com.example.uninasocialgroup.Controller to javafx.fxml;
 }

@@ -14,7 +14,7 @@ public class Main extends javafx.application.Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Untitled.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("LoginPage.fxml")));
 
         //Set icon on the application bar
         var appIcon = new Image("file:src/main/resources/images/icon.png");
@@ -31,7 +31,7 @@ public class Main extends javafx.application.Application {
             }
 
         }
-        //custom font?
+        //TO-DO: custom fonts?
 
         primaryStage.setTitle("Unina Social Group");
         primaryStage.setScene(new Scene(root));

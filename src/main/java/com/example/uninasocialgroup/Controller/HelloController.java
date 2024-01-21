@@ -1,4 +1,4 @@
-package com.example.uninasocialgroup;
+package com.example.uninasocialgroup.Controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

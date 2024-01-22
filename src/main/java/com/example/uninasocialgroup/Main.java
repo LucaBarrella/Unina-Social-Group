@@ -21,15 +21,23 @@ public class Main extends javafx.application.Application {
         primaryStage.getIcons().add(appIcon);
 
         //Set icon on the taskbar/dock
-        if (Taskbar.isTaskbarSupported()) {
-            var taskbar = Taskbar.getTaskbar();
+        String os = System.getProperty("os.name").toLowerCase();
+        if (os.contains("mac")) {
+            try {
+                if (Taskbar.isTaskbarSupported()) {
+                    var taskbar = Taskbar.getTaskbar();
 
-            if (taskbar.isSupported(Feature.ICON_IMAGE)) {
-                final Toolkit defaultToolkit = Toolkit.getDefaultToolkit();
-                var dockIcon = defaultToolkit.getImage(getClass().getResource("/images/icon.png"));
-                taskbar.setIconImage(dockIcon);
+                    if (taskbar.isSupported(Feature.ICON_IMAGE)) {
+                        final Toolkit defaultToolkit = Toolkit.getDefaultToolkit();
+                        var dockIcon = defaultToolkit.getImage(getClass().getResource("/images/icon.png"));
+                        taskbar.setIconImage(dockIcon);
+                    }
+                }
+            } catch (UnsupportedOperationException e) {
+                System.out.println("The operation is not supported on the current platform.");
+            } catch (SecurityException e) {
+                System.out.println("There was a security exception.");
             }
-
         }
         //TO-DO: custom fonts?
 

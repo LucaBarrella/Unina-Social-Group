@@ -1,34 +1,41 @@
 package BackEnd.Class;
 
+import java.util.Date;
 import java.util.List;
 
 public class Group {
-    private String groupName;
-    private List<User> groupMembers;
-    private User groupAdmin;
+   public String NomeGruppo;
+   public Date DataDiCreazione;
+   public String CategoriaGruppo;
+   private List<User> ListaPartecipanti;
 
-    // Getters and Setters
-    public String getGroupName() {
-        return groupName;
+    public String getNomeGruppo() {
+        return NomeGruppo;
     }
 
-    public void setGroupName(String groupName) {
-        this.groupName = groupName;
+    public void setNomeGruppo(String nomeGruppo) {
+        NomeGruppo = nomeGruppo;
     }
 
-    public List<User> getGroupMembers() {
-        return groupMembers;
+    public Date getDataDiCreazione() {
+        return DataDiCreazione;
     }
 
-    public void setGroupMembers(List<User> groupMembers) {
-        this.groupMembers = groupMembers;
+    public void setDataDiCreazione(Date dataDiCreazione) {
+        DataDiCreazione = dataDiCreazione;
     }
 
-    public User getGroupAdmin() {
-        return groupAdmin;
+    public String getCategoriaGruppo() {
+        return CategoriaGruppo;
     }
 
-    public void setGroupAdmin(User groupAdmin) {
-        this.groupAdmin = groupAdmin;
+    public void setCategoriaGruppo(String categoriaGruppo) {
+        CategoriaGruppo = categoriaGruppo;
+    }
+
+    public Group(String nomeGruppo, Date dataDiCreazione, String categoriaGruppo) {
+        NomeGruppo = nomeGruppo;
+        DataDiCreazione = dataDiCreazione;
+        CategoriaGruppo = categoriaGruppo;
     }
 }

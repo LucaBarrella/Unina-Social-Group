@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ListView layoutX="145.0" prefHeight="400.0" prefWidth="310.0" style="-fx-background-color: orange;" />
+      <TextField layoutX="220.0" layoutY="6.0" opacity="0.08" promptText="Cerca qualcosa!" style="-fx-background-color: black; -fx-background-radius: 15;" />
+      <Button layoutX="174.0" layoutY="1.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="40.0" style="-fx-background-color: trasparent;">
+         <graphic>
+            <ImageView fitHeight="28.0" fitWidth="67.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@wired-lineal-19-magnifier-zoom-search.gif" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+   </children>
+</Pane>

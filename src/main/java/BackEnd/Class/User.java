@@ -1,4 +1,4 @@
-package BackEnd;
+package BackEnd.Class;
 
 import java.util.Date;
 // Generate getters and setters for all fields in a class:
@@ -15,6 +15,16 @@ public class User {
         return Matricola;
     }
 
+    public User(String nome, String cognome, String matricola, String email, String password, Date dataDiNascita, Enum interessi) {
+        Nome = nome;
+        Cognome = cognome;
+        Matricola = matricola;
+        Email = email;
+        Password = password;
+        DataDiNascita = dataDiNascita;
+        Interessi = interessi;
+    }
+
     public void setMatricola(String matricola) {
         Matricola = matricola;
     }
@@ -26,6 +36,7 @@ public class User {
     public void setPassword(String password) {
         Password = password;
     }
+
 
     public void setEmail(String email) {
         Email = email;

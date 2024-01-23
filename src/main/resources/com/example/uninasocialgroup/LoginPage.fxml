@@ -39,7 +39,7 @@
             <Font name="Sarabun Light" size="45.0" />
          </font>
       </Label>
-      <Button fx:id="LoginButton" alignment="CENTER" layoutX="402.0" layoutY="336.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="250.0" style="-fx-background-radius: 0; -fx-text-fill: white;" stylesheets="@../../../style/button.css" text="Login" textAlignment="CENTER">
+      <Button fx:id="SwitchToHomePageButton" alignment="CENTER" layoutX="402.0" layoutY="336.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="250.0" style="-fx-background-radius: 0; -fx-text-fill: white;" stylesheets="@../../../style/button.css" text="Login" textAlignment="CENTER">
          <font>
             <Font name="Apple SD Gothic Neo Regular" size="19.0" />
          </font>

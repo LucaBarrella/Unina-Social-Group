@@ -25,8 +25,8 @@ public class SwitchScene {
     setTransitionDirection(exitTransition, direction, true);
 
 
-        //Crea una transizione di ingresso per la nuova scena
     scene = new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource(fxmlFile))));
+    //Crea una transizione di ingresso per la nuova scena
     /*TranslateTransition enterTransition = new TranslateTransition(Duration.millis(500), scene.getRoot());
     setTransitionDirection(enterTransition, direction, false);*/
 
@@ -62,6 +62,8 @@ private void setTransitionDirection(TranslateTransition transition, String direc
         case "btt":
             transition.setFromY(isExit ? 0f : 200f);
             transition.setToY(isExit ? -200f : 0f);
+            break;
+        case "n":
             break;
         default:
             throw new IllegalArgumentException("Invalid direction: " + direction);

@@ -8,8 +8,9 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.uninasocialgroup.Controller.SignUpPageController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.uninasocialgroup.Controller.RegistrationPageController2">
    <children>
+      <StackPane layoutX="479.0" layoutY="-75.0" prefHeight="650.0" prefWidth="638.0" style="-fx-background-color: #09f;" />
       <VBox layoutX="450.0" prefHeight="500.0" prefWidth="300.0" style="-fx-background-color: #09F;">
          <children>
             <Button fx:id="SwitchToSignInButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="504.0" prefWidth="306.0" style="-fx-background-radius: 0; -fx-background-color: #09F;">
@@ -37,16 +38,22 @@
             <Font name="Sarabun Light" size="45.0" />
          </font>
       </Label>
-      <Button fx:id="ContinueButton" alignment="CENTER" layoutX="100.0" layoutY="336.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="250.0" style="-fx-text-fill: white; -fx-background-radius: 0;" stylesheets="@../../../style/button.css" text="Continua" textAlignment="CENTER">
+      <Button alignment="CENTER" layoutX="100.0" layoutY="336.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="250.0" style="-fx-text-fill: white; -fx-background-radius: 0;" stylesheets="@../../../style/button.css" text="Continua" textAlignment="CENTER">
          <font>
             <Font name="Apple SD Gothic Neo Regular" size="19.0" />
          </font>
       </Button>
-      <Pane layoutX="739.0" layoutY="-41.0" prefHeight="571.0" prefWidth="278.0" style="-fx-background-color: #09f;" />
-      <Button mnemonicParsing="false" prefHeight="64.0" prefWidth="96.0" style="-fx-background-color: trasparent;" text="&lt;">
+      <Button layoutX="14.0" layoutY="54.0" mnemonicParsing="false" style="-fx-background-color: trasparent;">
          <font>
-            <Font name="Avenir Heavy" size="34.0" />
+            <Font size="1.0" />
          </font>
+         <graphic>
+            <ImageView fitHeight="90.0" fitWidth="94.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../images/Back.gif" />
+               </image>
+            </ImageView>
+         </graphic>
       </Button>
    </children>
 </AnchorPane>

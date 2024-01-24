@@ -6,6 +6,9 @@ import javafx.scene.control.Button;
 import javafx.event.ActionEvent;
 import java.io.IOException;
 
+//TO-DO: add a "remember me" checkbox and a "forgot password" button and "show me password" button
+//TO-DO: add a "login with google" button
+//TO-DO: add a "" button
 public class LoginPageController {
     @FXML
     private Button SwitchToSignUpButton, SwitchToHomePageButton;

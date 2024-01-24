@@ -7,7 +7,7 @@ import java.sql.Statement;
 import java.util.List;
 
 public class DatabaseAccess {
-    public ResultSet executeQuery(String query, List<String> parameters) {
+    public ResultSet executeQuery(String query, List<String> parameters, String closeDataBase) {
         ResultSet rs = null;
         try {
             // 1. Load the JDBC driver
@@ -23,6 +23,10 @@ public class DatabaseAccess {
             rs = stmt.executeQuery(query);
 
             // 5. Close the connection
+            if (!closeDataBase.startsWith("n")) {
+            } else {
+                conn.close();
+            }
             // conn.close(); // You might want to close this connection in the finally block or use try-with-resources to ensure it gets closed.
         } catch (Exception e) {
             e.printStackTrace();

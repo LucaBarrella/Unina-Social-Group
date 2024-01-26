@@ -28,7 +28,7 @@ public class SwitchScene {
         //TO-DO: add a fade transition and fix the resize problem (cuz it's not a flexible solution)
 
         scene = new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource(fxmlFile))));
-        stage.resizableProperty().setValue(!fxmlFile.startsWith("Login") && !fxmlFile.startsWith("Registration"));
+        stage.resizableProperty().setValue(!fxmlFile.contains("Login") && !fxmlFile.contains("Registration"));
         //Crea una transizione di ingresso per la nuova scena
     /*TranslateTransition enterTransition = new TranslateTransition(Duration.millis(500), scene.getRoot());
     setTransitionDirection(enterTransition, direction, false);*/

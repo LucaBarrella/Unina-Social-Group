@@ -1,8 +1,8 @@
 package BackEnd.Class;
 
 public class Post {
-    public String Categoria;
-    public String MessaggioTestuale;
+    private String Categoria;
+    private String MessaggioTestuale;
 
     public String getCategoria() {
         return Categoria;
@@ -23,5 +23,13 @@ public class Post {
     public Post(String categoria, String messaggioTestuale) {
         Categoria = categoria;
         MessaggioTestuale = messaggioTestuale;
+    }
+
+    @Override
+    public String toString() {
+        return "Post{" +
+                "Categoria='" + Categoria + '\'' +
+                ", MessaggioTestuale='" + MessaggioTestuale + '\'' +
+                '}';
     }
 }

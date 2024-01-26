@@ -1,10 +1,10 @@
 package BackEnd.Class;
 
 public class Authentication {
-    public String Email;
-    public String Password;
-    public String ConfermaPassword;
-    public String NumeroDiTelefono;
+    private String Email;
+    private String Password;
+    private String ConfermaPassword;
+    private String NumeroDiTelefono;
     private User Matricola;
     public String getEmail() {
         return Email;
@@ -43,5 +43,16 @@ public class Authentication {
         Password = password;
         ConfermaPassword = confermaPassword;
         NumeroDiTelefono = numeroDiTelefono;
+    }
+
+    @Override
+    public String toString() {
+        return "Authentication{" +
+                "Email='" + Email + '\'' +
+                ", Password='" + Password + '\'' +
+                ", ConfermaPassword='" + ConfermaPassword + '\'' +
+                ", NumeroDiTelefono='" + NumeroDiTelefono + '\'' +
+                ", Matricola=" + Matricola +
+                '}';
     }
 }

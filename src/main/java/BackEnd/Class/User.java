@@ -5,18 +5,18 @@ import java.util.List;
 // Generate getters and setters for all fields in a class:
 
 public class User {
-    public String Nome;
-    public String Cognome;
-    public String Matricola;
-    public String Email;
+    private String Nome;
+    private String Cognome;
+    private String Matricola;
+    private String Email;
     private String Password;
-    public Date DataDiNascita;
-    public Date DataDiRegistazione;
+    private Date DataDiNascita;
+    private Date DataDiRegistazione;
     private List<Group> OwnerGroups;
     private List<Group> UserGroups;
     private List<Post> PostPubblicati;
     private List<User> Amici;
-    public Report report;
+    private Report report;
 
     public String getNome() {
         return Nome;
@@ -82,5 +82,18 @@ public class User {
         Password = password;
         DataDiNascita = dataDiNascita;
         DataDiRegistazione = dataDiRegistazione;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "Nome='" + Nome + '\'' +
+                ", Cognome='" + Cognome + '\'' +
+                ", Matricola='" + Matricola + '\'' +
+                ", Email='" + Email + '\'' +
+                ", Password='" + Password + '\'' +
+                ", DataDiNascita=" + DataDiNascita +
+                ", DataDiRegistazione=" + DataDiRegistazione +
+                '}';
     }
 }

@@ -4,9 +4,9 @@ import java.util.Date;
 import java.util.List;
 
 public class Group {
-   public String NomeGruppo;
-   public Date DataDiCreazione;
-   public String CategoriaGruppo;
+   private String NomeGruppo;
+   private Date DataDiCreazione;
+   private String CategoriaGruppo;
    private List<User> ListaPartecipanti;
 
     public String getNomeGruppo() {
@@ -37,5 +37,14 @@ public class Group {
         NomeGruppo = nomeGruppo;
         DataDiCreazione = dataDiCreazione;
         CategoriaGruppo = categoriaGruppo;
+    }
+
+    @Override
+    public String toString() {
+        return "Group{" +
+                "NomeGruppo='" + NomeGruppo + '\'' +
+                ", DataDiCreazione=" + DataDiCreazione +
+                ", CategoriaGruppo='" + CategoriaGruppo + '\'' +
+                '}';
     }
 }

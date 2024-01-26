@@ -5,9 +5,9 @@ import java.time.LocalTime;
 import java.util.List;
 
 public class Notification {
-    public String Messaggio;
-    public LocalDate DataInvio;
-    public LocalTime OraInvio;
+    private String Messaggio;
+    private LocalDate DataInvio;
+    private LocalTime OraInvio;
     private List<User> UserNotificati;
 
     public String getMessaggio() {
@@ -38,5 +38,14 @@ public class Notification {
         Messaggio = messaggio;
         DataInvio = dataInvio;
         OraInvio = oraInvio;
+    }
+
+    @Override
+    public String toString() {
+        return "Notification{" +
+                "Messaggio='" + Messaggio + '\'' +
+                ", DataInvio=" + DataInvio +
+                ", OraInvio=" + OraInvio +
+                '}';
     }
 }

@@ -11,13 +11,13 @@ import java.io.IOException;
 //TO-DO: add a "" button
 public class LoginPageController {
     @FXML
-    private Button SwitchToSignUpButton, SwitchToHomePageButton;
+    private Button SwitchToSignUpButton, loginButton;
 
     private SwitchScene SwitchScene = new SwitchScene();
     @FXML
     public void initialize() {
         SwitchToSignUpButton.setOnAction(this::SwitchToSignUpButton);
-        SwitchToHomePageButton.setOnAction(this::SwitchToHomePage);
+        loginButton.setOnAction(this::SwitchToHomePage);
     }
 
     private void SwitchToSignUpButton(ActionEvent event) {

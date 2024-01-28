@@ -1,8 +1,10 @@
 package com.example.uninasocialgroup;
 
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
@@ -11,7 +13,6 @@ import java.awt.Taskbar.Feature;
 import java.util.Objects;
 
 public class Main extends javafx.application.Application {
-
     @Override
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("LoginPage.fxml")));
@@ -46,5 +47,6 @@ public class Main extends javafx.application.Application {
         primaryStage.resizableProperty().setValue(false);
         primaryStage.show();
     }
+
 
 }

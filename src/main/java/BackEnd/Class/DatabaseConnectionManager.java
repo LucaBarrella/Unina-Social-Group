@@ -18,8 +18,6 @@ public class DatabaseConnectionManager {
             printConnectionStatus(connection);
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
-        } finally {
-            closeDatabaseConnection(connection);
         }
         return connection;
     }

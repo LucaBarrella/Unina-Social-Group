@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="960.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ToolBar orientation="VERTICAL" prefHeight="320.0" prefWidth="20.0" style="-fx-background-color: trasparrent;">
+        <items>
+          <Button mnemonicParsing="false" style="-fx-background-radius: 0;" text="Button" />
+            <Button mnemonicParsing="false" style="-fx-background-radius: 0;" text="Button" />
+            <Button mnemonicParsing="false" style="-fx-background-radius: 0;" text="Button" />
+            <Button mnemonicParsing="false" style="-fx-background-radius: 0;" text="Button" />
+            <Button fx:id="LogOutButton" mnemonicParsing="false" style="-fx-background-radius: 0;" text="Button" />
+        </items>
+      </ToolBar>
+      <Button layoutX="1320.0" layoutY="20.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" style="-fx-background-radius: 50;" text="Button" />
+      <ListView layoutX="385.0" prefHeight="960.0" prefWidth="670.0" />
+      <Button layoutX="1055.0" mnemonicParsing="false" prefHeight="175.0" prefWidth="385.0" text="Button" />
+      <Button layoutY="785.0" mnemonicParsing="false" prefHeight="175.0" prefWidth="385.0" text="Button" />
+   </children>
+</AnchorPane>

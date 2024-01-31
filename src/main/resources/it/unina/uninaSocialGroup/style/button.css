@@ -1,0 +1,11 @@
+.button {
+    -fx-background-color: #ff0000; /* Colore di sfondo del bottone */
+}
+
+.button:hover {
+    -fx-background-color: #ff4d4d; /* Colore di sfondo del bottone quando il mouse passa sopra */
+}
+
+.button:pressed {
+    -fx-background-color: #b30000; /* Colore di sfondo del bottone quando viene premuto */
+}

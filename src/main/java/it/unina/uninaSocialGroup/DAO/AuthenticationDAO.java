@@ -1,6 +1,6 @@
 package it.unina.uninaSocialGroup.DAO;
 
-import Model.DatabaseConnectionManager;
+import it.unina.uninaSocialGroup.Model.DatabaseConnectionManager;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

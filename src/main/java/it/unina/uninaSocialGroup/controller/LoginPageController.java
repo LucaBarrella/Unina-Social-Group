@@ -1,7 +1,8 @@
 package it.unina.uninaSocialGroup.controller;
 
-import DAO.AuthenticationDAO;
-import Model.SwitchScene;
+
+import it.unina.uninaSocialGroup.DAO.AuthenticationDAO;
+import it.unina.uninaSocialGroup.SwitchScene;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

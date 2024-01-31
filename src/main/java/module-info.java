@@ -1,13 +1,14 @@
-module MainPackage {
+module it.unina.uninaSocialGroup {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.desktop;
     requires java.sql;
 
-    opens MainPackage to javafx.fxml;
-    exports MainPackage;
-    exports Controller;
-    opens Controller to javafx.fxml;
-    exports Controller.RegistrationPhase;
-    opens Controller.RegistrationPhase to javafx.fxml;
+
+    opens it.unina.uninaSocialGroup to javafx.fxml;
+    exports it.unina.uninaSocialGroup;
+    exports it.unina.uninaSocialGroup.controller;
+    opens it.unina.uninaSocialGroup.controller to javafx.fxml;
+    exports it.unina.uninaSocialGroup.controller.RegistrationPhase;
+    opens it.unina.uninaSocialGroup.controller.RegistrationPhase to javafx.fxml;
 }

@@ -2,7 +2,6 @@ package Controller;
 
 import DAO.AuthenticationDAO;
 import Model.SwitchScene;
-import PostgresDAO.AuthenticationDAOPostgres;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -12,7 +11,6 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 //TO-DO: add a "remember me" checkbox and a "forgot password" button and "show me password" button
 //TO-DO: add a "login with google" button
@@ -31,7 +29,7 @@ public class LoginPageController {
     }
 
     private void signIn(){
-        AuthenticationDAOPostgres autenticate = new AuthenticationDAOPostgres();
+        AuthenticationDAO autenticate = new AuthenticationDAO();
         if (LoginButton.isPressed()) {
             result = autenticate.CheckCredentials(emailField.getText(), passwordField.getText());
             if(result){

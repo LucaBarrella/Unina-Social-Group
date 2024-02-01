@@ -1,0 +1,15 @@
+.button {
+    -fx-background-color:  #000000 ; /* Colore di sfondo del bottone */
+    -fx-text-fill: #FFFFFF; /* Colore del testo del bottone */
+    -fx-font-size: 20px; /* Dimensione del testo del bottone */
+    -fx-font-family: "Sans-serif"; /* Font del testo del bottone */
+    -fx-background-radius: 20; /* Arrotondamento dei bordi del bottone */
+}
+
+.button:hover {
+    -fx-background-color: #333333; /* Colore di sfondo del bottone quando il mouse passa sopra */
+}
+
+.button:pressed {
+    -fx-background-color: #666666; /* Colore di sfondo del bottone quando viene premuto */
+}

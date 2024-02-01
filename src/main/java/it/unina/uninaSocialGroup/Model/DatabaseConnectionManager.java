@@ -6,9 +6,10 @@ import java.sql.SQLException;
 
 public class DatabaseConnectionManager {
 
-    private static final String DatabaseURL = "jdbc:postgresql://manny.db.elephantsql.com:5432/";
-    private static final String DatabaseUser = "rhwjlmoo";
-    private static final String DatabasePassword = "qRli1Cj50UXsPpSaCn4cG1u5cTgoqjZF";
+    private static final String JDBCDriver = "org.postgresql.Driver";
+    private static final String DatabaseURL = "jdbc:postgresql://aws-0-eu-central-1.pooler.supabase.com:6543/postgres?currentSchema=UninaSocialGroup";
+    private static final String DatabaseUser = "postgres.cpsqkfuqoizfrhisstzx";
+    private static final String DatabasePassword = "nuvxiz-vuvSy2-tajxuk";
 
     /**
      * createDatabaseConnection
@@ -18,7 +19,7 @@ public class DatabaseConnectionManager {
     public static Connection createDatabaseConnection() {
         Connection connection = null;
         try {
-            Class.forName("manny.db.elephantsql.com");
+            Class.forName(JDBCDriver);
             connection = DriverManager.getConnection(DatabaseURL, DatabaseUser, DatabasePassword);
             printConnectionStatus(connection);
         } catch (ClassNotFoundException | SQLException e) {

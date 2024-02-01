@@ -24,14 +24,14 @@ public class RegistrationPageController3 {
         try {
             String scenePath, direction;
             if (event.getSource() == SwitchToSignInButton) {
-                scenePath = "/MainPackage/LoginPage.fxml";
+                scenePath = "/it/unina/uninaSocialGroup/view/LoginPage.fxml";
                 direction = "rtl";
             } else if (event.getSource() == ContinueButton) {
                 // TO-DO:add the new page
-                scenePath = "/MainPackage/RegistrationPage4.fxml";
+                scenePath = "/it/unina/uninaSocialGroup/view/RegistrationPage4.fxml";
                 direction = "btt";
             } else {
-                scenePath = "/MainPackage/RegistrationPage2.fxml";
+                scenePath = "/it/unina/uninaSocialGroup/view/RegistrationPage2.fxml";
                 direction = "ttb";
             }
             switchScene.switchToScene(event, scenePath, direction);

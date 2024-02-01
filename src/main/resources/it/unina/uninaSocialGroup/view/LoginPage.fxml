@@ -24,12 +24,12 @@
             </Button>
          </children>
       </VBox>
-      <TextField layoutX="402.0" layoutY="167.0" prefHeight="50.0" prefWidth="250.0" promptText="Email" style="-fx-background-radius: 0;">
+      <TextField fx:id="emailField" layoutX="402.0" layoutY="167.0" prefHeight="50.0" prefWidth="250.0" promptText="Email" style="-fx-background-radius: 0;">
          <font>
             <Font name="Avenir Roman" size="16.0" />
          </font>
       </TextField>
-      <PasswordField layoutX="402.0" layoutY="249.0" prefHeight="50.0" prefWidth="250.0" promptText="Password" style="-fx-background-radius: 0;">
+      <PasswordField fx:id="passwordField" layoutX="402.0" layoutY="249.0" prefHeight="50.0" prefWidth="250.0" promptText="Password" style="-fx-background-radius: 0;">
          <font>
             <Font name="Avenir Roman" size="16.0" />
          </font>

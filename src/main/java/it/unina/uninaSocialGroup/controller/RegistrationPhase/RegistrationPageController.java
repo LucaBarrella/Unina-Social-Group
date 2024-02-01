@@ -1,37 +1,78 @@
 package it.unina.uninaSocialGroup.controller.RegistrationPhase;
 
+import it.unina.uninaSocialGroup.DAO.AuthenticationDAO;
 import it.unina.uninaSocialGroup.SwitchScene;
+import it.unina.uninaSocialGroup.esperimenti.UserDAO;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.event.ActionEvent;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 public class RegistrationPageController {
     @FXML
-    private Button SwitchToSignInButton, ContinueButton;
+    private TextField NameField, SurnameField, StudentIDField, BirthDateField, EmailField, PhoneNumberField;
+    @FXML
+    private PasswordField PasswordField, ConfirmPasswordField;
+    @FXML
+    private Button SwitchToSignInButton, SwitchToSignInButton2 , ContinueButton;
 
     private SwitchScene switchScene = new SwitchScene();
 
     @FXML
     public void initialize() {
-        SwitchToSignInButton.setOnAction(this::switchToScene);
-        ContinueButton.setOnAction(this::switchToScene);
+        SwitchToSignInButton.setOnAction(this::SwitchToSignInButton);
+        SwitchToSignInButton2.setOnAction(this::SwitchToSignInButton);
+        ContinueButton.setOnAction(this::registration);
     }
 
-    private void switchToScene(ActionEvent event) {
+    private void SwitchToSignInButton(ActionEvent event) {
         try {
-            String scenePath, direction;
-            if (event.getSource() == SwitchToSignInButton) {
-                scenePath = "/MainPackage/LoginPage.fxml";
-                direction = "rtl";
-            } else {
-                scenePath = "/MainPackage/RegistrationPage2.fxml";
-                direction = "btt";
-            }
-            switchScene.switchToScene(event, scenePath, direction);
+            switchScene.switchToScene(event, "/it/unina/uninaSocialGroup/view/LoginPage.fxml", "rightToLeft");
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private boolean areFieldsNotNull() {
+        return NameField.getText() != null &&
+                SurnameField.getText() != null &&
+                StudentIDField.getText() != null &&
+                BirthDateField.getText() != null &&
+                EmailField.getText() != null &&
+                PhoneNumberField.getText() != null &&
+                PasswordField.getText() != null &&
+                ConfirmPasswordField.getText() != null;
+    }
+
+    private void registration (ActionEvent event) {
+        if (!areFieldsNotNull()) {
+            System.out.println("All fields must be filled");
+            return;
+        }
+
+        AuthenticationDAO authenticate = new AuthenticationDAO();
+        UserDAO user = new UserDAO();
+        LocalDateTime currentDate = LocalDateTime.now();
+        boolean result = authenticate.CheckCredentials(EmailField.getText(), PasswordField.getText());
+        if (!result) {
+            if (PasswordField.getText().equals(ConfirmPasswordField.getText())) {
+                try {
+                    user.addNewUser(StudentIDField.getText(), NameField.getText(), SurnameField.getText(), BirthDateField.getText(), String.valueOf(currentDate));
+                    authenticate.addNewUserToAuthTable(EmailField.getText(), PasswordField.getText(), PhoneNumberField.getText());
+                    System.out.println("Registration successful");
+                    switchScene.switchToScene(event, "/it/unina/uninaSocialGroup/view/HomePageBeta.fxml", "buttonToTop");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                System.out.println("Password and Confirm Password are not the same");
+            }
+        } else {
+            System.out.println("User already exists");
         }
     }
 }

@@ -7,9 +7,9 @@ import java.sql.SQLException;
 public class DatabaseConnectionManager {
 
     private static final String JDBCDriver = "org.postgresql.Driver";
-    private static final String DatabaseURL = "jdbc:postgresql://aws-0-eu-central-1.pooler.supabase.com:6543/postgres?currentSchema=UninaSocialGroup";
-    private static final String DatabaseUser = "postgres.cpsqkfuqoizfrhisstzx";
-    private static final String DatabasePassword = "nuvxiz-vuvSy2-tajxuk";
+    private static final String DatabaseURL = "jdbc:postgresql://localhost:5432/postgres?currentSchema=UninaSocialGroup";
+    private static final String DatabaseUser = "postgres";
+    private static final String DatabasePassword = "lucasimone";
 
     /**
      * createDatabaseConnection

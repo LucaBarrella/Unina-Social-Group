@@ -1,11 +1,12 @@
-package it.unina.uninaSocialGroup.controller.RegistrationPhase;
+package it.unina.uninaSocialGroup.controller;
 
 import it.unina.uninaSocialGroup.DAO.AuthenticationDAO;
-import it.unina.uninaSocialGroup.SwitchScene;
-import it.unina.uninaSocialGroup.esperimenti.UserDAO;
+import it.unina.uninaSocialGroup.DAO.UserDAO;
+import it.unina.uninaSocialGroup.Model.SwitchScene;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.event.ActionEvent;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
@@ -14,7 +15,9 @@ import java.time.LocalDateTime;
 
 public class RegistrationPageController {
     @FXML
-    private TextField NameField, SurnameField, StudentIDField, BirthDateField, EmailField, PhoneNumberField;
+    private TextField NameField, SurnameField, StudentIDField, EmailField, PhoneNumberField;
+    @FXML
+    private DatePicker BirthDateField;
     @FXML
     private PasswordField PasswordField, ConfirmPasswordField;
     @FXML
@@ -41,7 +44,7 @@ public class RegistrationPageController {
         return NameField.getText() != null &&
                 SurnameField.getText() != null &&
                 StudentIDField.getText() != null &&
-                BirthDateField.getText() != null &&
+                BirthDateField.getValue() != null &&
                 EmailField.getText() != null &&
                 PhoneNumberField.getText() != null &&
                 PasswordField.getText() != null &&
@@ -61,10 +64,10 @@ public class RegistrationPageController {
         if (!result) {
             if (PasswordField.getText().equals(ConfirmPasswordField.getText())) {
                 try {
-                    user.addNewUser(StudentIDField.getText(), NameField.getText(), SurnameField.getText(), BirthDateField.getText(), String.valueOf(currentDate));
+                    user.addNewUser(StudentIDField.getText(), NameField.getText(), SurnameField.getText(), String.valueOf(BirthDateField.getValue()), String.valueOf(currentDate));
                     authenticate.addNewUserToAuthTable(EmailField.getText(), PasswordField.getText(), PhoneNumberField.getText());
                     System.out.println("Registration successful");
-                    switchScene.switchToScene(event, "/it/unina/uninaSocialGroup/view/HomePageBeta.fxml", "buttonToTop");
+                    switchScene.switchToScene(event, "/it/unina/uninaSocialGroup/view/HomePage.fxml", "buttonToTop");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

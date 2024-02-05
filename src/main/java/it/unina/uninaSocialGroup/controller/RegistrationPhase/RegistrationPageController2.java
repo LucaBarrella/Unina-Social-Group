@@ -1,6 +1,6 @@
 package it.unina.uninaSocialGroup.controller.RegistrationPhase;
 
-import it.unina.uninaSocialGroup.SwitchScene;
+import it.unina.uninaSocialGroup.Model.SwitchScene;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

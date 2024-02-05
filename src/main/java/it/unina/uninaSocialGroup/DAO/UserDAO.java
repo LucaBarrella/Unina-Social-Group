@@ -1,6 +1,7 @@
-package it.unina.uninaSocialGroup.esperimenti;
+package it.unina.uninaSocialGroup.DAO;
 
 import it.unina.uninaSocialGroup.Model.DatabaseConnectionManager;
+import it.unina.uninaSocialGroup.Model.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,8 +18,7 @@ public class UserDAO {
      */
     public void addNewUser(String studentID, String name, String surname, String birthDate, String registrationDate){
         Connection connect = null;
-        String query = "INSERT INTO \"UninaSocialGroup\".\"utente\" (matricola, nome, cognome, DataDiNascita, DataDiRegistrazione) VALUES (?, ?, ?, ?, ?)";
-        PreparedStatement psCheck = null;
+        String query = "INSERT INTO \"UninaSocialGroup\".\"utente\" (Matricola, Nome, Cognome, Data_di_Nascita, Data_di_Registrazione) VALUES (?, ?, ?, ?, ?)";
         PreparedStatement psInsert = null;
         try {
             connect = DatabaseConnectionManager.createDatabaseConnection();
@@ -35,7 +35,79 @@ public class UserDAO {
             System.out.println("User not added!");
         }
     }
+
+    public User getFullNameByEmail(String email){
+        User user = null;
+            Connection connect = null;
+            String query = "SELECT Nome, Cognome FROM Utente U JOIN Autenticazione A" +
+                           "ON U.ID_Autenticazione = A.ID_Autenticazione" +
+                           "WHERE A.Email = ?";
+            PreparedStatement ps = null;
+            ResultSet resultSet = null;
+            try {
+                connect = DatabaseConnectionManager.createDatabaseConnection();
+                ps = connect.prepareStatement(query);
+                ps.setString(1, email);
+                resultSet = ps.executeQuery();
+                if (resultSet.next()) {
+                    String name = resultSet.getString("Nome");
+                    String surname = resultSet.getString("Cognome");
+                    user = new User(name,surname);
+                }
+            } catch (SQLException sql) {
+                sql.printStackTrace();
+            }
+           return user;
+        }
+
+    public String getMatricolaByEmail(String email){
+        String matricola = null;
+        Connection connect = null;
+        String query = "SELECT Matricola FROM Utente WHERE Matricola IN (" +
+                       "SELECT U.Matricola FROM Utente U JOIN Autenticazione A " +
+                       "ON U.ID_Autenticazione = A.ID_Autenticazione" +
+                       "WHERE A.Email = ?)";
+        PreparedStatement ps = null;
+        ResultSet resultSet = null;
+        try {
+            connect = DatabaseConnectionManager.createDatabaseConnection();
+            ps = connect.prepareStatement(query);
+            ps.setString(1, email);
+            resultSet = ps.executeQuery();
+            if (resultSet.next()) {
+                matricola = resultSet.getString("Matricola");
+            }
+        } catch (SQLException sql) {
+            sql.printStackTrace();
+        }
+        return matricola;
+    }
+
+    public User getUserData(String matricola){
+        User user = null;
+        Connection connect = null;
+        String query = "SELECT * FROM Utente WHERE Matricola = ?)";
+        PreparedStatement ps = null;
+        ResultSet resultSet = null;
+        try {
+            connect = DatabaseConnectionManager.createDatabaseConnection();
+            ps = connect.prepareStatement(query);
+            ps.setString(1, matricola);
+            resultSet = ps.executeQuery();
+            if (resultSet.next()) {
+                user = new User(resultSet.getString("Matricola"),
+                                resultSet.getString("Nome"),
+                                resultSet.getString("Cognome"),
+                                resultSet.getDate("Data_di_Nascita"),
+                                resultSet.getDate("Data_di_Registrazione"));
+            }
+        } catch (SQLException sql) {
+            sql.printStackTrace();
+        }
+        return user;
+    }
 }
+
 
 
 

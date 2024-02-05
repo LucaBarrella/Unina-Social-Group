@@ -4,10 +4,19 @@ import java.util.Date;
 import java.util.List;
 
 public class Group {
+    private String IDGruppo;
    private String NomeGruppo;
    private Date DataDiCreazione;
    private String CategoriaGruppo;
    private List<User> ListaPartecipanti;
+
+    public String getIDGruppo() {
+        return IDGruppo;
+    }
+
+    public void setIDGruppo(String IDGruppo) {
+        this.IDGruppo = IDGruppo;
+    }
 
     public String getNomeGruppo() {
         return NomeGruppo;
@@ -33,7 +42,8 @@ public class Group {
         CategoriaGruppo = categoriaGruppo;
     }
 
-    public Group(String nomeGruppo, Date dataDiCreazione, String categoriaGruppo) {
+    public Group(String IDGruppo, String nomeGruppo, Date dataDiCreazione, String categoriaGruppo) {
+        this.IDGruppo = IDGruppo;
         NomeGruppo = nomeGruppo;
         DataDiCreazione = dataDiCreazione;
         CategoriaGruppo = categoriaGruppo;
@@ -42,7 +52,8 @@ public class Group {
     @Override
     public String toString() {
         return "Group{" +
-                "NomeGruppo='" + NomeGruppo + '\'' +
+                "IDGruppo='" + IDGruppo + '\'' +
+                ", NomeGruppo='" + NomeGruppo + '\'' +
                 ", DataDiCreazione=" + DataDiCreazione +
                 ", CategoriaGruppo='" + CategoriaGruppo + '\'' +
                 '}';

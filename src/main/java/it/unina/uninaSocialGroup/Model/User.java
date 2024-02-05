@@ -8,15 +8,13 @@ public class User {
     private String Nome;
     private String Cognome;
     private String Matricola;
-    private String Email;
-    private String Password;
     private Date DataDiNascita;
     private Date DataDiRegistazione;
     private List<Group> OwnerGroups;
     private List<Group> UserGroups;
     private List<Post> PostPubblicati;
     private List<User> Amici;
-    private Report report;
+
 
     public String getNome() {
         return Nome;
@@ -42,22 +40,6 @@ public class User {
         Matricola = matricola;
     }
 
-    public String getEmail() {
-        return Email;
-    }
-
-    public void setEmail(String email) {
-        Email = email;
-    }
-
-    public String getPassword() {
-        return Password;
-    }
-
-    public void setPassword(String password) {
-        Password = password;
-    }
-
     public Date getDataDiNascita() {
         return DataDiNascita;
     }
@@ -74,14 +56,17 @@ public class User {
         DataDiRegistazione = dataDiRegistazione;
     }
 
-    public User(String nome, String cognome, String matricola, String email, String password, Date dataDiNascita, Date dataDiRegistazione) {
+    public User(String nome, String cognome, String matricola, Date dataDiNascita, Date dataDiRegistazione) {
         Nome = nome;
         Cognome = cognome;
         Matricola = matricola;
-        Email = email;
-        Password = password;
         DataDiNascita = dataDiNascita;
         DataDiRegistazione = dataDiRegistazione;
+    }
+
+    public User(String nome, String cognome) {
+        Nome = nome;
+        Cognome = cognome;
     }
 
     @Override
@@ -90,8 +75,6 @@ public class User {
                 "Nome='" + Nome + '\'' +
                 ", Cognome='" + Cognome + '\'' +
                 ", Matricola='" + Matricola + '\'' +
-                ", Email='" + Email + '\'' +
-                ", Password='" + Password + '\'' +
                 ", DataDiNascita=" + DataDiNascita +
                 ", DataDiRegistazione=" + DataDiRegistazione +
                 '}';

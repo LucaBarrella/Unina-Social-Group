@@ -40,7 +40,7 @@ public class AuthenticationDAO {
 
       public void addNewUserToAuthTable(String email, String password, String numeroDiTelefono) {
           Connection connect = null;
-          String query = "INSERT INTO \"UninaSocialGroup\".\"autenticazione\" (Email, Password, ConfermaPassword, numeroDiTelefono) VALUES (?, ?, ?, ?)";
+          String query = "INSERT INTO \"UninaSocialGroup\".\"autenticazione\" (Email, Password, Conferma_Password, Numero_di_Telefono) VALUES (?, ?, ?, ?)";
           PreparedStatement ps = null;
           try {
               connect = DatabaseConnectionManager.createDatabaseConnection();

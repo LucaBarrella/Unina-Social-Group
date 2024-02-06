@@ -9,7 +9,7 @@ public class User {
     private String Cognome;
     private String Matricola;
     private Date DataDiNascita;
-    private Date DataDiRegistazione;
+    private Date DataDiRegistrazione;
     private List<Group> OwnerGroups;
     private List<Group> UserGroups;
     private List<Post> PostPubblicati;
@@ -48,20 +48,20 @@ public class User {
         DataDiNascita = dataDiNascita;
     }
 
-    public Date getDataDiRegistazione() {
-        return DataDiRegistazione;
+    public Date getDataDiRegistrazione() {
+        return DataDiRegistrazione;
     }
 
-    public void setDataDiRegistazione(Date dataDiRegistazione) {
-        DataDiRegistazione = dataDiRegistazione;
+    public void setDataDiRegistrazione(Date dataDiRegistrazione) {
+        DataDiRegistrazione = dataDiRegistrazione;
     }
 
-    public User(String nome, String cognome, String matricola, Date dataDiNascita, Date dataDiRegistazione) {
+    public User(String nome, String cognome, String matricola, Date dataDiNascita, Date dataDiRegistrazione) {
         Nome = nome;
         Cognome = cognome;
         Matricola = matricola;
         DataDiNascita = dataDiNascita;
-        DataDiRegistazione = dataDiRegistazione;
+        DataDiRegistrazione = dataDiRegistrazione;
     }
 
     public User(String nome, String cognome) {
@@ -76,7 +76,7 @@ public class User {
                 ", Cognome='" + Cognome + '\'' +
                 ", Matricola='" + Matricola + '\'' +
                 ", DataDiNascita=" + DataDiNascita +
-                ", DataDiRegistazione=" + DataDiRegistazione +
+                ", DataDiRegistazione=" + DataDiRegistrazione +
                 '}';
     }
 }

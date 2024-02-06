@@ -32,4 +32,25 @@ public class GroupDAO {
         }
         return dataList;
     }
+
+
+    public List<Group> getAdminGroups(String matricola){
+        List<Group> dataList = new ArrayList<>();
+        PreparedStatement ps = null;
+        String query = "SELECT G.* FROM Gruppo G WHERE G.GestoreGruppo = ?";
+        try{
+            Connection db = DatabaseConnectionManager.createDatabaseConnection();
+            ps = db.prepareStatement(query);
+            ps.setString(1, matricola);
+            ResultSet resultSet = ps.executeQuery();
+            while(resultSet.next()){
+                Group gruppo = new Group(resultSet.getString("ID_Gruppo"),resultSet.getString("Nome_Gruppo"),
+                        resultSet.getDate("Data_di_Creazione"),resultSet.getString("Categoria_Gruppo"));
+                dataList.add(gruppo);
+            }
+        }catch(SQLException sql){
+            sql.printStackTrace();
+        }
+        return dataList;
+    }
 }

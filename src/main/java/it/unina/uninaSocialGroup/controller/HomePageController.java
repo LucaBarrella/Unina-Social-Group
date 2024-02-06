@@ -44,6 +44,10 @@ public class HomePageController{
     public void initialize() {
         LogOutButton.setOnAction(this::Logout);
         MonthBox.getItems().addAll(Months);
+        CreatedGroups.setOnAction(event -> {if (CreatedGroups.isSelected()) {
+                                                LoadDataTableAdminGroups();
+                                            }else{
+                                                LoadDataTableUserGroups();}});
     }
 
     public void UserEmail(String email){
@@ -58,7 +62,7 @@ public class HomePageController{
         LabelNameSurname.setText(name+ " " +surname);
     }
 
-    public void LoadDataTableGroups(){
+    public void LoadDataTableUserGroups(){
         UserDAO user = new UserDAO();
         GroupDAO group = new GroupDAO();
         String matricola = user.getMatricolaByEmail(userEmail);
@@ -70,6 +74,29 @@ public class HomePageController{
         TableGroups.getItems().addAll(dati);
     }
 
+    public void LoadDataTableAdminGroups(){
+        UserDAO user = new UserDAO();
+        GroupDAO group = new GroupDAO();
+        String matricola = user.getMatricolaByEmail(userEmail);
+        IDColumn.setCellValueFactory(new PropertyValueFactory<>("IDGruppo"));
+        NameColumn.setCellValueFactory(new PropertyValueFactory<>("NomeGruppo"));
+        CreationDateColumn.setCellValueFactory(new PropertyValueFactory<>("DataDiCreazione"));
+        CategoryColumn.setCellValueFactory(new PropertyValueFactory<>("CategoriaGruppo"));
+        List<Group> dati = group.getAdminGroups(matricola);
+        TableGroups.getItems().addAll(dati);
+    }
+
+    public void LoadProfileData(){
+        UserDAO userdao = new UserDAO();
+        String matricola = userdao.getMatricolaByEmail(userEmail);
+        User user = userdao.getUserData(matricola);
+        LabelMatricola.setText(user.getMatricola());
+        LabelEmail.setText(userEmail);
+        LabelName.setText(user.getNome());
+        LabelSurname.setText(user.getCognome());
+        LabelBirthDate.setText(String.valueOf(user.getDataDiNascita()));
+        LabelRegistrationDate.setText(String.valueOf(user.getDataDiRegistrazione()));
+    }
 
     private void Logout(ActionEvent event) {
         try {

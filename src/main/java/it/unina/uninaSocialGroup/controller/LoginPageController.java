@@ -19,6 +19,7 @@ public class LoginPageController {
     @FXML
     private TextField passwordField;
     private SwitchScene switchScene = new SwitchScene();
+    private Parent root;
 
     @FXML
     public void initialize() {
@@ -31,7 +32,8 @@ public class LoginPageController {
         boolean result = authenticate.CheckCredentials(emailField.getText(), passwordField.getText());
         if(result){
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("HomePage.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/it/unina/uninaSocialGroup/view/HomePage.fxml"));
+                root = loader.load();
                 HomePageController hpc = loader.getController();
                 hpc.UserEmail(emailField.getText());
                 System.out.println("Login successful");

@@ -11,6 +11,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.time.LocalDateTime;
 
 public class RegistrationPageController {
@@ -59,14 +60,17 @@ public class RegistrationPageController {
 
         AuthenticationDAO authenticate = new AuthenticationDAO();
         UserDAO user = new UserDAO();
-        LocalDateTime currentDate = LocalDateTime.now();
-        boolean result = authenticate.CheckCredentials(EmailField.getText(), PasswordField.getText());
+        Date currentDate =  Date.valueOf(LocalDateTime.now().toLocalDate());
+        Date birthDate = Date.valueOf(BirthDateField.getValue());
+        boolean result = user.UserAlreadyExists(StudentIDField.getText()) && authenticate.CheckCredentials(EmailField.getText(), PasswordField.getText());
         if (!result) {
             if (PasswordField.getText().equals(ConfirmPasswordField.getText())) {
                 try {
-                    user.addNewUser(StudentIDField.getText(), NameField.getText(), SurnameField.getText(), String.valueOf(BirthDateField.getValue()), String.valueOf(currentDate));
+                    user.addNewUser(StudentIDField.getText(), NameField.getText(), SurnameField.getText(), birthDate, currentDate);
                     authenticate.addNewUserToAuthTable(EmailField.getText(), PasswordField.getText(), PhoneNumberField.getText());
                     System.out.println("Registration successful");
+                    HomePageController homePageController = new HomePageController();
+                    homePageController.setUserEmail(EmailField.getText());
                     switchScene.switchToScene(event, "/it/unina/uninaSocialGroup/view/HomePage.fxml", "buttonToTop");
                 } catch (IOException e) {
                     e.printStackTrace();

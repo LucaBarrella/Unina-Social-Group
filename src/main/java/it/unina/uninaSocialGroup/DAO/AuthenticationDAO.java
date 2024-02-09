@@ -17,7 +17,7 @@ public class AuthenticationDAO {
        */
       public boolean CheckCredentials(String email, String password) {
             Connection connect = null;
-            String query = "SELECT * FROM \"UninaSocialGroup\".\"autenticazione\" WHERE Email = ? AND Password = ?";
+            String query = "SELECT 1 FROM autenticazione WHERE Email = ? AND Password = ?";
             PreparedStatement ps = null;
             ResultSet resultSet = null;
             try {
@@ -39,22 +39,20 @@ public class AuthenticationDAO {
       }
 
       public void addNewUserToAuthTable(String email, String password, String numeroDiTelefono) {
-          Connection connect = null;
-          String query = "INSERT INTO \"UninaSocialGroup\".\"autenticazione\" (Email, Password, Conferma_Password, Numero_di_Telefono) VALUES (?, ?, ?, ?)";
-          PreparedStatement ps = null;
-          try {
-              connect = DatabaseConnectionManager.createDatabaseConnection();
-              ps = connect.prepareStatement(query);
-              ps.setString(1, email);
-              ps.setString(2, password);
-              ps.setString(3, password);
-              ps.setString(4, numeroDiTelefono);
-              int rowsInserted = ps.executeUpdate();
-              if (rowsInserted > 0) {
-                  System.out.println("A new user was inserted successfully!");
-              }
-          } catch (SQLException sql) {
-              sql.printStackTrace();
-          }
+        Connection connect = null;
+        String query = "INSERT INTO autenticazione (Email, Password, Conferma_Password, numero_Di_Telefono, tipo_autenticazione) VALUES (?, ?, ?, ?, ?)";
+        PreparedStatement ps = null;
+        try {
+            connect = DatabaseConnectionManager.createDatabaseConnection();
+            ps = connect.prepareStatement(query);
+            ps.setString(1, email);
+            ps.setString(2, password);
+            ps.setString(3, password);
+            ps.setString(4, numeroDiTelefono);
+            ps.setString(5, "Registrazione");
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
       }
 }

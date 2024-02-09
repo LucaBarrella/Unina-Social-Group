@@ -9,9 +9,34 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class GroupDAO {
+    public List<Group> getGroupsBySearchField(String searchBarFieldText) {
+        List<Group> listGroups = new ArrayList<>();
+
+        try (Connection connection = DatabaseConnectionManager.createDatabaseConnection()) {
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM gruppo WHERE nome_Gruppo LIKE ? OR categoria_Gruppo LIKE ?");
+            statement.setString(1, "%" + searchBarFieldText + "%");
+            statement.setString(2, "%" + searchBarFieldText + "%");
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                String nomeGruppo = resultSet.getString("nome_Gruppo");
+                String categoriaGruppo = resultSet.getString("categoria_Gruppo");
+                Date dataCreazione = new java.util.Date(resultSet.getDate("data_Di_Creazione").getTime());
+                String idGruppo = resultSet.getString("ID_Gruppo");
+                Group group = new Group(idGruppo, nomeGruppo, dataCreazione, categoriaGruppo);
+                listGroups.add(group);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return listGroups;
+    }
+
     public List<Group> getUserGroups(String matricola){
         List<Group> dataList = new ArrayList<>();
         PreparedStatement ps = null;
@@ -32,8 +57,6 @@ public class GroupDAO {
         }
         return dataList;
     }
-
-
     public List<Group> getAdminGroups(String matricola){
         List<Group> dataList = new ArrayList<>();
         PreparedStatement ps = null;

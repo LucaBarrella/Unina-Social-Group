@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+
+<HBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unina.uninaSocialGroup.controller.GroupCellController">
+   <children>
+       <Button fx:id="groupNameButton">
+         <HBox.margin>
+            <Insets />
+         </HBox.margin>
+      </Button>
+       <Button fx:id="categoryButton">
+           <HBox.margin>
+               <Insets />
+           </HBox.margin>
+       </Button>
+       <Label fx:id="memberCountLabel">
+         <HBox.margin>
+            <Insets right="5.0" top="6.0" />
+         </HBox.margin>
+      </Label>
+       <Region HBox.hgrow="ALWAYS" />
+       <Button fx:id="joinButton" prefHeight="27.0" prefWidth="27.0" style="-fx-background-radius: 50; -fx-background-color: lime; -fx-text-fill: white;" text="+">
+         <HBox.margin>
+            <Insets bottom="2.0" right="10.0" top="2.0" />
+         </HBox.margin>
+      </Button>
+   </children>
+</HBox>

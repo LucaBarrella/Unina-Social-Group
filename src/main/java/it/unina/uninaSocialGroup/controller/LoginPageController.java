@@ -4,10 +4,13 @@ import it.unina.uninaSocialGroup.DAO.AuthenticationDAO;
 import it.unina.uninaSocialGroup.Model.SwitchScene;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.event.ActionEvent;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 
@@ -33,11 +36,10 @@ public class LoginPageController {
         if(result){
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/it/unina/uninaSocialGroup/view/HomePage.fxml"));
-                root = loader.load();
-                HomePageController hpc = loader.getController();
-                hpc.UserEmail(emailField.getText());
-                System.out.println("Login successful");
-                switchScene.switchToScene(event, "/it/unina/uninaSocialGroup/view/HomePage.fxml", "leftToRight");
+                Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+                stage.setScene(new Scene(loader.load()));
+                stage.show();
+                loader.<HomePageController>getController().setUserEmail(emailField.getText());
             } catch (IOException e) {
                 e.printStackTrace();
             }

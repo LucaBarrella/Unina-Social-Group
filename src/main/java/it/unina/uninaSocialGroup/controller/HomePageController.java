@@ -5,32 +5,25 @@ import it.unina.uninaSocialGroup.DAO.UserDAO;
 import it.unina.uninaSocialGroup.Model.Group;
 import it.unina.uninaSocialGroup.Model.SwitchScene;
 import it.unina.uninaSocialGroup.Model.User;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.event.ActionEvent;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.HBox;
+
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
 public class HomePageController{
-    private @FXML Label LabelProfilo;
-    private @FXML Label LabelGruppi;
-    private @FXML Label LabelReport;
-    private @FXML Label LabelNameSurname;
-    private @FXML Label LabelMatricola;
-    private @FXML Label LabelName;
-    private @FXML Label LabelBirthDate;
-    private @FXML Label LabelEmail;
-    private @FXML Label LabelSurname;
-    private @FXML Label LabelRegistrationDate;
+    private @FXML Label LabelProfilo, LabelGruppi, LabelReport, LabelNameSurname, LabelMatricola, LabelName, LabelBirthDate, LabelEmail, LabelSurname, LabelRegistrationDate;
     private @FXML TableView<Group> TableGroups;
-    private @FXML TableColumn<Group, String> IDColumn;
-    private @FXML TableColumn<Group, String> NameColumn;
-    private @FXML TableColumn<Group, Date> CreationDateColumn;
-    private @FXML TableColumn<Group, String> CategoryColumn;
+    private @FXML TableColumn<Group, String> IDColumn, NameColumn, CreationDateColumn, CategoryColumn;
     private @FXML ToggleButton CreatedGroups;
     private @FXML ChoiceBox<String> MonthBox;
     private String[] Months = {"Gennaio","Febbraio","Marzo","Aprile","Maggio","Giugno","Luglio",
@@ -41,6 +34,15 @@ public class HomePageController{
     private SwitchScene switchScene = new SwitchScene();
     private String userEmail;
     @FXML
+    private ListView<Group> groupListView;
+    @FXML
+    private TextField searchField;
+
+    private ObservableList<Group> allGroups;
+    public HomePageController() {
+        allGroups = FXCollections.observableArrayList();
+    }
+    @FXML
     public void initialize() {
         LogOutButton.setOnAction(this::Logout);
         MonthBox.getItems().addAll(Months);
@@ -48,11 +50,53 @@ public class HomePageController{
                                                 LoadDataTableAdminGroups();
                                             }else{
                                                 LoadDataTableUserGroups();}});
+
+        GroupDAO groupDao = new GroupDAO();
+        allGroups.addAll(groupDao.getGroupsBySearchField(searchField.getText()));
+        groupListView.setItems(allGroups);
+        groupListView.setCellFactory(param -> new ListCell<>() {
+            @Override
+            protected void updateItem(Group item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (empty || item == null) {
+                    setText(null);
+                    setGraphic(null);
+                } else {
+                    try {
+                        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/it/unina/uninaSocialGroup/view/GroupCell.fxml"));
+                        HBox hbox = fxmlLoader.load();
+                        GroupCellController controller = fxmlLoader.getController();
+                        controller.setGroup(item, searchField, HomePageController.this);
+                        setGraphic(hbox);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        });
     }
 
-    public void UserEmail(String email){
+//   TO:DO Va fatto un file css per i bottoni per fargli cambiare colore, poi si dovrà fare i listener per fargli cambiare tab
+//    <effect>
+//        <ColorAdjust hue="0.15" saturation="0.2" brightness="0.1" />
+//    </effect>
+    public void setUserEmail(String email){
         this.userEmail = email;
+        LoadProfileData();
+        displayName();
     }
+
+    public void LoadProfileData() {
+    UserDAO userDAO = new UserDAO();
+    User user = userDAO.getUserData(userDAO.getMatricolaByEmail(userEmail));
+    LabelMatricola.setText(user.getMatricola());
+    LabelEmail.setText(userEmail);
+    LabelName.setText(user.getNome());
+    LabelSurname.setText(user.getCognome());
+    LabelBirthDate.setText(user.getDataDiNascita().toString());
+    LabelRegistrationDate.setText(user.getDataDiRegistrazione().toString());
+}
 
     public void displayName(){
         UserDAO user = new UserDAO();
@@ -86,24 +130,28 @@ public class HomePageController{
         TableGroups.getItems().addAll(dati);
     }
 
-    public void LoadProfileData(){
-        UserDAO userdao = new UserDAO();
-        String matricola = userdao.getMatricolaByEmail(userEmail);
-        User user = userdao.getUserData(matricola);
-        LabelMatricola.setText(user.getMatricola());
-        LabelEmail.setText(userEmail);
-        LabelName.setText(user.getNome());
-        LabelSurname.setText(user.getCognome());
-        LabelBirthDate.setText(String.valueOf(user.getDataDiNascita()));
-        LabelRegistrationDate.setText(String.valueOf(user.getDataDiRegistrazione()));
-    }
-
     private void Logout(ActionEvent event) {
         try {
             switchScene.switchToScene(event, "/it/unina/uninaSocialGroup/view/LoginPage.fxml", "topToBottom");
             System.out.println("Logout successful");
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void onSearch(KeyEvent event) {
+        String searchText = searchField.getText().toLowerCase();
+
+        if (searchText.isEmpty()) {
+            groupListView.setVisible(false);
+        } else {
+            groupListView.setVisible(true);
+            ObservableList<Group> filteredGroups = allGroups.filtered(group ->
+                    group.getNomeGruppo().toLowerCase().contains(searchText) ||
+                            group.getCategoriaGruppo().toLowerCase().contains(searchText)
+            );
+            groupListView.setItems(filteredGroups);
         }
     }
 }

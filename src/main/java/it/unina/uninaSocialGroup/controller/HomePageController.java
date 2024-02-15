@@ -1,8 +1,10 @@
 package it.unina.uninaSocialGroup.controller;
 
 import it.unina.uninaSocialGroup.DAO.GroupDAO;
+import it.unina.uninaSocialGroup.DAO.ReportDAO;
 import it.unina.uninaSocialGroup.DAO.UserDAO;
 import it.unina.uninaSocialGroup.Model.Group;
+import it.unina.uninaSocialGroup.Model.Report;
 import it.unina.uninaSocialGroup.Model.SwitchScene;
 import it.unina.uninaSocialGroup.Model.User;
 import javafx.collections.FXCollections;
@@ -16,19 +18,22 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 
+import javax.swing.text.html.ImageView;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
 public class HomePageController{
-    private @FXML Label LabelProfilo, LabelGruppi, LabelReport, LabelNameSurname, LabelMatricola, LabelName, LabelBirthDate, LabelEmail, LabelSurname, LabelRegistrationDate;
+    private @FXML Label LabelNameSurname, LabelMatricola, LabelName, LabelBirthDate, LabelEmail, LabelSurname, LabelRegistrationDate;
     private @FXML TableView<Group> TableGroups;
     private @FXML TableColumn<Group, String> IDColumn, NameColumn, CreationDateColumn, CategoryColumn;
     private @FXML ToggleButton CreatedGroups;
-    private @FXML ChoiceBox<String> MonthBox;
-    private String[] Months = {"Gennaio","Febbraio","Marzo","Aprile","Maggio","Giugno","Luglio",
-                               "Agosto","Settembre","Ottobre","Novembre","Dicembre"};
+    private @FXML ChoiceBox<Integer> MonthBox;
+    private Integer[] Months = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
     private @FXML TableView TableReport;
+    private @FXML TableColumn<Group, String> NameGroupColumn, PostPlusLikeColumn, PostMinusLikeColumn, PostPlusCommentColumn, PostMinusCommentColumn;
+    private @FXML TableColumn<Group, Integer> AveragePostColumn;
     @FXML
     private Button LogOutButton;
     private SwitchScene switchScene = new SwitchScene();
@@ -37,8 +42,13 @@ public class HomePageController{
     private ListView<Group> groupListView;
     @FXML
     private TextField searchField;
-
+    @FXML
+    private TabPane tabPane;
     private ObservableList<Group> allGroups;
+    @FXML
+    private Tab ProfileTab, GroupsTab, ReportTab;
+    @FXML
+    private Button profileButton, groupButton, reportButton;
     public HomePageController() {
         allGroups = FXCollections.observableArrayList();
     }
@@ -46,11 +56,16 @@ public class HomePageController{
     public void initialize() {
         LogOutButton.setOnAction(this::Logout);
         MonthBox.getItems().addAll(Months);
-        CreatedGroups.setOnAction(event -> {if (CreatedGroups.isSelected()) {
-                                                LoadDataTableAdminGroups();
-                                            }else{
-                                                LoadDataTableUserGroups();}});
-
+        profileButton.setOnAction(this::goToProfileTab);
+        groupButton.setOnAction(this::goToGroupsTab);
+        reportButton.setOnAction(this::goToReportTab);
+        CreatedGroups.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                LoadDataTableAdminGroups();
+            } else {
+                LoadDataTableUserGroups();
+            }
+        });
         GroupDAO groupDao = new GroupDAO();
         allGroups.addAll(groupDao.getGroupsBySearchField(searchField.getText()));
         groupListView.setItems(allGroups);
@@ -87,6 +102,20 @@ public class HomePageController{
         displayName();
     }
 
+    private void changeTab(Tab tab) {
+        tabPane.getSelectionModel().select(tab);
+    }
+
+    private @FXML void goToProfileTab(ActionEvent event) {
+        changeTab(ProfileTab);
+    }
+    private @FXML void goToGroupsTab(ActionEvent event) {
+        changeTab(GroupsTab);
+    }
+    private @FXML void goToReportTab(ActionEvent event) {
+        changeTab(ReportTab);
+    }
+
     public void LoadProfileData() {
     UserDAO userDAO = new UserDAO();
     User user = userDAO.getUserData(userDAO.getMatricolaByEmail(userEmail));
@@ -115,6 +144,7 @@ public class HomePageController{
         CreationDateColumn.setCellValueFactory(new PropertyValueFactory<>("DataDiCreazione"));
         CategoryColumn.setCellValueFactory(new PropertyValueFactory<>("CategoriaGruppo"));
         List<Group> dati = group.getUserGroups(matricola);
+        TableGroups.getItems().clear();
         TableGroups.getItems().addAll(dati);
     }
 
@@ -127,10 +157,25 @@ public class HomePageController{
         CreationDateColumn.setCellValueFactory(new PropertyValueFactory<>("DataDiCreazione"));
         CategoryColumn.setCellValueFactory(new PropertyValueFactory<>("CategoriaGruppo"));
         List<Group> dati = group.getAdminGroups(matricola);
+        TableGroups.getItems().clear();
         TableGroups.getItems().addAll(dati);
     }
 
-    private void Logout(ActionEvent event) {
+    public void LoadDataTableReport(){
+        UserDAO user = new UserDAO();
+        ReportDAO report = new ReportDAO();
+        String matricola = user.getMatricolaByEmail(userEmail);
+        NameGroupColumn.setCellValueFactory(new PropertyValueFactory<>("NomeGruppo"));
+        PostPlusLikeColumn.setCellValueFactory(new PropertyValueFactory<>("PostPiuLike"));
+        PostMinusLikeColumn.setCellValueFactory(new PropertyValueFactory<>("PostMenoLike"));
+        PostPlusCommentColumn.setCellValueFactory(new PropertyValueFactory<>("PostPiuCommenti"));
+        PostMinusCommentColumn.setCellValueFactory(new PropertyValueFactory<>("PostMenoCommenti"));
+        AveragePostColumn.setCellValueFactory(new PropertyValueFactory<>("NumMedioPost"));
+        List<Report> dati = report.getGroupsReport(matricola,MonthBox.getValue());
+        TableReport.getItems().addAll(dati);
+    }
+
+    private @FXML void Logout(ActionEvent event) {
         try {
             switchScene.switchToScene(event, "/it/unina/uninaSocialGroup/view/LoginPage.fxml", "topToBottom");
             System.out.println("Logout successful");
@@ -139,8 +184,7 @@ public class HomePageController{
         }
     }
 
-    @FXML
-    public void onSearch(KeyEvent event) {
+    public @FXML void onSearch(KeyEvent event) {
         String searchText = searchField.getText().toLowerCase();
 
         if (searchText.isEmpty()) {

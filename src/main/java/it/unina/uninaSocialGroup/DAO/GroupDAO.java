@@ -40,12 +40,13 @@ public class GroupDAO {
     public List<Group> getUserGroups(String matricola){
         List<Group> dataList = new ArrayList<>();
         PreparedStatement ps = null;
-        String query = "SELECT G.* FROM Gruppo G LEFT JOIN Partecipa P ON G.ID_Gruppo = P.ID_Gruppo" +
+        String query = "SELECT G.* FROM Gruppo G LEFT JOIN Partecipa P ON G.ID_Gruppo = P.ID_Gruppo " +
                        "WHERE P.Matricola = ? OR G.GestoreGruppo = ?";
         try{
             Connection db = DatabaseConnectionManager.createDatabaseConnection();
             ps = db.prepareStatement(query);
             ps.setString(1, matricola);
+            ps.setString(2, matricola);
             ResultSet resultSet = ps.executeQuery();
             while(resultSet.next()){
                 Group gruppo = new Group(resultSet.getString("ID_Gruppo"),resultSet.getString("Nome_Gruppo"),
@@ -75,5 +76,21 @@ public class GroupDAO {
             sql.printStackTrace();
         }
         return dataList;
+    }
+
+    public void CreateNewGroup(String Nome, String Categoria, String Matricola){
+        Connection connect = null;
+        String query = "INSERT INTO Gruppo (ID_Gruppo,Nome_Gruppo,Data_di_Creazione,Categoria_Gruppo,GestoreGruppo) VALUES (NULL,?,current_date,?,?)";
+        PreparedStatement psInsert = null;
+        try {
+            connect = DatabaseConnectionManager.createDatabaseConnection();
+            psInsert = connect.prepareStatement(query);
+            psInsert.setString(1, Nome);
+            psInsert.setString(2, Categoria);
+            psInsert.setString(3, Matricola);
+            psInsert.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

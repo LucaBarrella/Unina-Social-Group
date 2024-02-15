@@ -9,7 +9,7 @@ public class UserDAO {
     /**
      * registerNewUser
      * Registra un nuovo utente nel database
-     * @param  name dall'utente
+     * @param name dall'utente
      * @param studentID inserita dall'utente
      * @return true se la registrazione è andata a buon fine, false altrimenti
      */

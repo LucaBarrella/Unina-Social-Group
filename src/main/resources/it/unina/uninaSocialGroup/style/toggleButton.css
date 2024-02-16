@@ -1,0 +1,28 @@
+.toggle-button-container {
+    -fx-cursor: hand;
+    -fx-pref-height: 36px;
+    -fx-border-width: 0;
+    -fx-border-radius: 20px;
+    -fx-background-color: #E74B3C;
+}
+
+.toggle-button-container:focused {
+    -fx-focus-color: transparent;
+}
+
+.toggle-button-container.active {
+    -fx-background-color: #2DCC70;
+}
+
+.toggle-button-container .toggle-button-text {
+    -fx-text-fill: #FFF;
+    -fx-font-weight: bold;
+}
+
+.toggle-button-container .toggle-button-nob {
+    -fx-pref-height: 34px;
+    -fx-pref-width: 34px;
+    -fx-background-radius: 100%;
+    -fx-background-color: #F3F4F6;
+    -fx-border-width: 0;
+}

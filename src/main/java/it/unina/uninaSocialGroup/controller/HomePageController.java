@@ -37,7 +37,7 @@ public class HomePageController{
     @FXML
     private Button LogOutButton;
     private SwitchScene switchScene = new SwitchScene();
-    private String userEmail;
+    private static String userEmail;
     @FXML
     private ListView<Group> groupListView;
     @FXML
@@ -49,11 +49,13 @@ public class HomePageController{
     private Tab ProfileTab, GroupsTab, ReportTab;
     @FXML
     private Button profileButton, groupButton, reportButton;
-    public HomePageController() {
+    public HomePageController(){
         allGroups = FXCollections.observableArrayList();
     }
     @FXML
     public void initialize() {
+        LoadProfileData();
+        displayName();
         LogOutButton.setOnAction(this::Logout);
         MonthBox.getItems().addAll(Months);
         profileButton.setOnAction(this::goToProfileTab);
@@ -81,7 +83,7 @@ public class HomePageController{
                     try {
                         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/it/unina/uninaSocialGroup/view/GroupCell.fxml"));
                         HBox hbox = fxmlLoader.load();
-                        GroupCellController controller = fxmlLoader.getController();
+                        SearchBarCellController controller = fxmlLoader.getController();
                         controller.setGroup(item, searchField, HomePageController.this);
                         setGraphic(hbox);
                     } catch (IOException e) {
@@ -98,8 +100,7 @@ public class HomePageController{
 //    </effect>
     public void setUserEmail(String email){
         this.userEmail = email;
-        LoadProfileData();
-        displayName();
+        System.out.println("User email: " + userEmail);
     }
 
     private void changeTab(Tab tab) {

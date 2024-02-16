@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.shape.*?>
 <?import javafx.scene.image.*?>
 <?import java.lang.*?>
 <?import javafx.geometry.*?>
@@ -25,7 +24,6 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.shape.Circle?>
 
 <AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unina.uninaSocialGroup.controller.HomePageController">
    <children>
@@ -68,36 +66,36 @@
                      <Insets bottom="50.0" top="50.0" />
                   </padding>
                   <children>
-                        <Button fx:id="profileButton" mnemonicParsing="false" style="-fx-background-color: transparent;">
+                        <Button mnemonicParsing="false">
                            <font>
                               <Font size="1.0" />
                            </font>
                            <graphic>
-                              <ImageView fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../images/profileIcon.gif" />
                                  </image>
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Button fx:id="groupButton" mnemonicParsing="false" style="-fx-background-color: transparent;">
+                        <Button mnemonicParsing="false">
                            <font>
                               <Font size="1.0" />
                            </font>
                            <graphic>
-                              <ImageView fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../images/groupIcon.gif" />
                                  </image>
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Button fx:id="reportButton" mnemonicParsing="false" style="-fx-background-color: transparent;">
+                        <Button mnemonicParsing="false">
                            <font>
                               <Font size="1.0" />
                            </font>
                            <graphic>
-                              <ImageView fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../images/reportIcon.gif" />
                                  </image>
@@ -116,7 +114,7 @@
                            <Font name="System Bold" size="24.0" />
                         </font>
                      </Label>
-                     <Button fx:id="LogOutButton" mnemonicParsing="false" prefHeight="36.0" prefWidth="101.0" stylesheets="@../style/button.css" text="Esci" textFill="WHITE">
+                     <Button fx:id="LogOutButton" mnemonicParsing="false" prefHeight="36.0" prefWidth="101.0" style="-fx-background-color: red;" text="Esci" textFill="WHITE">
                         <font>
                            <Font name="System Bold" size="19.0" />
                         </font>
@@ -144,7 +142,7 @@
                   <children>
                      <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #09F;">
                         <children>
-                           <Label contentDisplay="CENTER" prefHeight="53.0" prefWidth="113.0" text="Ciao" textFill="WHITE">
+                           <Label contentDisplay="CENTER" text="Ciao" textFill="WHITE">
                               <font>
                                  <Font name="System Italic" size="36.0" />
                               </font>
@@ -152,7 +150,7 @@
                                  <Insets left="20.0" right="20.0" />
                               </padding>
                            </Label>
-                           <Label fx:id="LabelNameSurname" contentDisplay="CENTER" prefHeight="53.0" prefWidth="524.0" text="Nome Cognome">
+                           <Label fx:id="LabelNameSurname" contentDisplay="CENTER" prefHeight="53.0" prefWidth="259.0" text="Nome Cognome">
                               <font>
                                  <Font name="System Bold" size="36.0" />
                               </font>
@@ -174,9 +172,9 @@
                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                         </content>
                      </Tab>
-                     <Tab fx:id="ProfileTab" text="Profilo">
+                     <Tab text="Profilo">
                         <content>
-                           <AnchorPane fx:id="Profile" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                               <children>
                                  <ImageView fitHeight="173.0" fitWidth="480.0" layoutX="253.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
@@ -223,29 +221,25 @@
                            </AnchorPane>
                         </content>
                      </Tab>
-                     <Tab fx:id="GroupsTab" text="I tuoi gruppi">
+                     <Tab text="I tuoi gruppi">
                         <content>
                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                               <children>
-                                 <ToggleButton fx:id="CreatedGroups" alignment="CENTER_LEFT" layoutX="815.0" layoutY="72.0" mnemonicParsing="false" prefHeight="16.0" prefWidth="63.0" style="-fx-background-radius: 50;">
-                                    <graphic>
-                                       <Circle fx:id="knob" fill="WHITE" radius="9.0" />
-                                    </graphic>
-                                 </ToggleButton>
+                                 <ToggleButton fx:id="CreatedGroups" layoutX="804.0" layoutY="74.0" mnemonicParsing="false" text="ToggleButton" />
                                  <Text layoutX="797.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gruppi creati da te" />
                                  <TableView fx:id="TableGroups" layoutX="83.0" layoutY="113.0" prefHeight="380.0" prefWidth="554.0">
                                     <columns>
-                                       <TableColumn fx:id="IDColumn" prefWidth="75.0" text="ID" />
-                                       <TableColumn fx:id="NameColumn" prefWidth="121.0" text="Nome" />
-                                       <TableColumn fx:id="CreationDateColumn" prefWidth="175.0" text="Data di creazione" />
-                                       <TableColumn fx:id="CategoryColumn" prefWidth="182.0" text="Categoria" />
+                                       <TableColumn prefWidth="75.0" text="ID" />
+                                       <TableColumn prefWidth="121.0" text="Nome" />
+                                       <TableColumn prefWidth="175.0" text="Data di creazione" />
+                                       <TableColumn prefWidth="182.0" text="Categoria" />
                                     </columns>
                                  </TableView>
                               </children>
                            </AnchorPane>
                         </content>
                      </Tab>
-                     <Tab fx:id="ReportTab" text="Report">
+                     <Tab text="Report">
                         <content>
                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                               <children>
@@ -253,12 +247,12 @@
                                  <Text fx:id="Month" layoutX="796.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Seleziona un mese" />
                                  <TableView fx:id="TableReport" layoutX="14.0" layoutY="151.0" prefHeight="376.0" prefWidth="961.0">
                                     <columns>
-                                       <TableColumn fx:id="NameGroupColumn" prefWidth="133.0" text="Nome Gruppo" />
-                                       <TableColumn fx:id="PostPlusLikeColumn" prefWidth="139.0" text="Post con + like" />
-                                       <TableColumn fx:id="PostMinusLikeColumn" prefWidth="139.0" text="Post con - like" />
-                                       <TableColumn fx:id="PostPlusCommentColumn" prefWidth="196.0" text="Post con + commenti" />
-                                       <TableColumn fx:id="PostMinusCommentColumn" prefWidth="186.0" text="Post con - commenti" />
-                                       <TableColumn fx:id="AveragePostColumn" prefWidth="167.0" text="N. medio di post" />
+                                       <TableColumn prefWidth="133.0" text="Nome Gruppo" />
+                                       <TableColumn prefWidth="139.0" text="Post con + like" />
+                                       <TableColumn prefWidth="139.0" text="Post con - like" />
+                                       <TableColumn prefWidth="196.0" text="Post con + commenti" />
+                                       <TableColumn prefWidth="186.0" text="Post con - commenti" />
+                                       <TableColumn prefWidth="167.0" text="N. medio di post" />
                                     </columns>
                                  </TableView>
                                  <Text layoutX="28.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Qui puoi visualizzare, per ogni gruppo che hai creato, un report mensile che informa sul post che ha più like e quello che ha più commenti (stessa cosa per quello con meno like e quello con meno commenti) e fornisce il numero medio di post pubblicati in quel mese." wrappingWidth="718.74609375" />

@@ -5,6 +5,7 @@ import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -14,6 +15,19 @@ import java.util.Objects;
 public class SwitchScene {
     private Stage stage;
     private Scene scene;
+
+    //NUOVO METODO
+    public FXMLLoader createFXML(String fxmlFile) {
+        return new FXMLLoader(Objects.requireNonNull(getClass().getResource(fxmlFile)));
+    }
+    //NUOVO METODO
+    public void loadSceneAndShow(ActionEvent event, FXMLLoader loader) throws IOException {
+        Parent root = loader.load();
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
+
     public void switchToScene(ActionEvent event, String fxmlFile, String direction) throws IOException {
         stage = getStageFromEvent(event);
         Scene currentScene = stage.getScene();
@@ -32,7 +46,7 @@ public class SwitchScene {
     }
 
     private TranslateTransition createExitTransition(Node node, String direction) {
-        TranslateTransition transition = new TranslateTransition(Duration.millis(100), node);
+        TranslateTransition transition = new TranslateTransition(Duration.millis(400), node);
         transition.setInterpolator(Interpolator.EASE_BOTH);
         setTransitionDirection(transition, direction, true);
         return transition;

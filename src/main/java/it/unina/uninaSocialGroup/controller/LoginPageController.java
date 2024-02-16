@@ -35,11 +35,10 @@ public class LoginPageController {
         boolean result = authenticate.CheckCredentials(emailField.getText(), passwordField.getText());
         if(result){
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/it/unina/uninaSocialGroup/view/HomePage.fxml"));
-                Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-                stage.setScene(new Scene(loader.load()));
-                stage.show();
-                loader.<HomePageController>getController().setUserEmail(emailField.getText());
+                FXMLLoader loader = switchScene.createFXML("/it/unina/uninaSocialGroup/view/HomePage.fxml");
+                HomePageController homePageController = new HomePageController();
+                homePageController.setUserEmail(emailField.getText());
+                switchScene.loadSceneAndShow(event, loader);
             } catch (IOException e) {
                 e.printStackTrace();
             }

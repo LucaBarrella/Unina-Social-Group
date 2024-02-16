@@ -25,6 +25,7 @@ public class CreationGroupController {
     @FXML
     private TableColumn<Group, String> IDColumn, NameColumn, CategoryColumn;
     private SwitchScene switchScene = new SwitchScene();
+    private String userEmail; //NON FUNZIONA ATTENTO !!!! DA RIVEDERE!!!
     @FXML
     public void initialize(){
         BackButton.setOnAction(this::BackToHomePage);

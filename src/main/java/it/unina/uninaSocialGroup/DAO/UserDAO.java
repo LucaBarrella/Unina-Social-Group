@@ -6,14 +6,6 @@ import it.unina.uninaSocialGroup.Model.User;
 import java.sql.*;
 
 public class UserDAO {
-    /**
-     * registerNewUser
-     * Registra un nuovo utente nel database
-     * @param name dall'utente
-     * @param studentID inserita dall'utente
-     * @return true se la registrazione è andata a buon fine, false altrimenti
-     */
-
     public boolean UserAlreadyExists(String studentID) {
         Connection connect = null;
         String query = "SELECT 1 FROM utente WHERE Matricola = ?";
@@ -104,7 +96,10 @@ public class UserDAO {
     public User getFullNameByEmail(String email){
         User user = null;
         Connection connect = null;
-        String query = "SELECT Nome, Cognome FROM Utente U JOIN Autenticazione A ON U.ID_Autenticazione = A.ID_Autenticazione WHERE A.Email = ?";
+        String query = "SELECT Nome, Cognome " +
+                       "FROM Utente U JOIN Autenticazione A " +
+                       "ON U.ID_Autenticazione = A.ID_Autenticazione " +
+                       "WHERE A.Email = ?";
         PreparedStatement ps = null;
         ResultSet resultSet = null;
         try {
@@ -123,82 +118,3 @@ public class UserDAO {
         return user;
     }
 }
-
-
-
-
-/*
-* @FXML
-private TextField nomeField;
-@FXML
-private TextField cognomeField;
-@FXML
-private TextField emailField;
-@FXML
-private TextField passwordField;
-
-public void registerUser() {
-    String nome = nomeField.getText();
-    String cognome = cognomeField.getText();
-    String email = emailField.getText();
-    String password = passwordField.getText();
-
-    // Qui puoi utilizzare i dati raccolti per creare un nuovo utente
-    // Ad esempio, potresti chiamare il metodo registerNewUser del tuo DAO
-    RegistrationDAO registrationDAO = new RegistrationDAO();
-    boolean registrationResult = registrationDAO.registerNewUser(email, password);
-
-    if (registrationResult) {
-        System.out.println("Utente registrato con successo");
-    } else {
-        System.out.println("Registrazione fallita");
-    }
-}
-*
-*
-*
-*
-*
-*
-*
-*
-*
-*
-*
-*
-*
-* @FXML
-private TextField nomeField;
-@FXML
-private TextField cognomeField;
-@FXML
-private TextField matricolaField;
-@FXML
-private TextField emailField;
-@FXML
-private PasswordField passwordField;
-@FXML
-private PasswordField confermaPasswordField;
-@FXML
-private TextField numeroTelefonoField;
-
-public void registerUser() {
-    String nome = nomeField.getText();
-    String cognome = cognomeField.getText();
-    String matricola = matricolaField.getText();
-    String email = emailField.getText();
-    String password = passwordField.getText();
-    String confermaPassword = confermaPasswordField.getText();
-    String numeroTelefono = numeroTelefonoField.getText();
-
-    // Qui puoi utilizzare i dati raccolti per creare un nuovo utente
-    // Ad esempio, potresti chiamare il metodo registerNewUser del tuo DAO
-    RegistrationDAO registrationDAO = new RegistrationDAO();
-    boolean registrationResult = registrationDAO.registerNewUser(nome, cognome, matricola, email, password, confermaPassword, numeroTelefono);
-
-    if (registrationResult) {
-        System.out.println("Utente registrato con successo");
-    } else {
-        System.out.println("Registrazione fallita");
-    }
-}*/

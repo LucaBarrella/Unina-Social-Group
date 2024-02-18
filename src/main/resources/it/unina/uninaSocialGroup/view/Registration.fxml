@@ -44,7 +44,7 @@
             <Font name="Apple SD Gothic Neo Regular" size="19.0" />
          </font>
       </Button>
-      <TextField fx:id="EmailField" layoutX="46.0" layoutY="300.0" prefHeight="0.0" prefWidth="170.0" promptText="Email" style="-fx-background-radius: 0;">
+      <TextField fx:id="EmailField" layoutX="235.0" layoutY="165.0" prefHeight="0.0" prefWidth="170.0" promptText="Email" style="-fx-background-radius: 0;">
          <font>
             <Font name="Avenir Roman" size="16.0" />
          </font>
@@ -54,22 +54,18 @@
             <Font name="Avenir Roman" size="16.0" />
          </font>
       </TextField>
-      <PasswordField fx:id="PasswordField" layoutX="235.0" layoutY="165.0" prefHeight="0.0" prefWidth="170.0" promptText="Password" style="-fx-background-radius: 0;">
+      <PasswordField fx:id="PasswordField" layoutX="235.0" layoutY="210.0" prefHeight="0.0" prefWidth="170.0" promptText="Password" style="-fx-background-radius: 0;">
          <font>
             <Font name="Avenir Roman" size="16.0" />
          </font>
       </PasswordField>
-      <PasswordField fx:id="ConfirmPasswordField" layoutX="235.0" layoutY="210.0" prefHeight="0.0" prefWidth="170.0" promptText="Conferma Password" style="-fx-background-radius: 0;">
-         <font>
-            <Font name="Avenir Roman" size="16.0" />
-         </font>
-      </PasswordField>
-      <TextField fx:id="PhoneNumberField" layoutX="235.0" layoutY="255.0" prefHeight="0.0" prefWidth="170.0" promptText="Numero Di Telefono" style="-fx-background-radius: 0;">
-         <font>
-            <Font name="Avenir Roman" size="16.0" />
-         </font>
-      </TextField>
       <Button fx:id="SwitchToSignInButton2" layoutX="520.0" layoutY="350.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="161.0" stylesheets="@../style/label.css" text="Login" />
-      <DatePicker fx:id="BirthDateField" layoutX="235.0" layoutY="300.0" prefHeight="36.0" prefWidth="170.0" promptText="Data di nascita" style="-fx-background-radius: 0;" />
+      <DatePicker fx:id="BirthDateField" layoutX="46.0" layoutY="302.0" prefHeight="36.0" prefWidth="170.0" promptText="Data di nascita" style="-fx-background-radius: 0;" />
+      <PasswordField fx:id="ConfirmPasswordField" layoutX="235.0" layoutY="255.0" prefHeight="0.0" prefWidth="170.0" promptText="Conferma password" style="-fx-background-radius: 0;">
+         <font>
+            <Font name="Avenir Roman" size="16.0" />
+         </font>
+      </PasswordField>
+      <Label fx:id="WarningLabel" layoutX="46.0" layoutY="134.0" text="Tutti i campi devono essere compilati !" textFill="RED" />
    </children>
 </AnchorPane>

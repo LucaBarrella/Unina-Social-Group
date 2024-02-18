@@ -38,18 +38,15 @@ public class AuthenticationDAO {
             }
       }
 
-      public void addNewUserToAuthTable(String email, String password, String numeroDiTelefono) {
+      public void addNewUserToAuthTable(String email, String password) {
         Connection connect = null;
-        String query = "INSERT INTO autenticazione (Email, Password, Conferma_Password, numero_Di_Telefono, tipo_autenticazione) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO autenticazione (Email, Password) VALUES (?,?)";
         PreparedStatement ps = null;
         try {
             connect = DatabaseConnectionManager.createDatabaseConnection();
             ps = connect.prepareStatement(query);
             ps.setString(1, email);
             ps.setString(2, password);
-            ps.setString(3, password);
-            ps.setString(4, numeroDiTelefono);
-            ps.setString(5, "Registrazione");
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);

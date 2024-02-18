@@ -77,21 +77,6 @@ public class GroupDAO {
         return dataList;
     }
 
-    public void CreateNewGroup(String Nome, String Categoria, String Matricola){
-        Connection connect = null;
-        String query = "INSERT INTO Gruppo (ID_Gruppo,Nome_Gruppo,Data_di_Creazione,Categoria_Gruppo,GestoreGruppo) VALUES (NULL,?,current_date,?,?)";
-        PreparedStatement psInsert = null;
-        try {
-            connect = DatabaseConnectionManager.createDatabaseConnection();
-            psInsert = connect.prepareStatement(query);
-            psInsert.setString(1, Nome);
-            psInsert.setString(2, Categoria);
-            psInsert.setString(3, Matricola);
-            psInsert.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
     public void addNewGroup(String GroupName, String GroupCategory, String GroupAdmin) {
         PreparedStatement ps = null;
         String query = "INSERT INTO Gruppo (Nome_Gruppo, Data_di_Creazione, Categoria_Gruppo, GestoreGruppo) VALUES (?, ?, ?, ?)";

@@ -4,11 +4,8 @@ import it.unina.uninaSocialGroup.DAO.AuthenticationDAO;
 import it.unina.uninaSocialGroup.DAO.UserDAO;
 import it.unina.uninaSocialGroup.Model.SwitchScene;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
+import javafx.scene.control.*;
 import javafx.event.ActionEvent;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.sql.Date;
@@ -16,7 +13,9 @@ import java.time.LocalDateTime;
 
 public class RegistrationPageController {
     @FXML
-    private TextField NameField, SurnameField, StudentIDField, EmailField, PhoneNumberField;
+    private Label WarningLabel;
+    @FXML
+    private TextField NameField, SurnameField, StudentIDField, EmailField;
     @FXML
     private DatePicker BirthDateField;
     @FXML
@@ -28,6 +27,7 @@ public class RegistrationPageController {
 
     @FXML
     public void initialize() {
+        WarningLabel.setVisible(false);
         SwitchToSignInButton.setOnAction(this::SwitchToSignInButton);
         SwitchToSignInButton2.setOnAction(this::SwitchToSignInButton);
         ContinueButton.setOnAction(this::registration);
@@ -47,14 +47,13 @@ public class RegistrationPageController {
                 StudentIDField.getText() != null &&
                 BirthDateField.getValue() != null &&
                 EmailField.getText() != null &&
-                PhoneNumberField.getText() != null &&
                 PasswordField.getText() != null &&
                 ConfirmPasswordField.getText() != null;
     }
 
     private void registration (ActionEvent event) {
         if (!areFieldsNotNull()) {
-            System.out.println("All fields must be filled");
+            WarningLabel.setVisible(true);
             return;
         }
 
@@ -67,7 +66,7 @@ public class RegistrationPageController {
             if (PasswordField.getText().equals(ConfirmPasswordField.getText())) {
                 try {
                     user.addNewUser(StudentIDField.getText(), NameField.getText(), SurnameField.getText(), birthDate, currentDate);
-                    authenticate.addNewUserToAuthTable(EmailField.getText(), PasswordField.getText(), PhoneNumberField.getText());
+                    authenticate.addNewUserToAuthTable(EmailField.getText(), PasswordField.getText());
                     System.out.println("Registration successful");
                     HomePageController homePageController = new HomePageController();
                     homePageController.setUserEmail(EmailField.getText());

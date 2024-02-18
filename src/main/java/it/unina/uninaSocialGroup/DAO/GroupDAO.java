@@ -39,7 +39,7 @@ public class GroupDAO {
     public List<Group> getUserGroups(String matricola){
         List<Group> dataList = new ArrayList<>();
         PreparedStatement ps = null;
-        String query = "SELECT G.* FROM Gruppo G LEFT JOIN Partecipa P ON G.ID_Gruppo = P.ID_Gruppo " +
+        String query = "SELECT DISTINCT G.* FROM Gruppo G LEFT JOIN Partecipa P ON G.ID_Gruppo = P.ID_Gruppo " +
                        "WHERE P.Matricola = ? OR G.GestoreGruppo = ?";
         try{
             Connection db = DatabaseConnectionManager.createDatabaseConnection();

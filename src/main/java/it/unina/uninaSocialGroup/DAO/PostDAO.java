@@ -11,15 +11,14 @@ public class PostDAO {
     public String getPostPlusLike(int Month, String IDGroup) {
         String post = null;
         Connection connect = null;
-        String query = "SELECT ID_Post " +
-                            "FROM (" +
-                            "SELECT ID_Post, COUNT(*) AS Num_Likes " +
-                            "FROM Like " +
-                            "WHERE ID_Gruppo = ? " +
-                            "AND EXTRACT(MONTH FROM Data_Pubblicazione) = ? " +
-                            "GROUP BY ID_Post " +
-                            "ORDER BY Num_Likes DESC " +
-                            "LIMIT 1)";
+        String query = "SELECT p.ID_Post, COUNT(l.ID_Post) AS Numero_Like " +
+                        "FROM Post p " +
+                        "JOIN Likes l ON p.ID_Post = l.ID_Post " +
+                        "WHERE p.ID_Gruppo = ? " +
+                        "AND EXTRACT(MONTH FROM Data_Pubblicazione) = ? " +
+                        "GROUP BY p.ID_Post " +
+                        "ORDER BY Numero_Like DESC " +
+                        "LIMIT 1";
         PreparedStatement ps = null;
         ResultSet resultSet = null;
         try {
@@ -40,15 +39,14 @@ public class PostDAO {
     public String getPostMinusLike(int Month, String IDGroup) {
         String post = null;
         Connection connect = null;
-        String query = "SELECT ID_Post " +
-                            "FROM (" +
-                            "SELECT ID_Post, COUNT(*) AS Num_Likes " +
-                            "FROM Like " +
-                            "WHERE ID_Gruppo = ? " +
-                            "AND EXTRACT(MONTH FROM Data_Pubblicazione) = ? " +
-                            "GROUP BY ID_Post " +
-                            "ORDER BY Num_Likes ASC " +
-                            "LIMIT 1)";
+        String query = "SELECT p.ID_Post, COUNT(l.ID_Post) AS Numero_Like " +
+                        "FROM Post p " +
+                        "JOIN Likes l ON p.ID_Post = l.ID_Post " +
+                        "WHERE p.ID_Gruppo = ? " +
+                        "AND EXTRACT(MONTH FROM Data_Pubblicazione) = ? " +
+                        "GROUP BY p.ID_Post " +
+                        "ORDER BY Numero_Like ASC " +
+                        "LIMIT 1";
         PreparedStatement ps = null;
         ResultSet resultSet = null;
         try {
@@ -69,15 +67,14 @@ public class PostDAO {
     public String getPostPlusComments(int Month, String IDGroup) {
         String post = null;
         Connection connect = null;
-        String query = "SELECT ID_Post " +
-                            "FROM (" +
-                            "SELECT ID_Post, COUNT(*) AS Num_Commenti " +
-                            "FROM Commento " +
-                            "WHERE ID_Gruppo = ? " +
-                            "AND EXTRACT(MONTH FROM Data_Pubblicazione) = ? " +
-                            "GROUP BY ID_Post " +
-                            "ORDER BY Num_Commenti DESC " +
-                            "LIMIT 1)";
+        String query = "SELECT p.ID_Post " +
+                        "FROM Post p " +
+                        "LEFT JOIN Commento c ON p.ID_Post = c.ID_Post " +
+                        "WHERE p.ID_Gruppo = ? " +
+                        "AND EXTRACT(MONTH FROM Data_Pubblicazione) = ? " +
+                        "GROUP BY p.ID_Post " +
+                        "ORDER BY COUNT(c.ID_Commento) DESC " +
+                        "LIMIT 1";
         PreparedStatement ps = null;
         ResultSet resultSet = null;
         try {
@@ -98,15 +95,14 @@ public class PostDAO {
     public String getPostMinusComments(int Month, String IDGroup) {
         String post = null;
         Connection connect = null;
-        String query = "SELECT ID_Post " +
-                            "FROM (" +
-                            "SELECT ID_Post, COUNT(*) AS Num_Commenti " +
-                            "FROM Commento " +
-                            "WHERE ID_Gruppo = ? " +
-                            "AND EXTRACT(MONTH FROM Data_Pubblicazione) = ? " +
-                            "GROUP BY ID_Post " +
-                            "ORDER BY Num_Commenti ASC " +
-                            "LIMIT 1)";
+        String query = "SELECT p.ID_Post " +
+                        "FROM Post p " +
+                        "LEFT JOIN Commento c ON p.ID_Post = c.ID_Post " +
+                        "WHERE p.ID_Gruppo = ? " +
+                        "AND EXTRACT(MONTH FROM Data_Pubblicazione) = ? " +
+                        "GROUP BY p.ID_Post " +
+                        "ORDER BY COUNT(c.ID_Commento) " +
+                        "LIMIT 1";
         PreparedStatement ps = null;
         ResultSet resultSet = null;
         try {
@@ -133,7 +129,7 @@ public class PostDAO {
                             "FROM Post " +
                             "WHERE ID_Gruppo = ? " +
                             "AND EXTRACT(MONTH FROM Data_Pubblicazione) = ? " +
-                            "GROUP BY DATE_TRUNC('day', Data_Pubblicazione))";
+                            "GROUP BY DATE_TRUNC('day', Data_Pubblicazione)) AS subquery";
         PreparedStatement ps = null;
         ResultSet resultSet = null;
         try {
@@ -143,7 +139,7 @@ public class PostDAO {
             ps.setInt(2, Month);
             resultSet = ps.executeQuery();
             if (resultSet.next()) {
-                result = resultSet.getInt("MediaPostPubblicati");
+                result = resultSet.getInt("Numero_Medio_Post_Pubblicati");
             }
         } catch (SQLException sql) {
             sql.printStackTrace();

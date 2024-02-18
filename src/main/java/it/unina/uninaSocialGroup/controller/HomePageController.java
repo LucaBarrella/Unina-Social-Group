@@ -56,6 +56,7 @@ public class HomePageController{
     public void initialize() {
         LoadProfileData();
         displayName();
+        LoadDataTableUserGroups();
         LogOutButton.setOnAction(this::Logout);
         MonthBox.getItems().addAll(Months);
         profileButton.setOnAction(this::goToProfileTab);
@@ -67,6 +68,9 @@ public class HomePageController{
             } else {
                 LoadDataTableUserGroups();
             }
+        });
+        MonthBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            LoadDataTableReport(newValue);
         });
         GroupDAO groupDao = new GroupDAO();
         allGroups.addAll(groupDao.getGroupsBySearchField(searchField.getText()));
@@ -162,7 +166,7 @@ public class HomePageController{
         TableGroups.getItems().addAll(dati);
     }
 
-    public void LoadDataTableReport(){
+    public void LoadDataTableReport(Integer month){
         UserDAO user = new UserDAO();
         ReportDAO report = new ReportDAO();
         String matricola = user.getMatricolaByEmail(userEmail);
@@ -172,7 +176,8 @@ public class HomePageController{
         PostPlusCommentColumn.setCellValueFactory(new PropertyValueFactory<>("PostPiuCommenti"));
         PostMinusCommentColumn.setCellValueFactory(new PropertyValueFactory<>("PostMenoCommenti"));
         AveragePostColumn.setCellValueFactory(new PropertyValueFactory<>("NumMedioPost"));
-        List<Report> dati = report.getGroupsReport(matricola,MonthBox.getValue());
+        TableReport.getItems().clear();
+        List<Report> dati = report.getGroupsReport(matricola,month);
         TableReport.getItems().addAll(dati);
     }
 

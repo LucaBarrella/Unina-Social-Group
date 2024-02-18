@@ -19,7 +19,7 @@ public class ReportDAO {
         int NMP, i = 0;
         GroupDAO group = new GroupDAO();
         List<Group> groups = group.getAdminGroups(matricola);
-            while(!groups.isEmpty()){
+            while(i < groups.size()){
                 PPL = post.getPostPlusLike(Month, groups.get(i).getIDGruppo());
                 PML = post.getPostMinusLike(Month, groups.get(i).getIDGruppo());
                 PPC = post.getPostPlusComments(Month, groups.get(i).getIDGruppo());

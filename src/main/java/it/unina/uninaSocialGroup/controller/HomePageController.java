@@ -35,7 +35,7 @@ public class HomePageController{
     private @FXML TableColumn<Group, String> NameGroupColumn, PostPlusLikeColumn, PostMinusLikeColumn, PostPlusCommentColumn, PostMinusCommentColumn;
     private @FXML TableColumn<Group, Integer> AveragePostColumn;
     @FXML
-    private Button LogOutButton;
+    private Button LogOutButton, CreationGroupButton;
     private SwitchScene switchScene = new SwitchScene();
     private static String userEmail;
     @FXML
@@ -54,6 +54,7 @@ public class HomePageController{
     }
     @FXML
     public void initialize() {
+        CreationGroupButton.setOnAction(this::CreationGroup);
         LoadProfileData();
         displayName();
         LoadDataTableUserGroups();
@@ -185,6 +186,14 @@ public class HomePageController{
         try {
             switchScene.switchToScene(event, "/it/unina/uninaSocialGroup/view/LoginPage.fxml", "topToBottom");
             System.out.println("Logout successful");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private @FXML void CreationGroup(ActionEvent event) {
+        try {
+            switchScene.switchToScene(event, "/it/unina/uninaSocialGroup/view/GroupCreationPage.fxml", "topToBottom");
         } catch (IOException e) {
             e.printStackTrace();
         }

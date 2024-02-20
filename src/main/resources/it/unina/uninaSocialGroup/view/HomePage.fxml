@@ -232,7 +232,10 @@
                                        <Circle fx:id="knob" fill="WHITE" radius="9.0" />
                                     </graphic>
                                  </ToggleButton>
-                                 <Text layoutX="797.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gruppi creati da te" />
+                                 <Text layoutX="797.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gruppi creati da te">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font></Text>
                                  <TableView fx:id="TableGroups" layoutX="83.0" layoutY="113.0" prefHeight="380.0" prefWidth="554.0">
                                     <columns>
                                        <TableColumn fx:id="IDColumn" prefWidth="75.0" text="ID" />
@@ -241,6 +244,18 @@
                                        <TableColumn fx:id="CategoryColumn" prefWidth="182.0" text="Categoria" />
                                     </columns>
                                  </TableView>
+                                    <Text layoutX="44.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Qui puoi visualizzare i gruppi creati da te o i gruppi di cui fai parte. Se vuoi visualizzare solo i gruppi creati da te, attivare il bottone a destra." wrappingWidth="631.15625">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font></Text>
+                                    <Button fx:id="CreationGroupButton" layoutX="796.0" layoutY="249.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="78.0" style="-fx-background-color: red;" text="Crea" textFill="WHITE">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font></Button>
+                                    <Text layoutX="798.0" layoutY="223.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Crea nuovo gruppo">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font></Text>
                               </children>
                            </AnchorPane>
                         </content>
@@ -250,7 +265,10 @@
                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                               <children>
                                  <ChoiceBox fx:id="MonthBox" layoutX="795.0" layoutY="72.0" prefWidth="150.0" />
-                                 <Text fx:id="Month" layoutX="796.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Seleziona un mese" />
+                                 <Text fx:id="Month" layoutX="796.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Seleziona un mese">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font></Text>
                                  <TableView fx:id="TableReport" layoutX="14.0" layoutY="151.0" prefHeight="376.0" prefWidth="961.0">
                                     <columns>
                                        <TableColumn fx:id="NameGroupColumn" prefWidth="133.0" text="Nome Gruppo" />
@@ -261,7 +279,10 @@
                                        <TableColumn fx:id="AveragePostColumn" prefWidth="167.0" text="N. medio di post" />
                                     </columns>
                                  </TableView>
-                                 <Text layoutX="28.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Qui puoi visualizzare, per ogni gruppo che hai creato, un report mensile che informa sul post che ha più like e quello che ha più commenti (stessa cosa per quello con meno like e quello con meno commenti) e fornisce il numero medio di post pubblicati in quel mese." wrappingWidth="718.74609375" />
+                                 <Text layoutX="28.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Qui puoi visualizzare, per ogni gruppo che hai creato, un report mensile che informa sul post che ha più like e quello che ha più commenti (stessa cosa per quello con meno like e quello con meno commenti) e fornisce il numero medio di post pubblicati in quel mese." wrappingWidth="718.74609375">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font></Text>
                               </children>
                            </AnchorPane>
                         </content>

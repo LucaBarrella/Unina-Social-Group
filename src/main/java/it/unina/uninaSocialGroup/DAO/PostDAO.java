@@ -2,12 +2,25 @@ package it.unina.uninaSocialGroup.DAO;
 
 import it.unina.uninaSocialGroup.Model.DatabaseConnectionManager;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDate;
 
 public class PostDAO {
+    public void CreateNewPost(String Category, String Message, String Matricola, String IDGroup){
+        PreparedStatement ps = null;
+        String query = "INSERT INTO Post (Categoria, Data_Pubblicazione, Messaggio_Scritto, Percorso_File, Estensione, Tipo_Post, Matricola, ID_Gruppo) VALUES (?,current_date,NULL,NULL,'Post_Testuale',?,?)";
+        try {
+            Connection db = DatabaseConnectionManager.createDatabaseConnection();
+            ps = db.prepareStatement(query);
+            ps.setString(1, Category);
+            ps.setString(2, Message);
+            ps.setString(3, Matricola);
+            ps.setString(4, IDGroup);
+            ps.executeUpdate();
+        } catch (SQLException sql) {
+            sql.printStackTrace();
+        }
+    }
     public String getPostPlusLike(int Month, String IDGroup) {
         String post = null;
         Connection connect = null;

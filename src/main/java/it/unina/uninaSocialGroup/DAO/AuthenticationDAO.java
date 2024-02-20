@@ -27,7 +27,6 @@ public class AuthenticationDAO {
                   ps.setString(2, password);
                   resultSet = ps.executeQuery();
                   while (!resultSet.next()) {
-                        System.out.println("Utente non trovato");
                         return false;
                   }
                   System.out.println("Utente trovato");

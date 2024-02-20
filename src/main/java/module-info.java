@@ -9,6 +9,4 @@ module it.unina.uninaSocialGroup {
     exports it.unina.uninaSocialGroup;
     exports it.unina.uninaSocialGroup.controller;
     opens it.unina.uninaSocialGroup.controller to javafx.fxml;
-    exports it.unina.uninaSocialGroup.controller.RegistrationPhase;
-    opens it.unina.uninaSocialGroup.controller.RegistrationPhase to javafx.fxml;
 }

@@ -7,11 +7,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.event.ActionEvent;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 
 public class LoginPageController {
@@ -22,10 +23,13 @@ public class LoginPageController {
     @FXML
     private TextField passwordField;
     private SwitchScene switchScene = new SwitchScene();
+    @FXML
+    private Label NoEmailPassword;
     private Parent root;
 
     @FXML
     public void initialize() {
+        NoEmailPassword.setVisible(false);
         SwitchToSignUpButton.setOnAction(this::SwitchToSignUpButton);
         LoginButton.setOnAction(this::signIn);
     }
@@ -43,7 +47,11 @@ public class LoginPageController {
                 e.printStackTrace();
             }
         }else {
-            System.out.println("Login failed, probably wrong credentials");
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Errore di accesso");
+            alert.setHeaderText(null);
+            alert.setContentText("Accesso non riuscito, utente non trovato!");
+            alert.showAndWait();
         }
     }
 

@@ -12,6 +12,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReportDAO {
+    /**
+     * getGroupsReport
+     * Restituisce i dati report mensili di ogni gruppo creato da un utente
+     * @param matricola
+     * @param Month
+     * @return List<Report> dataList
+     */
     public List<Report> getGroupsReport(String matricola, int Month){
         List<Report> dataList = new ArrayList<>();
         PostDAO post = new PostDAO();

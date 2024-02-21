@@ -6,9 +6,17 @@ import java.sql.*;
 import java.time.LocalDate;
 
 public class PostDAO {
+    /**
+     * CreateNewPost
+     * Inserisce un nuovo post nel db.
+     * @param Category categoria del post
+     * @param Message messaggio del post
+     * @param Matricola matricola del creatore del post
+     * @param IDGroup ID del gruppo in cui il post è pubblicato
+     */
     public void CreateNewPost(String Category, String Message, String Matricola, String IDGroup){
         PreparedStatement ps = null;
-        String query = "INSERT INTO Post (Categoria, Data_Pubblicazione, Messaggio_Scritto, Percorso_File, Estensione, Tipo_Post, Matricola, ID_Gruppo) VALUES (?,current_date,NULL,NULL,'Post_Testuale',?,?)";
+        String query = "INSERT INTO Post (Categoria, Data_Pubblicazione, Messaggio_Scritto, Percorso_File, Estensione, Tipo_Post, Matricola, ID_Gruppo) VALUES (?,current_date,?,NULL,NULL,'Post_Testuale',?,?)";
         try {
             Connection db = DatabaseConnectionManager.createDatabaseConnection();
             ps = db.prepareStatement(query);
@@ -21,6 +29,14 @@ public class PostDAO {
             sql.printStackTrace();
         }
     }
+
+    /**
+     * getPostPlusLike
+     * Restituisce il post con piu like pubblicato su un gruppo in un determinato mese
+     * @param Month mese di riferimento
+     * @param IDGroup ID del gruppo
+     * @return post
+     */
     public String getPostPlusLike(int Month, String IDGroup) {
         String post = null;
         Connection connect = null;
@@ -49,6 +65,13 @@ public class PostDAO {
         return post;
     }
 
+    /**
+     * getPostMinusLike
+     * Restituisce il post con meno like pubblicato su un gruppo in un determinato mese
+     * @param Month mese di riferimento
+     * @param IDGroup ID del gruppo
+     * @return post
+     */
     public String getPostMinusLike(int Month, String IDGroup) {
         String post = null;
         Connection connect = null;
@@ -77,6 +100,13 @@ public class PostDAO {
         return post;
     }
 
+    /**
+     * getPostPlusComments
+     * Restituisce il post con piu commenti pubblicato su un gruppo in un determinato mese
+     * @param Month mese di riferimento
+     * @param IDGroup ID del gruppo
+     * @return post
+     */
     public String getPostPlusComments(int Month, String IDGroup) {
         String post = null;
         Connection connect = null;
@@ -105,6 +135,13 @@ public class PostDAO {
         return post;
     }
 
+    /**
+     * getPostMinusComments
+     * Restituisce il post con meno commenti pubblicato su un gruppo in un determinato mese
+     * @param Month mese di riferimento
+     * @param IDGroup ID del gruppo
+     * @return post
+     */
     public String getPostMinusComments(int Month, String IDGroup) {
         String post = null;
         Connection connect = null;
@@ -133,6 +170,13 @@ public class PostDAO {
         return post;
     }
 
+    /**
+     * getAveragePost
+     * Restituisce il numero medio di post pubblicati su un gruppo in un determinato mese
+     * @param Month mese di riferimento
+     * @param IDGroup ID del gruppo
+     * @return result
+     */
     public int getAveragePost(int Month, String IDGroup) {
         int result = 0;
         Connection connect = null;

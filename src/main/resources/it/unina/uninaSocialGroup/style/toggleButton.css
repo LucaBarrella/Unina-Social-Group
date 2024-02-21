@@ -26,3 +26,11 @@
     -fx-background-color: #F3F4F6;
     -fx-border-width: 0;
 }
+
+
+.toggle-button:selected {
+    -fx-background-color: green;
+}
+
+
+

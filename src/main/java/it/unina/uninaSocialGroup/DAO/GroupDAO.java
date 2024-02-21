@@ -12,6 +12,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GroupDAO {
+    /**
+     * getGroupsBySearchField
+     * Restituisce una lista di gruppi filtrati per la barra di ricerca
+     * @param searchBarFieldText testo scritto nella barra di ricerca
+     * @return List<Group> listGroups
+     */
     public List<Group> getGroupsBySearchField(String searchBarFieldText) {
         List<Group> listGroups = new ArrayList<>();
 
@@ -36,6 +42,12 @@ public class GroupDAO {
         return listGroups;
     }
 
+    /**
+     * getUserGroups
+     * Restituisce la lista di gruppi di un utente di cui fa parte o è creatore
+     * @param matricola
+     * @return List<Group> dataList
+     */
     public List<Group> getUserGroups(String matricola){
         List<Group> dataList = new ArrayList<>();
         PreparedStatement ps = null;
@@ -57,6 +69,13 @@ public class GroupDAO {
         }
         return dataList;
     }
+
+    /**
+     * getAdminGroups
+     * Restituisce la lista di gruppi di un utente di cui è creatore
+     * @param matricola
+     * @return List<Group> dataList
+     */
     public List<Group> getAdminGroups(String matricola){
         List<Group> dataList = new ArrayList<>();
         PreparedStatement ps = null;
@@ -77,6 +96,13 @@ public class GroupDAO {
         return dataList;
     }
 
+    /**
+     * addNewGroup
+     * Inserisce un nuovo gruppo nel db
+     * @param GroupName nome del gruppo
+     * @param GroupCategory categoria del gruppo
+     * @param GroupAdmin matricola del creatore del gruppo
+     */
     public void addNewGroup(String GroupName, String GroupCategory, String GroupAdmin) {
         PreparedStatement ps = null;
         String query = "INSERT INTO Gruppo (Nome_Gruppo, Data_di_Creazione, Categoria_Gruppo, GestoreGruppo) VALUES (?, ?, ?, ?)";

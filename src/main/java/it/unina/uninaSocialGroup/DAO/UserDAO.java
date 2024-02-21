@@ -6,7 +6,13 @@ import it.unina.uninaSocialGroup.Model.User;
 import java.sql.*;
 
 public class UserDAO {
-    public boolean UserAlreadyExists(String studentID) {
+    /**
+     * UserAlreadyExists
+     * Controlla che la matricola inserita non esista gia nel db.
+     * @param Matricola
+     * @return true or false
+     */
+    public boolean UserAlreadyExists(String Matricola) {
         Connection connect = null;
         String query = "SELECT 1 FROM utente WHERE Matricola = ?";
         PreparedStatement ps = null;
@@ -14,7 +20,7 @@ public class UserDAO {
         try {
             connect = DatabaseConnectionManager.createDatabaseConnection();
             ps = connect.prepareStatement(query);
-            ps.setString(1, studentID);
+            ps.setString(1, Matricola);
             resultSet = ps.executeQuery();
             if (!resultSet.next()) {
                 return false;
@@ -25,14 +31,24 @@ public class UserDAO {
         }
         return false;
     }
-    public void addNewUser(String studentID, String name, String surname, Date birthDate, Date registrationDate){
+
+    /**
+     * addNewUser
+     * Inserisce un nuovo utente nel db
+     * @param Matricola dell'utente
+     * @param name Nome dell'utente
+     * @param surname Cognome dell'utente
+     * @param birthDate Data di nascita dell'utente
+     * @param registrationDate Data di registrazione dell'utente
+     */
+    public void addNewUser(String Matricola, String name, String surname, Date birthDate, Date registrationDate){
         Connection connect = null;
         String query = "INSERT INTO utente (Matricola, Nome, Cognome, Data_di_Nascita, Data_di_Registrazione) VALUES (?, ?, ?, ?, ?)";
         PreparedStatement psInsert = null;
         try {
             connect = DatabaseConnectionManager.createDatabaseConnection();
             psInsert = connect.prepareStatement(query);
-            psInsert.setString(1, studentID);
+            psInsert.setString(1, Matricola);
             psInsert.setString(2, name);
             psInsert.setString(3, surname);
             psInsert.setDate(4, birthDate);
@@ -45,6 +61,12 @@ public class UserDAO {
         }
     }
 
+    /**
+     * getMatricolaByEmail
+     * Restituisce la matricola dell'utente a partire dalla sua email
+     * @param email
+     * @return matricola
+     */
     public String getMatricolaByEmail(String email){
         String matricola = null;
         Connection connect = null;
@@ -68,6 +90,12 @@ public class UserDAO {
         return matricola;
     }
 
+    /**
+     * getUserData
+     * Restituisce i dati di un utente a partire dalla sua matricola
+     * @param matricola dell'utente
+     * @return user
+     */
     public User getUserData(String matricola){
         User user = null;
         Connection connect = null;
@@ -93,6 +121,12 @@ public class UserDAO {
         return user;
     }
 
+    /**
+     * getFullNameByEmail
+     * Restituisce il nome e congome di un utente a partire dalla sua email
+     * @param email
+     * @return user
+     */
     public User getFullNameByEmail(String email){
         User user = null;
         Connection connect = null;

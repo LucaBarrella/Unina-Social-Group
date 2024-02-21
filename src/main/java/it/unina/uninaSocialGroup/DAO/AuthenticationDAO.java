@@ -37,6 +37,12 @@ public class AuthenticationDAO {
             }
       }
 
+    /**
+     * addNewUserToAuthTable
+     * Inserisce la email e la password di un nuovo utente nel db
+     * @param email dell'utente
+     * @param password dell'utente
+     */
       public void addNewUserToAuthTable(String email, String password) {
         Connection connect = null;
         String query = "INSERT INTO autenticazione (Email, Password) VALUES (?,?)";

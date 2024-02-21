@@ -227,9 +227,9 @@
                         <content>
                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                               <children>
-                                 <ToggleButton fx:id="CreatedGroups" alignment="CENTER_LEFT" layoutX="815.0" layoutY="72.0" mnemonicParsing="false" prefHeight="16.0" prefWidth="63.0" style="-fx-background-radius: 50;">
+                                 <ToggleButton fx:id="CreatedGroups" alignment="CENTER_LEFT" layoutX="815.0" layoutY="72.0" mnemonicParsing="false" prefHeight="16.0" prefWidth="63.0" style="-fx-background-radius: 50;" stylesheets="@../style/toggleButton.css">
                                     <graphic>
-                                       <Circle fx:id="knob" fill="WHITE" radius="9.0" />
+                                       <Circle fx:id="Circle" fill="WHITE" radius="9.0" />
                                     </graphic>
                                  </ToggleButton>
                                  <Text layoutX="797.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gruppi creati da te">

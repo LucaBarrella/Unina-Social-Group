@@ -7,6 +7,7 @@ import it.unina.uninaSocialGroup.Model.Group;
 import it.unina.uninaSocialGroup.Model.Report;
 import it.unina.uninaSocialGroup.Model.SwitchScene;
 import it.unina.uninaSocialGroup.Model.User;
+import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -17,6 +18,8 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.shape.Circle;
+import javafx.util.Duration;
 
 import javax.swing.text.html.ImageView;
 import java.io.IOException;
@@ -29,6 +32,7 @@ public class HomePageController{
     private @FXML TableView<Group> TableGroups;
     private @FXML TableColumn<Group, String> IDColumn, NameColumn, CreationDateColumn, CategoryColumn;
     private @FXML ToggleButton CreatedGroups;
+    private @FXML Circle Circle;
     private @FXML ChoiceBox<Integer> MonthBox;
     private Integer[] Months = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
     private @FXML TableView TableReport;
@@ -63,12 +67,16 @@ public class HomePageController{
         profileButton.setOnAction(this::goToProfileTab);
         groupButton.setOnAction(this::goToGroupsTab);
         reportButton.setOnAction(this::goToReportTab);
+        TranslateTransition transition = new TranslateTransition(Duration.seconds(0.4), Circle);
         CreatedGroups.selectedProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) {
+                transition.setToX(30);
                 LoadDataTableAdminGroups();
             } else {
+                transition.setToX(0);
                 LoadDataTableUserGroups();
             }
+            transition.play();
         });
         MonthBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             LoadDataTableReport(newValue);

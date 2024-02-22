@@ -13,7 +13,6 @@ public class User {
     private List<Group> OwnerGroups;
     private List<Group> UserGroups;
     private List<Post> PostPubblicati;
-    private List<User> Amici;
 
 
     public String getNome() {
@@ -54,6 +53,22 @@ public class User {
 
     public void setDataDiRegistrazione(Date dataDiRegistrazione) {
         DataDiRegistrazione = dataDiRegistrazione;
+    }
+
+    public List<Group> getOwnerGroups() {
+        return OwnerGroups;
+    }
+
+    public void setOwnerGroups(List<Group> ownerGroups) {
+        OwnerGroups = ownerGroups;
+    }
+
+    public List<Group> getUserGroups() {
+        return UserGroups;
+    }
+
+    public void setUserGroups(List<Group> userGroups) {
+        UserGroups = userGroups;
     }
 
     public User(String nome, String cognome, String matricola, Date dataDiNascita, Date dataDiRegistrazione) {

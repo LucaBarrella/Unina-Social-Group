@@ -151,4 +151,32 @@ public class UserDAO {
         }
         return user;
     }
+
+    public User getUserByEmail(String email){
+        User user = null;
+        Connection connect = null;
+        String query = "SELECT * " +
+                "FROM Utente U JOIN Autenticazione A " +
+                "ON U.ID_Autenticazione = A.ID_Autenticazione " +
+                "WHERE A.Email = ?";
+        PreparedStatement ps = null;
+        ResultSet resultSet = null;
+        try {
+            connect = DatabaseConnectionManager.createDatabaseConnection();
+            ps = connect.prepareStatement(query);
+            ps.setString(1, email);
+            resultSet = ps.executeQuery();
+            if (resultSet.next()) {
+                user = new User(
+                        resultSet.getString("Nome"),
+                        resultSet.getString("Cognome"),
+                        resultSet.getString("Matricola"),
+                        resultSet.getDate("Data_di_Nascita"),
+                        resultSet.getDate("Data_di_Registrazione"));
+            }
+        } catch (SQLException sql) {
+            sql.printStackTrace();
+        }
+        return user;
+    }
 }

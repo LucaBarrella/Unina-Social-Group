@@ -2,6 +2,8 @@ package it.unina.uninaSocialGroup.DAO;
 
 import it.unina.uninaSocialGroup.Model.DatabaseConnectionManager;
 import it.unina.uninaSocialGroup.Model.Group;
+import it.unina.uninaSocialGroup.Model.User;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -45,10 +47,11 @@ public class GroupDAO {
     /**
      * getUserGroups
      * Restituisce la lista di gruppi di un utente di cui fa parte o è creatore
-     * @param matricola
+     * @param user
      * @return List<Group> dataList
      */
-    public List<Group> getUserGroups(String matricola){
+    public void getUserGroups(User user){
+        String matricola = user.getMatricola();
         List<Group> dataList = new ArrayList<>();
         PreparedStatement ps = null;
         String query = "SELECT DISTINCT G.* FROM Gruppo G LEFT JOIN Partecipa P ON G.ID_Gruppo = P.ID_Gruppo " +
@@ -67,16 +70,17 @@ public class GroupDAO {
         }catch(SQLException sql){
             sql.printStackTrace();
         }
-        return dataList;
+        user.setUserGroups(dataList);
     }
 
     /**
      * getAdminGroups
      * Restituisce la lista di gruppi di un utente di cui è creatore
-     * @param matricola
+     * @param user
      * @return List<Group> dataList
      */
-    public List<Group> getAdminGroups(String matricola){
+    public void getAdminGroups(User user){
+        String matricola = user.getMatricola();
         List<Group> dataList = new ArrayList<>();
         PreparedStatement ps = null;
         String query = "SELECT G.* FROM Gruppo G WHERE G.GestoreGruppo = ?";
@@ -93,7 +97,7 @@ public class GroupDAO {
         }catch(SQLException sql){
             sql.printStackTrace();
         }
-        return dataList;
+        user.setOwnerGroups(dataList);
     }
 
     /**

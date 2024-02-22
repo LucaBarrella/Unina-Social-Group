@@ -3,6 +3,7 @@ package it.unina.uninaSocialGroup.DAO;
 import it.unina.uninaSocialGroup.Model.DatabaseConnectionManager;
 import it.unina.uninaSocialGroup.Model.Group;
 import it.unina.uninaSocialGroup.Model.Report;
+import it.unina.uninaSocialGroup.Model.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,17 +16,18 @@ public class ReportDAO {
     /**
      * getGroupsReport
      * Restituisce i dati report mensili di ogni gruppo creato da un utente
-     * @param matricola
+     * @param user
      * @param Month
      * @return List<Report> dataList
      */
-    public List<Report> getGroupsReport(String matricola, int Month){
+    public List<Report> getGroupsReport(User user, int Month){
         List<Report> dataList = new ArrayList<>();
         PostDAO post = new PostDAO();
         String PPL, PML, PPC, PMC;
         int NMP, i = 0;
-        GroupDAO group = new GroupDAO();
-        List<Group> groups = group.getAdminGroups(matricola);
+        GroupDAO groupDAO = new GroupDAO();
+        groupDAO.getAdminGroups(user);
+        List<Group> groups = user.getOwnerGroups();
             while(i < groups.size()){
                 PPL = post.getPostPlusLike(Month, groups.get(i).getIDGruppo());
                 PML = post.getPostMinusLike(Month, groups.get(i).getIDGruppo());

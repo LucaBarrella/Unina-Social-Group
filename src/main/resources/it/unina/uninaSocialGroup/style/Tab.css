@@ -1,0 +1,4 @@
+.button-selected {
+    -fx-border-color: yellow;
+    -fx-border-width: 2px;
+}

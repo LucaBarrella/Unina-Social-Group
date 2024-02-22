@@ -13,6 +13,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.event.ActionEvent;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -48,6 +49,7 @@ public class HomePageController{
     private TextField searchField;
     @FXML
     private TabPane tabPane;
+    private Tab newTab;
     private ObservableList<Group> allGroups;
     @FXML
     private Tab ProfileTab, GroupsTab, ReportTab;
@@ -105,29 +107,39 @@ public class HomePageController{
                 }
             }
         });
+        tabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldTab, newTab) -> {
+            if (oldTab == ProfileTab) {
+                profileButton.getStyleClass().remove("button-selected");
+            } else if (oldTab == GroupsTab) {
+                groupButton.getStyleClass().remove("button-selected");
+            } else if (oldTab == ReportTab) {
+                reportButton.getStyleClass().remove("button-selected");
+            }
+
+            if (newTab == ProfileTab) {
+                profileButton.getStyleClass().add("button-selected");
+            } else if (newTab == GroupsTab) {
+                groupButton.getStyleClass().add("button-selected");
+            } else if (newTab == ReportTab) {
+                reportButton.getStyleClass().add("button-selected");
+            }
+        });
+
     }
 
-//   TO:DO Va fatto un file css per i bottoni per fargli cambiare colore, poi si dovrà fare i listener per fargli cambiare tab
-//    <effect>
-//        <ColorAdjust hue="0.15" saturation="0.2" brightness="0.1" />
-//    </effect>
     public void setUserEmail(String email){
         this.userEmail = email;
         System.out.println("User email: " + userEmail);
     }
 
-    private void changeTab(Tab tab) {
-        tabPane.getSelectionModel().select(tab);
-    }
-
     private @FXML void goToProfileTab(ActionEvent event) {
-        changeTab(ProfileTab);
+        tabPane.getSelectionModel().select(ProfileTab);;
     }
     private @FXML void goToGroupsTab(ActionEvent event) {
-        changeTab(GroupsTab);
+        tabPane.getSelectionModel().select(GroupsTab);
     }
     private @FXML void goToReportTab(ActionEvent event) {
-        changeTab(ReportTab);
+        tabPane.getSelectionModel().select(ReportTab);
     }
 
     public void LoadProfileData() {
@@ -150,35 +162,37 @@ public class HomePageController{
     }
 
     public void LoadDataTableUserGroups(){
-        UserDAO user = new UserDAO();
-        GroupDAO group = new GroupDAO();
-        String matricola = user.getMatricolaByEmail(userEmail);
-        IDColumn.setCellValueFactory(new PropertyValueFactory<>("IDGruppo"));
+        UserDAO userDAO = new UserDAO();
+        GroupDAO groupDAO = new GroupDAO();
+        User user = userDAO.getUserByEmail(userEmail);
+        groupDAO.getUserGroups(user);
+        List<Group> dati = user.getUserGroups();
         NameColumn.setCellValueFactory(new PropertyValueFactory<>("NomeGruppo"));
         CreationDateColumn.setCellValueFactory(new PropertyValueFactory<>("DataDiCreazione"));
         CategoryColumn.setCellValueFactory(new PropertyValueFactory<>("CategoriaGruppo"));
-        List<Group> dati = group.getUserGroups(matricola);
         TableGroups.getItems().clear();
         TableGroups.getItems().addAll(dati);
     }
 
+
     public void LoadDataTableAdminGroups(){
-        UserDAO user = new UserDAO();
-        GroupDAO group = new GroupDAO();
-        String matricola = user.getMatricolaByEmail(userEmail);
-        IDColumn.setCellValueFactory(new PropertyValueFactory<>("IDGruppo"));
+        UserDAO userDAO = new UserDAO();
+        GroupDAO groupDAO = new GroupDAO();
+        User user = userDAO.getUserByEmail(userEmail);
+        groupDAO.getAdminGroups(user);
+        List<Group> dati = user.getOwnerGroups();
         NameColumn.setCellValueFactory(new PropertyValueFactory<>("NomeGruppo"));
         CreationDateColumn.setCellValueFactory(new PropertyValueFactory<>("DataDiCreazione"));
         CategoryColumn.setCellValueFactory(new PropertyValueFactory<>("CategoriaGruppo"));
-        List<Group> dati = group.getAdminGroups(matricola);
         TableGroups.getItems().clear();
         TableGroups.getItems().addAll(dati);
     }
 
     public void LoadDataTableReport(Integer month){
-        UserDAO user = new UserDAO();
+        UserDAO userDAO = new UserDAO();
         ReportDAO report = new ReportDAO();
-        String matricola = user.getMatricolaByEmail(userEmail);
+        User user = userDAO.getUserByEmail(userEmail);
+        List<Report> dati = report.getGroupsReport(user,month);
         NameGroupColumn.setCellValueFactory(new PropertyValueFactory<>("NomeGruppo"));
         PostPlusLikeColumn.setCellValueFactory(new PropertyValueFactory<>("PostPiuLike"));
         PostMinusLikeColumn.setCellValueFactory(new PropertyValueFactory<>("PostMenoLike"));
@@ -186,7 +200,6 @@ public class HomePageController{
         PostMinusCommentColumn.setCellValueFactory(new PropertyValueFactory<>("PostMenoCommenti"));
         AveragePostColumn.setCellValueFactory(new PropertyValueFactory<>("NumMedioPost"));
         TableReport.getItems().clear();
-        List<Report> dati = report.getGroupsReport(matricola,month);
         TableReport.getItems().addAll(dati);
     }
 
@@ -194,14 +207,6 @@ public class HomePageController{
         try {
             switchScene.switchToScene(event, "/it/unina/uninaSocialGroup/view/LoginPage.fxml", "topToBottom");
             System.out.println("Logout successful");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private @FXML void CreationGroup(ActionEvent event) {
-        try {
-            switchScene.switchToScene(event, "/it/unina/uninaSocialGroup/view/GroupCreationPage.fxml", "topToBottom");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -221,4 +226,28 @@ public class HomePageController{
             groupListView.setItems(filteredGroups);
         }
     }
+
+    private @FXML void CreationGroup(ActionEvent event) {
+        if (newTab == null) {
+            newTab = new Tab("Creazione Gruppo");
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/it/unina/uninaSocialGroup/view/GroupCreationPage.fxml"));
+                Parent interfaceContent = fxmlLoader.load();
+                GroupCreationController controller = fxmlLoader.getController();
+                controller.setUserEmail(userEmail);
+                newTab.setContent(interfaceContent);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            tabPane.getTabs().add(newTab);
+        }
+        tabPane.getSelectionModel().select(newTab);
+        tabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldTab, newTab) -> {
+            if (this.newTab != null && newTab != this.newTab) {
+                tabPane.getTabs().remove(this.newTab);
+                this.newTab = null;
+            }
+        });
+    }
+
 }

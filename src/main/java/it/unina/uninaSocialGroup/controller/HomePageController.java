@@ -3,10 +3,7 @@ package it.unina.uninaSocialGroup.controller;
 import it.unina.uninaSocialGroup.DAO.GroupDAO;
 import it.unina.uninaSocialGroup.DAO.ReportDAO;
 import it.unina.uninaSocialGroup.DAO.UserDAO;
-import it.unina.uninaSocialGroup.Model.Group;
-import it.unina.uninaSocialGroup.Model.Report;
-import it.unina.uninaSocialGroup.Model.SwitchScene;
-import it.unina.uninaSocialGroup.Model.User;
+import it.unina.uninaSocialGroup.Model.*;
 import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -37,8 +34,9 @@ public class HomePageController{
     private @FXML ChoiceBox<Integer> MonthBox;
     private Integer[] Months = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
     private @FXML TableView TableReport;
-    private @FXML TableColumn<Group, String> NameGroupColumn, PostPlusLikeColumn, PostMinusLikeColumn, PostPlusCommentColumn, PostMinusCommentColumn;
-    private @FXML TableColumn<Group, Integer> AveragePostColumn;
+    private @FXML TableColumn<Group, String> NameGroupColumn;
+    private @FXML TableColumn<Post, String> PostPlusLikeColumn, PostMinusLikeColumn, PostPlusCommentColumn, PostMinusCommentColumn;
+    private @FXML TableColumn<Post, Integer> AveragePostColumn;
     @FXML
     private Button LogOutButton, CreationGroupButton;
     private SwitchScene switchScene = new SwitchScene();
@@ -155,7 +153,7 @@ public class HomePageController{
 
     public void displayName(){
         UserDAO user = new UserDAO();
-        User result = user.getFullNameByEmail(userEmail);
+        User result = user.getUserByEmail(userEmail);
         String name = result.getNome();
         String surname = result.getCognome();
         LabelNameSurname.setText(name+ " " +surname);
@@ -166,7 +164,7 @@ public class HomePageController{
         GroupDAO groupDAO = new GroupDAO();
         User user = userDAO.getUserByEmail(userEmail);
         groupDAO.getUserGroups(user);
-        List<Group> dati = user.getUserGroups();
+        List<Group> dati = user.getGruppiUtente();
         NameColumn.setCellValueFactory(new PropertyValueFactory<>("NomeGruppo"));
         CreationDateColumn.setCellValueFactory(new PropertyValueFactory<>("DataDiCreazione"));
         CategoryColumn.setCellValueFactory(new PropertyValueFactory<>("CategoriaGruppo"));
@@ -180,7 +178,7 @@ public class HomePageController{
         GroupDAO groupDAO = new GroupDAO();
         User user = userDAO.getUserByEmail(userEmail);
         groupDAO.getAdminGroups(user);
-        List<Group> dati = user.getOwnerGroups();
+        List<Group> dati = user.getGruppiCreati();
         NameColumn.setCellValueFactory(new PropertyValueFactory<>("NomeGruppo"));
         CreationDateColumn.setCellValueFactory(new PropertyValueFactory<>("DataDiCreazione"));
         CategoryColumn.setCellValueFactory(new PropertyValueFactory<>("CategoriaGruppo"));

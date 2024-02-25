@@ -122,36 +122,11 @@ public class UserDAO {
     }
 
     /**
-     * getFullNameByEmail
-     * Restituisce il nome e congome di un utente a partire dalla sua email
+     * getUserByEmail
+     * Restituisce i dati di un utente a partire dalla sua email
      * @param email
      * @return user
      */
-    public User getFullNameByEmail(String email){
-        User user = null;
-        Connection connect = null;
-        String query = "SELECT Nome, Cognome " +
-                       "FROM Utente U JOIN Autenticazione A " +
-                       "ON U.ID_Autenticazione = A.ID_Autenticazione " +
-                       "WHERE A.Email = ?";
-        PreparedStatement ps = null;
-        ResultSet resultSet = null;
-        try {
-            connect = DatabaseConnectionManager.createDatabaseConnection();
-            ps = connect.prepareStatement(query);
-            ps.setString(1, email);
-            resultSet = ps.executeQuery();
-            if (resultSet.next()) {
-                String name = resultSet.getString("Nome");
-                String surname = resultSet.getString("Cognome");
-                user = new User(name,surname);
-            }
-        } catch (SQLException sql) {
-            sql.printStackTrace();
-        }
-        return user;
-    }
-
     public User getUserByEmail(String email){
         User user = null;
         Connection connect = null;

@@ -25,7 +25,7 @@ public class LoginPageController {
     private SwitchScene switchScene = new SwitchScene();
     @FXML
     private Label NoEmailPassword;
-    private Parent root;
+
 
     @FXML
     public void initialize() {

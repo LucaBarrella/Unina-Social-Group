@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="485.0" prefWidth="435.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <GridPane layoutX="-1.0" layoutY="-6.0" prefHeight="70.0" prefWidth="442.0" style="-fx-background-color: #09F;">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button fx:id="BackButton" mnemonicParsing="false" style="-fx-background-color: red;" text="indietro" textFill="WHITE" />
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Nuovo post">
+               <font>
+                  <Font name="System Bold" size="30.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="100.0" />
+               </GridPane.margin>
+            </Text>
+         </children>
+      </GridPane>
+      <TextArea fx:id="TextArea" layoutX="26.0" layoutY="81.0" prefHeight="188.0" prefWidth="354.0" promptText="A cosa stai pensando?" />
+      <TextField fx:id="CategoryField" layoutX="26.0" layoutY="290.0" prefHeight="39.0" prefWidth="354.0" promptText="Categoria" />
+      <RadioButton fx:id="NoComments" layoutX="26.0" layoutY="349.0" mnemonicParsing="false" text="Commenti disattivati" />
+      <Button fx:id="PublishButton" layoutX="166.0" layoutY="410.0" mnemonicParsing="false" style="-fx-background-color: red;" text="Pubblica" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

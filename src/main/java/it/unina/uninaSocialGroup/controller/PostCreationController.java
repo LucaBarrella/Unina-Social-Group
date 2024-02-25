@@ -4,13 +4,11 @@ import it.unina.uninaSocialGroup.DAO.GroupDAO;
 import it.unina.uninaSocialGroup.DAO.PostDAO;
 import it.unina.uninaSocialGroup.DAO.UserDAO;
 import it.unina.uninaSocialGroup.Model.SwitchScene;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Button;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 import java.io.IOException;
 
@@ -29,10 +27,10 @@ public class PostCreationController {
     @FXML
     public void initialize(){
         BackButton.setOnAction(this::BackToGroupPage);
-        PublishButton.setOnAction(this::GroupCreation);
+        PublishButton.setOnAction(this::PostCreation);
     }
 
-    public @FXML void GroupCreation(ActionEvent event){
+    public @FXML void PostCreation(ActionEvent event){
         UserDAO user = new UserDAO();
         PostDAO post = new PostDAO();
         String matricola = user.getMatricolaByEmail(userEmail);
@@ -40,6 +38,13 @@ public class PostCreationController {
         try {
             FXMLLoader loader = switchScene.createFXML("/it/unina/uninaSocialGroup/view/GroupPage.fxml");
             switchScene.loadSceneAndShow(event, loader);
+            Platform.runLater(() -> {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Post Pubblicato");
+                alert.setHeaderText(null);
+                alert.setContentText("Il tuo post è stato pubblicato!");
+                alert.showAndWait();
+            });
         }catch(IOException e){
             e.printStackTrace();
         }

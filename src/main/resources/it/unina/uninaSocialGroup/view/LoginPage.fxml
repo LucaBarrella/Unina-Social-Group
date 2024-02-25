@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.effect.*?>
@@ -13,14 +14,18 @@
       <StackPane layoutX="-257.0" layoutY="-226.0" prefHeight="973.0" prefWidth="558.0" style="-fx-background-color: #09F;" />
       <VBox prefHeight="500.0" prefWidth="300.0" style="-fx-background-color: #09F;">
          <children>
-            <Button fx:id="SwitchToSignUpButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="504.0" prefWidth="306.0" style="-fx-background-radius: 0; -fx-background-color: #09F;">
-               <graphic>
-                  <ImageView fitHeight="314.0" fitWidth="219.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/addUser.gif" />
-                     </image>
-                  </ImageView>
-               </graphic>
+            <ImageView fitHeight="314.0" fitWidth="219.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/addUser.gif" />
+               </image>
+               <VBox.margin>
+                  <Insets left="40.0" top="130.0" />
+               </VBox.margin>
+            </ImageView>
+            <Button fx:id="SwitchToSignUpButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="161.0" stylesheets="@../style/label.css" text="Registrazione">
+               <VBox.margin>
+                  <Insets left="60.0" />
+               </VBox.margin>
             </Button>
          </children>
       </VBox>

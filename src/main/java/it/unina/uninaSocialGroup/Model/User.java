@@ -2,7 +2,6 @@ package it.unina.uninaSocialGroup.Model;
 
 import java.util.Date;
 import java.util.List;
-// Generate getters and setters for all fields in a class:
 
 public class User {
     private String Nome;
@@ -10,8 +9,8 @@ public class User {
     private String Matricola;
     private Date DataDiNascita;
     private Date DataDiRegistrazione;
-    private List<Group> OwnerGroups;
-    private List<Group> UserGroups;
+    private List<Group> GruppiCreati;
+    private List<Group> GruppiUtente;
     private List<Post> PostPubblicati;
 
 
@@ -55,20 +54,20 @@ public class User {
         DataDiRegistrazione = dataDiRegistrazione;
     }
 
-    public List<Group> getOwnerGroups() {
-        return OwnerGroups;
+    public List<Group> getGruppiCreati() {
+        return GruppiCreati;
     }
 
-    public void setOwnerGroups(List<Group> ownerGroups) {
-        OwnerGroups = ownerGroups;
+    public void setGruppiCreati(List<Group> gruppiCreati) {
+        GruppiCreati = gruppiCreati;
     }
 
-    public List<Group> getUserGroups() {
-        return UserGroups;
+    public List<Group> getGruppiUtente() {
+        return GruppiUtente;
     }
 
-    public void setUserGroups(List<Group> userGroups) {
-        UserGroups = userGroups;
+    public void setGruppiUtente(List<Group> gruppiUtente) {
+        GruppiUtente = gruppiUtente;
     }
 
     public User(String nome, String cognome, String matricola, Date dataDiNascita, Date dataDiRegistrazione) {
@@ -77,11 +76,6 @@ public class User {
         Matricola = matricola;
         DataDiNascita = dataDiNascita;
         DataDiRegistrazione = dataDiRegistrazione;
-    }
-
-    public User(String nome, String cognome) {
-        Nome = nome;
-        Cognome = cognome;
     }
 
     @Override

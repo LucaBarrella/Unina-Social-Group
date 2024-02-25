@@ -1,14 +1,9 @@
 package it.unina.uninaSocialGroup.DAO;
 
-import it.unina.uninaSocialGroup.Model.DatabaseConnectionManager;
 import it.unina.uninaSocialGroup.Model.Group;
 import it.unina.uninaSocialGroup.Model.Report;
 import it.unina.uninaSocialGroup.Model.User;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +22,7 @@ public class ReportDAO {
         int NMP, i = 0;
         GroupDAO groupDAO = new GroupDAO();
         groupDAO.getAdminGroups(user);
-        List<Group> groups = user.getOwnerGroups();
+        List<Group> groups = user.getGruppiCreati();
             while(i < groups.size()){
                 PPL = post.getPostPlusLike(Month, groups.get(i).getIDGruppo());
                 PML = post.getPostMinusLike(Month, groups.get(i).getIDGruppo());

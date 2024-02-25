@@ -21,7 +21,7 @@ public class RegistrationPageController {
     @FXML
     private PasswordField PasswordField, ConfirmPasswordField;
     @FXML
-    private Button SwitchToSignInButton, SwitchToSignInButton2 , ContinueButton;
+    private Button SwitchToSignInButton,  ContinueButton;
 
     private SwitchScene switchScene = new SwitchScene();
 
@@ -29,7 +29,6 @@ public class RegistrationPageController {
     public void initialize() {
         WarningLabel.setVisible(false);
         SwitchToSignInButton.setOnAction(this::SwitchToSignInButton);
-        SwitchToSignInButton2.setOnAction(this::SwitchToSignInButton);
         ContinueButton.setOnAction(this::registration);
     }
 

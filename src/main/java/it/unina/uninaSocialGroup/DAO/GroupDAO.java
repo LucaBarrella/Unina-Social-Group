@@ -70,7 +70,7 @@ public class GroupDAO {
         }catch(SQLException sql){
             sql.printStackTrace();
         }
-        user.setUserGroups(dataList);
+        user.setGruppiUtente(dataList);
     }
 
     /**
@@ -97,7 +97,7 @@ public class GroupDAO {
         }catch(SQLException sql){
             sql.printStackTrace();
         }
-        user.setOwnerGroups(dataList);
+        user.setGruppiCreati(dataList);
     }
 
     /**

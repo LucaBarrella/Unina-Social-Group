@@ -13,11 +13,11 @@ import java.util.Objects;
 public class Main extends javafx.application.Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/it/unina/uninaSocialGroup/view/LoginPage.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/it/unina/uninaSocialGroup/view/group2.fxml")));
 
         //Set icon on the application bar
         var appIcon = new Image("file:src/main/resources/it/unina/uninaSocialGroup/images/icon.png");
-        primaryStage.getIcons().add(appIcon);
+        primaryStage.getIcons().add(appIcon) ;
 
         //Set icon on the taskbar/dock
         String os = System.getProperty("os.name").toLowerCase();
@@ -38,7 +38,8 @@ public class Main extends javafx.application.Application {
                 System.out.println("There was a security exception.");
             }
         }
-        //TO-DO: custom fonts?
+        //TODO: custom fonts?
+        //TODO: Togliere per il login i pulsanti, voglio che sia una finestra trasparente (quindi senza bottoni)
 
         primaryStage.setTitle("Unina Social Group");
         primaryStage.setScene(new Scene(root));

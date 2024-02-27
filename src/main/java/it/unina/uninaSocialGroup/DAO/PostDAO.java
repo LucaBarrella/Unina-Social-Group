@@ -3,6 +3,8 @@ package it.unina.uninaSocialGroup.DAO;
 import it.unina.uninaSocialGroup.Model.DatabaseConnectionManager;
 import it.unina.uninaSocialGroup.Model.Post;
 import it.unina.uninaSocialGroup.Model.User;
+import java.util.ArrayList;
+import java.util.List;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -233,5 +235,32 @@ public class PostDAO {
             sql.printStackTrace();
         }
         return post;
+    }
+
+
+
+    public List<Post> getAllPosts(String IDGroup) {
+        List<Post> posts = new ArrayList<>();
+        Connection connect = null;
+        PreparedStatement ps = null;
+        ResultSet resultSet = null;
+        String query = "SELECT * FROM post NATURAL JOIN utente WHERE id_gruppo = ?";
+        try {
+            connect = DatabaseConnectionManager.createDatabaseConnection();
+            ps = connect.prepareStatement(query);
+            ps.setString(1, IDGroup);
+            resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                Post post = new Post(
+                        resultSet.getString("ID_Post"),
+                        resultSet.getString("Categoria"),
+                        resultSet.getString("Messaggio_Scritto"),
+                        resultSet.getString("nome") + " " + resultSet.getString("cognome"));
+                posts.add(post);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return posts;
     }
 }

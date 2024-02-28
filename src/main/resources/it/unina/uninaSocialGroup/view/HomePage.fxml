@@ -255,6 +255,16 @@
                                        <font>
                                           <Font size="20.0" />
                                        </font></Text>
+                                    <Button fx:id="OpenButton" layoutX="796.0" layoutY="415.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="78.0" style="-fx-background-color: red;" text="Apri" textFill="WHITE">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Button>
+                                    <Text fx:id="ChatText" layoutX="798.0" layoutY="394.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mostra chat">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Text>
                               </children>
                            </AnchorPane>
                         </content>

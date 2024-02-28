@@ -13,7 +13,7 @@ import java.util.Objects;
 public class Main extends javafx.application.Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/it/unina/uninaSocialGroup/view/group2.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/it/unina/uninaSocialGroup/view/LoginPage.fxml")));
 
         //Set icon on the application bar
         var appIcon = new Image("file:src/main/resources/it/unina/uninaSocialGroup/images/icon.png");

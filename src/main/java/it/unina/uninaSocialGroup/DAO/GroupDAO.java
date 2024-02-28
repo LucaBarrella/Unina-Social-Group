@@ -122,4 +122,58 @@ public class GroupDAO {
             sql.printStackTrace();
         }
     }
+
+    /**
+     * getNumberOfMemberGroup
+     * Restituisce il numero di membri di un gruppo
+     * @param IDGroup id del gruppo
+     * @return numberOfMember
+     */
+    public int getNumberOfMemberGroup(String IDGroup){
+        int numberOfMember = 0;
+        PreparedStatement ps = null;
+        String query = "SELECT COUNT(*) AS NumeroMembri FROM Partecipa WHERE ID_Gruppo = ?";
+        try{
+            Connection db = DatabaseConnectionManager.createDatabaseConnection();
+            ps = db.prepareStatement(query);
+            ps.setString(1, IDGroup);
+            ResultSet resultSet = ps.executeQuery();
+            while(resultSet.next()){
+                numberOfMember = resultSet.getInt("NumeroMembri");
+            }
+        }catch(SQLException sql){
+            sql.printStackTrace();
+        }
+        return numberOfMember;
+    }
+
+    /**
+     * getGroup
+     * Restituisce il gruppo con l'id dato
+     * @param IDGroup
+     * @return group
+     */
+    public Group getGroup(String IDGroup){
+        Group group = null;
+        Connection connect = null;
+        String query = "SELECT * FROM Gruppo WHERE ID_Gruppo = ?";
+        PreparedStatement ps = null;
+        ResultSet resultSet = null;
+        try {
+            connect = DatabaseConnectionManager.createDatabaseConnection();
+            ps = connect.prepareStatement(query);
+            ps.setString(1, IDGroup);
+            resultSet = ps.executeQuery();
+            if (resultSet.next()) {
+                group = new Group(
+                        resultSet.getString("ID_Gruppo"),
+                        resultSet.getString("Nome_Gruppo"),
+                        resultSet.getDate("Data_di_Creazione"),
+                        resultSet.getString("Categoria_Gruppo"));
+            }
+        } catch (SQLException sql) {
+            sql.printStackTrace();
+        }
+        return group;
+    }
 }

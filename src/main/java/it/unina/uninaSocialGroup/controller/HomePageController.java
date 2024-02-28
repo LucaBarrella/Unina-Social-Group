@@ -9,7 +9,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.event.ActionEvent;
@@ -17,28 +16,27 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 
-import javax.swing.text.html.ImageView;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 public class HomePageController{
     private @FXML Label LabelNameSurname, LabelMatricola, LabelName, LabelBirthDate, LabelEmail, LabelSurname, LabelRegistrationDate;
     private @FXML TableView<Group> TableGroups;
-    private @FXML TableColumn<Group, String> IDColumn, NameColumn, CreationDateColumn, CategoryColumn;
+    private @FXML TableColumn<Group, String> NameColumn, CreationDateColumn, CategoryColumn;
     private @FXML ToggleButton CreatedGroups;
     private @FXML Circle Circle;
     private @FXML ChoiceBox<Integer> MonthBox;
+    private @FXML Text ChatText;
     private Integer[] Months = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
     private @FXML TableView TableReport;
     private @FXML TableColumn<Group, String> NameGroupColumn;
     private @FXML TableColumn<Post, String> PostPlusLikeColumn, PostMinusLikeColumn, PostPlusCommentColumn, PostMinusCommentColumn;
     private @FXML TableColumn<Post, Integer> AveragePostColumn;
     @FXML
-    private Button LogOutButton, CreationGroupButton;
+    private Button LogOutButton, CreationGroupButton, OpenButton;
     private SwitchScene switchScene = new SwitchScene();
     private static String userEmail;
     @FXML
@@ -58,7 +56,7 @@ public class HomePageController{
     }
     @FXML
     public void initialize() {
-        CreationGroupButton.setOnAction(this::CreationGroup);
+        CreationGroupButton.setOnAction(this::GroupCreation);
         LoadProfileData();
         displayName();
         LoadDataTableUserGroups();
@@ -96,7 +94,7 @@ public class HomePageController{
                     try {
                         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/it/unina/uninaSocialGroup/view/GroupCell.fxml"));
                         HBox hbox = fxmlLoader.load();
-                        SearchBarCellController controller = fxmlLoader.getController();
+                        SearchBarController controller = fxmlLoader.getController();
                         controller.setGroup(item, searchField, HomePageController.this);
                         setGraphic(hbox);
                     } catch (IOException e) {
@@ -122,12 +120,25 @@ public class HomePageController{
                 reportButton.getStyleClass().add("button-selected");
             }
         });
-
+        OpenButton.setVisible(false);
+        OpenButton.setDisable(true);
+        ChatText.setVisible(false);
+        TableGroups.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                OpenButton.setVisible(true);
+                OpenButton.setDisable(false);
+                ChatText.setVisible(true);
+            }else {
+                OpenButton.setVisible(false);
+                ChatText.setVisible(false);
+                OpenButton.setDisable(true);
+            }
+        });
+        OpenButton.setOnAction(this::goToGroupChat);
     }
 
     public void setUserEmail(String email){
         this.userEmail = email;
-        System.out.println("User email: " + userEmail);
     }
 
     private @FXML void goToProfileTab(ActionEvent event) {
@@ -225,7 +236,7 @@ public class HomePageController{
         }
     }
 
-    private @FXML void CreationGroup(ActionEvent event) {
+    private @FXML void GroupCreation(ActionEvent event) {
         if (newTab == null) {
             newTab = new Tab("Creazione Gruppo");
             try {
@@ -248,4 +259,17 @@ public class HomePageController{
         });
     }
 
+    private @FXML void goToGroupChat(ActionEvent event) {
+        try {
+            Group selectedGroup = TableGroups.getSelectionModel().getSelectedItem();
+            if (selectedGroup != null) {
+                GroupChatController group = new GroupChatController();
+                group.setGroupID(selectedGroup.getIDGruppo());
+                group.setUserEmail(userEmail);
+            }
+            switchScene.switchToScene(event, "/it/unina/uninaSocialGroup/view/GroupChatPage.fxml", "topToBottom");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

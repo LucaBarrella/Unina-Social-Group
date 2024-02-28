@@ -4,18 +4,15 @@ import it.unina.uninaSocialGroup.DAO.AuthenticationDAO;
 import it.unina.uninaSocialGroup.Model.SwitchScene;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
+
 import java.io.IOException;
 
-public class LoginPageController {
+public class LoginController {
     @FXML
     private Button SwitchToSignUpButton, LoginButton;
     @FXML
@@ -55,11 +52,13 @@ public class LoginPageController {
         }
     }
 
+
     private void SwitchToSignUpButton(ActionEvent event) {
         try {
-            switchScene.switchToScene(event, "/it/unina/uninaSocialGroup/view/Registration.fxml", "leftToRight");
+            switchScene.switchToScene(event, "/it/unina/uninaSocialGroup/view/RegistrationPage.fxml", "leftToRight");
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
 }

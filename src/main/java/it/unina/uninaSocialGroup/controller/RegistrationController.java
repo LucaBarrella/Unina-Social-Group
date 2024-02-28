@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDateTime;
 
-public class RegistrationPageController {
+public class RegistrationController {
     @FXML
     private Label WarningLabel;
     @FXML

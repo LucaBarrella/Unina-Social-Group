@@ -1,31 +1,32 @@
 package it.unina.uninaSocialGroup.controller;
 
-import it.unina.uninaSocialGroup.DAO.PostDAO;
-import it.unina.uninaSocialGroup.DAO.UserDAO;
 import it.unina.uninaSocialGroup.Model.Post;
-import it.unina.uninaSocialGroup.Model.User;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.text.Text;
 
+public class PostDetailsController extends ListCell<Post> {
+    private Post post;
+    //private LikeDAO likeDAO;
+    private @FXML Label usernameAuthor;
+    private @FXML Text postText;
+    private @FXML Button likeButton, commentButton;
 
-public class PostDetailsController {
-    @FXML
-    private Label UserName, PostMessage, PostCategory;
-    public String IDPost;
-
-    @FXML
-    public void initialize(){
-         displayPostDetails();
+    public void setPost(Post post) {
+        this.post = post;
+        setLabelAuthor(post.getCreatorePost());
+        setLabelContent(post.getMessaggioTestuale());
     }
 
-    public void setIDPost(String IDPost) {
-        this.IDPost = IDPost;
+
+    public void setLabelAuthor(String title) {
+        this.usernameAuthor.setText(title);
     }
 
-    public void displayPostDetails(){
-        PostDAO postDAO = new PostDAO();
-        Post post = postDAO.getPost(IDPost);
-        PostMessage.setText(post.getMessaggioTestuale());
-        PostCategory.setText(post.getCategoria());
+    public void setLabelContent(String content) {
+        this.postText.setText(content);
     }
+
 }

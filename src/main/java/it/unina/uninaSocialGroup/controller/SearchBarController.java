@@ -1,12 +1,13 @@
 package it.unina.uninaSocialGroup.controller;
 
+import it.unina.uninaSocialGroup.DAO.GroupDAO;
 import it.unina.uninaSocialGroup.Model.Group;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
-public class SearchBarCellController {
+public class SearchBarController {
     @FXML
     private Button groupNameButton;
     @FXML
@@ -30,12 +31,8 @@ public class SearchBarCellController {
             homePageController.onSearch(null);
         });
 
-        memberCountLabel.setText(String.valueOf(0) + " members");
-    }
-
-    // Add the action for the join button here
-    @FXML
-    public void onJoin() {
-        // Handle join button click
+        GroupDAO groupDAO = new GroupDAO();
+        int memberCount = groupDAO.getNumberOfMemberGroup(group.getIDGruppo());
+        memberCountLabel.setText(String.valueOf(memberCount) + " membri");
     }
 }

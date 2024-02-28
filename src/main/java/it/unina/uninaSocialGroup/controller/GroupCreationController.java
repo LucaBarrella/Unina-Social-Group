@@ -27,7 +27,6 @@ public class GroupCreationController {
 
     public void setUserEmail(String email){
         this.userEmail = email;
-        System.out.println("User email: " + userEmail);
     }
 
 

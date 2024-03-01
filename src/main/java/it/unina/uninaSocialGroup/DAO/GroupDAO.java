@@ -132,11 +132,21 @@ public class GroupDAO {
     public int getNumberOfMemberGroup(String IDGroup){
         int numberOfMember = 0;
         PreparedStatement ps = null;
-        String query = "SELECT COUNT(*) AS NumeroMembri FROM Partecipa WHERE ID_Gruppo = ?";
+        String query = "SELECT COUNT(*) AS NumeroMembri " +
+                            "FROM (" +
+                            "SELECT P.Matricola " +
+                            "FROM Partecipa P " +
+                            "WHERE P.ID_Gruppo = ? " +
+                            "UNION " +
+                            "SELECT G.GestoreGruppo " +
+                            "FROM Gruppo G " +
+                            "WHERE G.ID_Gruppo = ? " +
+                            ") AS Membri;";
         try{
             Connection db = DatabaseConnectionManager.createDatabaseConnection();
             ps = db.prepareStatement(query);
             ps.setString(1, IDGroup);
+            ps.setString(2, IDGroup);
             ResultSet resultSet = ps.executeQuery();
             while(resultSet.next()){
                 numberOfMember = resultSet.getInt("NumeroMembri");
@@ -175,5 +185,62 @@ public class GroupDAO {
             sql.printStackTrace();
         }
         return group;
+    }
+
+    /**
+     * getGroupMembers
+     * Restituisce i membri di un gruppo
+     * @param group
+     */
+    public void getGroupMembers(Group group){
+        String IDGroup = group.getIDGruppo();
+        List<User> dataList = new ArrayList<>();
+        PreparedStatement ps = null;
+        String query = "SELECT U.Nome, U.Cognome " +
+                        "FROM Utente U " +
+                        "WHERE U.Matricola IN (" +
+                        "    SELECT P.Matricola " +
+                        "    FROM Partecipa P " +
+                        "    WHERE P.ID_Gruppo = ?) " +
+                        "OR U.Matricola IN (" +
+                        "    SELECT G.GestoreGruppo " +
+                        "    FROM Gruppo G " +
+                        "    WHERE G.ID_Gruppo = ? " +
+                        ");";
+        try{
+            Connection db = DatabaseConnectionManager.createDatabaseConnection();
+            ps = db.prepareStatement(query);
+            ps.setString(1, IDGroup);
+            ps.setString(2, IDGroup);
+            ResultSet resultSet = ps.executeQuery();
+            while(resultSet.next()){
+                User user = new User(resultSet.getString("Nome"),resultSet.getString("Cognome"));
+                dataList.add(user);
+            }
+        }catch(SQLException sql){
+            sql.printStackTrace();
+        }
+        group.setListaPartecipanti(dataList);
+    }
+
+    /**
+     * addNewMemberToGroup
+     * Aggiunge un nuovo membro ad un gruppo
+     * @param group
+     * @param Matricola
+     */
+    public void addNewMemberToGroup(Group group, String Matricola){
+        Connection connect = null;
+        String query = "INSERT INTO Partecipa (Matricola, ID_Gruppo) VALUES (?, ?)";
+        PreparedStatement psInsert = null;
+        try {
+            connect = DatabaseConnectionManager.createDatabaseConnection();
+            psInsert = connect.prepareStatement(query);
+            psInsert.setString(1, Matricola);
+            psInsert.setString(2, group.getIDGruppo());
+            psInsert.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

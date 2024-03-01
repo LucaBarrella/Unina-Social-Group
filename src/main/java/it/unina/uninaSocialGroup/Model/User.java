@@ -12,6 +12,7 @@ public class User {
     private List<Group> GruppiCreati;
     private List<Group> GruppiUtente;
     private List<Post> PostPubblicati;
+    private List<Report> ReportMensili;
 
 
     public String getNome() {
@@ -70,6 +71,22 @@ public class User {
         GruppiUtente = gruppiUtente;
     }
 
+    public List<Post> getPostPubblicati() {
+        return PostPubblicati;
+    }
+
+    public void setPostPubblicati(List<Post> postPubblicati) {
+        PostPubblicati = postPubblicati;
+    }
+
+    public List<Report> getReportMensili() {
+        return ReportMensili;
+    }
+
+    public void setReportMensili(List<Report> reportMensili) {
+        ReportMensili = reportMensili;
+    }
+
     public User(String nome, String cognome, String matricola, Date dataDiNascita, Date dataDiRegistrazione) {
         Nome = nome;
         Cognome = cognome;
@@ -78,14 +95,14 @@ public class User {
         DataDiRegistrazione = dataDiRegistrazione;
     }
 
+    public User(String nome, String cognome) {
+        Nome = nome;
+        Cognome = cognome;
+    }
+
     @Override
     public String toString() {
-        return "User{" +
-                "Nome='" + Nome + '\'' +
-                ", Cognome='" + Cognome + '\'' +
-                ", Matricola='" + Matricola + '\'' +
-                ", DataDiNascita=" + DataDiNascita +
-                ", DataDiRegistazione=" + DataDiRegistrazione +
-                '}';
+        return "" + Nome + " " + Cognome;
     }
+
 }

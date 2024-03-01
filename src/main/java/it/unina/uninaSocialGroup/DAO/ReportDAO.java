@@ -15,24 +15,25 @@ public class ReportDAO {
      * @param Month
      * @return List<Report> dataList
      */
-    public List<Report> getGroupsReport(User user, int Month){
+    public void getGroupsReport(User user, int Month){
         List<Report> dataList = new ArrayList<>();
         PostDAO post = new PostDAO();
-        String PPL, PML, PPC, PMC;
-        int NMP, i = 0;
+        int i = 0;
         GroupDAO groupDAO = new GroupDAO();
         groupDAO.getAdminGroups(user);
         List<Group> groups = user.getGruppiCreati();
-            while(i < groups.size()){
-                PPL = post.getPostPlusLike(Month, groups.get(i).getIDGruppo());
-                PML = post.getPostMinusLike(Month, groups.get(i).getIDGruppo());
-                PPC = post.getPostPlusComments(Month, groups.get(i).getIDGruppo());
-                PMC = post.getPostMinusComments(Month, groups.get(i).getIDGruppo());
-                NMP = post.getAveragePost(Month, groups.get(i).getIDGruppo());
-                Report report = new Report(groups.get(i).getNomeGruppo(), PPL, PML, PPC, PMC, NMP);
-                dataList.add(report);
-                i += 1;
-            }
-        return dataList;
+        while(i < groups.size()){
+            Report report = new Report();
+            report.setNomeGruppo(groups.get(i).getNomeGruppo());
+            report.setPostPiuLike(post.getPostPlusLike(Month, groups.get(i).getIDGruppo()));
+            report.setPostMenoLike(post.getPostMinusLike(Month, groups.get(i).getIDGruppo()));
+            report.setPostPiuCommenti(post.getPostPlusComments(Month, groups.get(i).getIDGruppo()));
+            report.setPostMenoCommenti(post.getPostMinusComments(Month, groups.get(i).getIDGruppo()));
+            report.setNumMedioPost(post.getAveragePost(Month, groups.get(i).getIDGruppo()));
+            dataList.add(report);
+            i += 1;
+        }
+        user.setReportMensili(dataList);
     }
+
 }

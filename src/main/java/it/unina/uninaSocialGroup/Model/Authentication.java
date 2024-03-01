@@ -3,8 +3,6 @@ package it.unina.uninaSocialGroup.Model;
 public class Authentication {
     private String Email;
     private String Password;
-    private String ConfermaPassword;
-    private String NumeroDiTelefono;
     private User Matricola;
     public String getEmail() {
         return Email;
@@ -22,37 +20,15 @@ public class Authentication {
         Password = password;
     }
 
-    public String getConfermaPassword() {
-        return ConfermaPassword;
-    }
-
-    public void setConfermaPassword(String confermaPassword) {
-        ConfermaPassword = confermaPassword;
-    }
-
-    public String getNumeroDiTelefono() {
-        return NumeroDiTelefono;
-    }
-
-    public void setNumeroDiTelefono(String numeroDiTelefono) {
-        NumeroDiTelefono = numeroDiTelefono;
-    }
-
-    public Authentication(String email, String password, String confermaPassword, String numeroDiTelefono) {
+    public Authentication(String email, String password) {
         Email = email;
         Password = password;
-        ConfermaPassword = confermaPassword;
-        NumeroDiTelefono = numeroDiTelefono;
     }
 
     @Override
     public String toString() {
         return "Authentication{" +
                 "Email='" + Email + '\'' +
-                ", Password='" + Password + '\'' +
-                ", ConfermaPassword='" + ConfermaPassword + '\'' +
-                ", NumeroDiTelefono='" + NumeroDiTelefono + '\'' +
-                ", Matricola=" + Matricola +
-                '}';
+                ", Password='" + Password + '}';
     }
 }

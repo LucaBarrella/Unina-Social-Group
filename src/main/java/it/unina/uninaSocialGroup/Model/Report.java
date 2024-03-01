@@ -65,5 +65,6 @@ public class Report {
         NumMedioPost = numMedioPost;
     }
 
-
+    public Report() {
+    }
 }

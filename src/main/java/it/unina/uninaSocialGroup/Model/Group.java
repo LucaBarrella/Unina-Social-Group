@@ -9,6 +9,7 @@ public class Group {
    private Date DataDiCreazione;
    private String CategoriaGruppo;
    private List<User> ListaPartecipanti;
+   private List<Post> PostPubblicati;
 
     public String getIDGruppo() {
         return IDGruppo;
@@ -40,6 +41,22 @@ public class Group {
 
     public void setCategoriaGruppo(String categoriaGruppo) {
         CategoriaGruppo = categoriaGruppo;
+    }
+
+    public List<User> getListaPartecipanti() {
+        return ListaPartecipanti;
+    }
+
+    public void setListaPartecipanti(List<User> listaPartecipanti) {
+        ListaPartecipanti = listaPartecipanti;
+    }
+
+    public List<Post> getPostPubblicati() {
+        return PostPubblicati;
+    }
+
+    public void setPostPubblicati(List<Post> postPubblicati) {
+        PostPubblicati = postPubblicati;
     }
 
     public Group(String IDGruppo, String nomeGruppo, Date dataDiCreazione, String categoriaGruppo) {

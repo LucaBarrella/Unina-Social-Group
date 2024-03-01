@@ -44,19 +44,21 @@
             </columnConstraints>
             <rowConstraints>
                <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" valignment="CENTER" vgrow="ALWAYS" />
-               <RowConstraints vgrow="ALWAYS" />
-               <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" valignment="CENTER" vgrow="ALWAYS" />
             </rowConstraints>
             <children>
-               <StackPane style="-fx-background-color: #09F;">
-                  <children>
-                     <ImageView fitHeight="87.0" fitWidth="133.0" pickOnBounds="true" preserveRatio="true">
-                        <image>
-                           <Image url="@../images/icon.png" />
-                        </image>
-                     </ImageView>
-                  </children>
-               </StackPane>
+               <StackPane style="-fx-background-color: #09F;" />
+                  <Button fx:id="BackButton" mnemonicParsing="false" style="-fx-background-color: transparent;">
+                     <font>
+                        <Font size="1.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="89.0" fitWidth="92.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/Back.gif" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
             </children>
          </GridPane>
          <GridPane GridPane.columnIndex="1">
@@ -86,7 +88,7 @@
                                  <Insets left="20.0" right="20.0" />
                               </padding>
                            </Label>
-                              <Label prefHeight="22.0" prefWidth="145.0" text="Numero Membri :" HBox.hgrow="SOMETIMES">
+                              <Label prefHeight="22.0" prefWidth="127.0" text="Numero Membri :" HBox.hgrow="SOMETIMES">
                                  <HBox.margin>
                                     <Insets left="20.0" right="20.0" />
                                  </HBox.margin>
@@ -94,7 +96,13 @@
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="NumberOfMembers" prefHeight="27.0" prefWidth="69.0" text="Label" />
+                              <Label fx:id="NumberOfMembers" prefHeight="27.0" prefWidth="53.0" text="Label">
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin></Label>
                               <Button fx:id="PostButton" mnemonicParsing="false" style="-fx-background-color: transparent;">
                                  <font>
                                     <Font size="1.0" />
@@ -106,11 +114,11 @@
                                        </image></ImageView>
                                  </graphic></Button>
                               <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                           <TextField fx:id="searchField" minWidth="0" onKeyReleased="#onSearch" prefHeight="39.0" prefWidth="244.0" promptText="Cerca Gruppo">
-                              <HBox.margin>
-                                 <Insets right="50.0" />
-                              </HBox.margin>
-                           </TextField>
+                              <ComboBox fx:id="members" prefHeight="39.0" prefWidth="171.0" promptText="Membri">
+                                 <HBox.margin>
+                                    <Insets right="40.0" />
+                                 </HBox.margin>
+                              </ComboBox>
                         </children>
                      </HBox>
                   </children>

@@ -32,6 +32,10 @@ public class LoginController {
     }
 
     private void signIn(ActionEvent event){
+        if(emailField.getText().isEmpty() || passwordField.getText().isEmpty()){
+            NoEmailPassword.setVisible(true);
+            return;
+        }
         AuthenticationDAO authenticate = new AuthenticationDAO();
         boolean result = authenticate.CheckCredentials(emailField.getText(), passwordField.getText());
         if(result){

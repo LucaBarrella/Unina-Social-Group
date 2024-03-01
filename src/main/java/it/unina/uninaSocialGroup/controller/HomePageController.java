@@ -96,6 +96,7 @@ public class HomePageController{
                         HBox hbox = fxmlLoader.load();
                         SearchBarController controller = fxmlLoader.getController();
                         controller.setGroup(item, searchField, HomePageController.this);
+                        controller.setUserEmail(userEmail);
                         setGraphic(hbox);
                     } catch (IOException e) {
                         throw new RuntimeException(e);
@@ -199,9 +200,10 @@ public class HomePageController{
 
     public void LoadDataTableReport(Integer month){
         UserDAO userDAO = new UserDAO();
-        ReportDAO report = new ReportDAO();
+        ReportDAO reportDAO = new ReportDAO();
         User user = userDAO.getUserByEmail(userEmail);
-        List<Report> dati = report.getGroupsReport(user,month);
+        reportDAO.getGroupsReport(user,month);
+        List<Report> dati = user.getReportMensili();
         NameGroupColumn.setCellValueFactory(new PropertyValueFactory<>("NomeGruppo"));
         PostPlusLikeColumn.setCellValueFactory(new PropertyValueFactory<>("PostPiuLike"));
         PostMinusLikeColumn.setCellValueFactory(new PropertyValueFactory<>("PostMenoLike"));

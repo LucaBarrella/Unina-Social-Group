@@ -1,6 +1,7 @@
 package it.unina.uninaSocialGroup.DAO;
 
 import it.unina.uninaSocialGroup.Model.DatabaseConnectionManager;
+import it.unina.uninaSocialGroup.Model.Group;
 import it.unina.uninaSocialGroup.Model.Post;
 import it.unina.uninaSocialGroup.Model.User;
 import java.util.ArrayList;
@@ -44,7 +45,7 @@ public class PostDAO {
     public String getPostPlusLike(int Month, String IDGroup) {
         String post = null;
         Connection connect = null;
-        String query = "SELECT p.ID_Post, COUNT(l.ID_Post) AS Numero_Like " +
+        String query = "SELECT p.Messaggio_Scritto, COUNT(l.ID_Post) AS Numero_Like " +
                         "FROM Post p " +
                         "JOIN Likes l ON p.ID_Post = l.ID_Post " +
                         "WHERE p.ID_Gruppo = ? " +
@@ -61,7 +62,7 @@ public class PostDAO {
             ps.setInt(2, Month);
             resultSet = ps.executeQuery();
             if (resultSet.next()) {
-                post = resultSet.getString("ID_Post");
+                post = resultSet.getString("Messaggio_Scritto");
             }
         } catch (SQLException sql) {
             sql.printStackTrace();
@@ -79,7 +80,7 @@ public class PostDAO {
     public String getPostMinusLike(int Month, String IDGroup) {
         String post = null;
         Connection connect = null;
-        String query = "SELECT p.ID_Post, COUNT(l.ID_Post) AS Numero_Like " +
+        String query = "SELECT p.Messaggio_Scritto, COUNT(l.ID_Post) AS Numero_Like " +
                         "FROM Post p " +
                         "JOIN Likes l ON p.ID_Post = l.ID_Post " +
                         "WHERE p.ID_Gruppo = ? " +
@@ -96,7 +97,7 @@ public class PostDAO {
             ps.setInt(2, Month);
             resultSet = ps.executeQuery();
             if (resultSet.next()) {
-                post = resultSet.getString("ID_Post");
+                post = resultSet.getString("Messaggio_Scritto");
             }
         } catch (SQLException sql) {
             sql.printStackTrace();
@@ -114,7 +115,7 @@ public class PostDAO {
     public String getPostPlusComments(int Month, String IDGroup) {
         String post = null;
         Connection connect = null;
-        String query = "SELECT p.ID_Post " +
+        String query = "SELECT p.Messaggio_Scritto " +
                         "FROM Post p " +
                         "LEFT JOIN Commento c ON p.ID_Post = c.ID_Post " +
                         "WHERE p.ID_Gruppo = ? " +
@@ -131,7 +132,7 @@ public class PostDAO {
             ps.setInt(2, Month);
             resultSet = ps.executeQuery();
             if (resultSet.next()) {
-                post = resultSet.getString("ID_Post");
+                post = resultSet.getString("Messaggio_Scritto");
             }
         } catch (SQLException sql) {
             sql.printStackTrace();
@@ -149,7 +150,7 @@ public class PostDAO {
     public String getPostMinusComments(int Month, String IDGroup) {
         String post = null;
         Connection connect = null;
-        String query = "SELECT p.ID_Post " +
+        String query = "SELECT p.Messaggio_Scritto " +
                         "FROM Post p " +
                         "LEFT JOIN Commento c ON p.ID_Post = c.ID_Post " +
                         "WHERE p.ID_Gruppo = ? " +
@@ -166,7 +167,7 @@ public class PostDAO {
             ps.setInt(2, Month);
             resultSet = ps.executeQuery();
             if (resultSet.next()) {
-                post = resultSet.getString("ID_Post");
+                post = resultSet.getString("Messaggio_Scritto");
             }
         } catch (SQLException sql) {
             sql.printStackTrace();
@@ -238,12 +239,17 @@ public class PostDAO {
     }
 
 
-
-    public List<Post> getAllPosts(String IDGroup) {
-        List<Post> posts = new ArrayList<>();
+    /**
+     * getAllPosts
+     * Restituisce tutti i post pubblicati su un gruppo
+     * @param group
+     */
+    public void getAllPosts(Group group) {
+        List<Post> dataList = new ArrayList<>();
         Connection connect = null;
         PreparedStatement ps = null;
         ResultSet resultSet = null;
+        String IDGroup = group.getIDGruppo();
         String query = "SELECT * FROM post NATURAL JOIN utente WHERE id_gruppo = ?";
         try {
             connect = DatabaseConnectionManager.createDatabaseConnection();
@@ -256,11 +262,11 @@ public class PostDAO {
                         resultSet.getString("Categoria"),
                         resultSet.getString("Messaggio_Scritto"),
                         resultSet.getString("nome") + " " + resultSet.getString("cognome"));
-                posts.add(post);
+                dataList.add(post);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return posts;
+        group.setPostPubblicati(dataList);
     }
 }

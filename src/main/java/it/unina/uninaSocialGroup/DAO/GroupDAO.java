@@ -243,4 +243,38 @@ public class GroupDAO {
             e.printStackTrace();
         }
     }
+
+    /**
+     * isUserMemberOfGroup
+     * Controlla se l'utente fa parte del gruppo
+     * @param group
+     * @param matricola
+     * @return true or false
+     */
+    public boolean isUserMemberOfGroup(Group group, String matricola){
+        Connection connect = null;
+        String query = "SELECT U.Matricola, U.Nome, U.Cognome " +
+                "FROM Utente U " +
+                "WHERE U.Matricola = ? AND " +
+                "(EXISTS (SELECT 1 FROM Partecipa P WHERE P.Matricola = U.Matricola AND P.ID_Gruppo = ?) OR " +
+                "EXISTS (SELECT 1 FROM Gruppo G WHERE G.GestoreGruppo = U.Matricola AND G.ID_Gruppo = ?))";
+        PreparedStatement ps = null;
+        ResultSet resultSet = null;
+        String idgroup = group.getIDGruppo();
+        try {
+            connect = DatabaseConnectionManager.createDatabaseConnection();
+            ps = connect.prepareStatement(query);
+            ps.setString(1, matricola);
+            ps.setString(2, idgroup);
+            ps.setString(3, idgroup);
+            resultSet = ps.executeQuery();
+            while (!resultSet.next()) {
+                return false;
+            }
+            return true;
+        } catch (SQLException sql) {
+            sql.printStackTrace();
+            return false;
+        }
+    }
 }

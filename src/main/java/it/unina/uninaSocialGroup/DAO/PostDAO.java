@@ -209,35 +209,6 @@ public class PostDAO {
         return result;
     }
 
-    /**
-     * getPost
-     * Restituisce i dati di un post
-     * @param IDPost
-     * @return post
-     */
-    public Post getPost(String IDPost){
-        Post post = null;
-        PreparedStatement ps = null;
-        ResultSet resultSet = null;
-        String query = "SELECT * FROM Post WHERE ID_Post = ?";
-        try {
-            Connection db = DatabaseConnectionManager.createDatabaseConnection();
-            ps = db.prepareStatement(query);
-            ps.setString(1, IDPost);
-            resultSet = ps.executeQuery();
-            if (resultSet.next()) {
-                post = new Post(
-                        resultSet.getString("ID_Post"),
-                        resultSet.getString("Categoria"),
-                        resultSet.getString("Messaggio_Scritto"),
-                        resultSet.getString("Matricola"));
-            }
-        } catch (SQLException sql) {
-            sql.printStackTrace();
-        }
-        return post;
-    }
-
 
     /**
      * getAllPosts

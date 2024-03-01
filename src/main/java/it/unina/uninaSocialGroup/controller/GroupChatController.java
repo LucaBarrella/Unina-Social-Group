@@ -62,6 +62,7 @@ public class GroupChatController {
         User currentUser = userDAO.getUserByEmail(userEmail);
         String currentUserName = currentUser.getNome() + " " + currentUser.getCognome();
 
+        //Controlla se l'utente fa parte del gruppo che si sta visualizzando
         boolean isUserInMembers = false;
         for (User member : members.getItems()) {
             String memberName = member.getNome() + " " + member.getCognome();
@@ -71,12 +72,19 @@ public class GroupChatController {
             }
         }
 
+        //Se l'utente non fa parte del gruppo, allora si impedisce di pubblicare post
         if (!isUserInMembers) {
             PostButton.setDisable(true);
         }
     }
 
+    /**
+     * displayName
+     * Metodo che mostra i membri del gruppo
+     */
     public void displayMembers() {
+        // Imposta una factory per le celle della lista "members".
+        // Ogni cella visualizza il toString() dell'oggetto User e viene disabilitata
         members.setCellFactory(lv -> new ListCell<User>() {
             @Override
             public void updateItem(User item, boolean empty) {
@@ -96,6 +104,11 @@ public class GroupChatController {
         members.setItems(memberList);
     }
 
+    /**
+     * CreatePost
+     * Metodo che viene chiamato quando viene cliccato INVIO sulla tastiera.
+     * Il post appena scritto viene salvato nel database
+     */
     public void CreatePost(){
         String text = PostTextArea.getText();
         if (text != null && !text.trim().isEmpty()) {
@@ -106,7 +119,9 @@ public class GroupChatController {
             String matricola = user.getMatricolaByEmail(userEmail);
             postDAO.CreateNewPost(category,text,matricola,groupId);
             PostTextArea.clear();
+            //ricarica la lista dei post
             fillListView();
+            //mostra un messaggio di conferma
             Platform.runLater(() -> {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Post Pubblicato");
@@ -117,14 +132,28 @@ public class GroupChatController {
         }
     }
 
+    /**
+     * setUserEmail
+     * Funzione che viene chiamata nella HomePage e nella SearchBar
+     * Usata principalmente per ottenere la Email dell'utente dalla HomePage
+     */
     public void setUserEmail(String userEmail) {
         this.userEmail = userEmail;
     }
 
+    /**
+     * setGroupID
+     * Funzione che viene chiamata nella HomePage e nella SearchBar
+     * Usata principalmente per ottenere l'ID del gruppo scelto nella HomePage
+     */
     public void setGroupID(String groupId) {
         this.groupId = groupId;
     }
 
+    /**
+     * displayData
+     * Metodo che mostra il nome e il numero di membri del gruppo sull'interfaccia
+     */
     public void displayData(){
         GroupDAO groupDAO = new GroupDAO();
         Group result = groupDAO.getGroup(groupId);
@@ -133,6 +162,13 @@ public class GroupChatController {
         NumberOfMembers.setText(String.valueOf(groupDAO.getNumberOfMemberGroup(groupId)));
     }
 
+
+    /**
+     * loadVBoxFromFXML
+     * Metodo che carica un VBox da un file FXML. Il file FXML è specificato dal percorso.
+     * Dopo aver caricato il VBox, ottiene il controller associato e imposta il post specificato.
+     * Infine, restituisce il VBox caricato (o null se il caricamento non è riuscito).
+     */
     private VBox loadVBoxFromFXML(Post post) {
         VBox vBox = null;
         try {
@@ -146,6 +182,11 @@ public class GroupChatController {
         return vBox;
     }
 
+    /**
+     * fillListView
+     * Metodo che mostra i post pubblicati sul gruppo.
+     * Si prendono i post dal db, li si aggiungono al VBox e poi alla ListView
+     */
     private void fillListView() {
         ObservableList<VBox> vBoxList = FXCollections.observableArrayList();
         PostDAO postDAO = new PostDAO();
@@ -161,6 +202,11 @@ public class GroupChatController {
         postListView.setItems(vBoxList);
     }
 
+    /**
+     * BackToHomePage
+     * Metodo che viene chiamato quando viene cliccato il bottone per tornare alla homepage
+     * Scambia la scena con la HomePage
+     */
     public @FXML void BackToHomePage(ActionEvent event){
             try {
                 switchScene.switchToScene(event, "/it/unina/uninaSocialGroup/view/HomePage.fxml", "topToBottom");

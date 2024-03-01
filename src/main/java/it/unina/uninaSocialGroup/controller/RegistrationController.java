@@ -32,6 +32,11 @@ public class RegistrationController {
         ContinueButton.setOnAction(this::registration);
     }
 
+    /**
+     * SwitchToSignInButton
+     * Metodo che viene chiamato quando viene cliccato il bottone LOGIN
+     * Scambia la scena con la LoginPage
+     */
     private void SwitchToSignInButton(ActionEvent event) {
         try {
             switchScene.switchToScene(event, "/it/unina/uninaSocialGroup/view/LoginPage.fxml", "rightToLeft");
@@ -40,6 +45,10 @@ public class RegistrationController {
         }
     }
 
+    /**
+     * areFieldsNotNull
+     * Metodo che controlla se i campi sono tutti compilati (non siano vuoti)
+     */
     private boolean areFieldsNotNull() {
         return NameField.getText() != null &&
                 SurnameField.getText() != null &&
@@ -50,7 +59,13 @@ public class RegistrationController {
                 ConfirmPasswordField.getText() != null;
     }
 
+    /**
+     * registration
+     * Metodo che viene chiamato quando viene cliccato il bottone CONTINUA
+     * Salva i dati scritti nel database e scambia la scena con la HomePage
+     */
     private void registration (ActionEvent event) {
+        //se i campi non sono tutti compilati, mostra un messaggio di avertenza
         if (!areFieldsNotNull()) {
             WarningLabel.setVisible(true);
             return;
@@ -66,18 +81,28 @@ public class RegistrationController {
                 try {
                     user.addNewUser(StudentIDField.getText(), NameField.getText(), SurnameField.getText(), birthDate, currentDate);
                     authenticate.addNewUserToAuthTable(EmailField.getText(), PasswordField.getText());
-                    System.out.println("Registration successful");
                     HomePageController homePageController = new HomePageController();
+                    //Passa la email inserita alla HomePage
                     homePageController.setUserEmail(EmailField.getText());
                     switchScene.switchToScene(event, "/it/unina/uninaSocialGroup/view/HomePage.fxml", "buttonToTop");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             } else {
-                System.out.println("Password and Confirm Password are not the same");
+                //Mostra il messaggio di errore (Password != ConfermaPassword)
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Errore di registrazione");
+                alert.setHeaderText(null);
+                alert.setContentText("Password e Conferma Password non coincidono");
+                alert.showAndWait();
             }
         } else {
-            System.out.println("User already exists");
+            //Mostra il messaggio di avvertenza (Utente gia esistente)
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Errore di registrazione");
+            alert.setHeaderText(null);
+            alert.setContentText("Utente gia esistente. Effettua il login");
+            alert.showAndWait();
         }
     }
 }

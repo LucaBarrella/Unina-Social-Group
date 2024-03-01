@@ -25,11 +25,20 @@ public class GroupCreationController {
         CreationGroupButton.setOnAction(this::GroupCreation);
     }
 
+    /**
+     * setUserEmail
+     * Funzione che viene chiamata nella HomePage
+     * Usata principalmente per ottenere la Email dell'utente dalla HomePage
+     */
     public void setUserEmail(String email){
         this.userEmail = email;
     }
 
-
+    /**
+     * GroupCreation
+     * Metodo che viene chiamato quando viene cliccato il bottone CREA.
+     * Viene creato nel database il nuovo gruppo con i dettagli scritti sull'interfaccia.
+     */
     public @FXML void GroupCreation(ActionEvent event){
         UserDAO user = new UserDAO();
         GroupDAO group = new GroupDAO();
@@ -38,6 +47,7 @@ public class GroupCreationController {
         try {
             FXMLLoader loader = switchScene.createFXML("/it/unina/uninaSocialGroup/view/HomePage.fxml");
             switchScene.loadSceneAndShow(event, loader);
+            //mostra un messaggio di conferma
             Platform.runLater(() -> {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Creazione Gruppo");

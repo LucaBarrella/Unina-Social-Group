@@ -31,7 +31,15 @@ public class LoginController {
         LoginButton.setOnAction(this::signIn);
     }
 
+    /**
+     * signIn
+     * Metodo che viene chiamato quando viene cliccato il bottone LOGIN
+     * Controlla se l'utente è presente nel database.
+     * In caso affermativo, scambia la scena con la HomePage
+     * In caso negativo, mostra un messaggio di errore
+     */
     private void signIn(ActionEvent event){
+        //Se non viene scritto nulla nel campo Email o Password, si mostra un messaggio di avvertenza
         if(emailField.getText().isEmpty() || passwordField.getText().isEmpty()){
             NoEmailPassword.setVisible(true);
             return;
@@ -42,12 +50,14 @@ public class LoginController {
             try {
                 FXMLLoader loader = switchScene.createFXML("/it/unina/uninaSocialGroup/view/HomePage.fxml");
                 HomePageController homePageController = new HomePageController();
+                //Passa la email inserita alla HomePage
                 homePageController.setUserEmail(emailField.getText());
                 switchScene.loadSceneAndShow(event, loader);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }else {
+            //Mostra il messaggio di errore
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Errore di accesso");
             alert.setHeaderText(null);
@@ -56,7 +66,11 @@ public class LoginController {
         }
     }
 
-
+    /**
+     * SwitchToSignUpButton
+     * Metodo che viene chiamato quando viene cliccato il bottone REGISTRAZIONE
+     * Scambia la scena con la RegistrationPage
+     */
     private void SwitchToSignUpButton(ActionEvent event) {
         try {
             switchScene.switchToScene(event, "/it/unina/uninaSocialGroup/view/RegistrationPage.fxml", "leftToRight");

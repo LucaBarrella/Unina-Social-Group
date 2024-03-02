@@ -30,14 +30,33 @@ public class SearchBarController {
 
     /**
      * setGroup
-     * Metodo che mostra i gruppi (cercati nel db per nome o categoria)
+     * Metodo che mostra i gruppi (cercati per nome o categoria)
      */
     public void setGroup(Group group, TextField searchField, HomePageController homePageController) {
         this.searchField = searchField;
         this.homePageController = homePageController;
         groupNameButton.setText(group.getNomeGruppo());
         groupNameButton.setOnAction(e -> {
-
+            try {
+                //Scambia la scena con la chat del gruppo
+                FXMLLoader loader = switchScene.createFXML("/it/unina/uninaSocialGroup/view/GroupChatPage.fxml");
+                GroupChatController groupchat = new GroupChatController();
+                //Passa l'ID del gruppo alla GroupChat
+                groupchat.setGroupID(group.getIDGruppo());
+                //Passa la email dell'utente alla GroupChat
+                groupchat.setUserEmail(userEmail);
+                switchScene.loadSceneAndShow(e, loader);
+                //Mostra un messaggio di avvertenza
+                Platform.runLater(() -> {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Attenzione!");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Unisciti al gruppo per pubblicare post");
+                    alert.showAndWait();
+                });
+            } catch(IOException ex){
+                ex.printStackTrace();
+            }
         });
 
         GroupDAO groupDAO = new GroupDAO();

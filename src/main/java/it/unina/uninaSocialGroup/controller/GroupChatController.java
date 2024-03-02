@@ -20,6 +20,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
+import javax.swing.text.html.ImageView;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -74,8 +75,11 @@ public class GroupChatController {
         }
 
         //Se l'utente non fa parte del gruppo, allora si impedisce di pubblicare post
+        //e si impedisce di cliccare il tasto per abbandonare il gruppo
         if (!isUserInMembers) {
             PostButton.setDisable(true);
+            LeaveGroupButton.setVisible(false);
+            LeaveGroupButton.setDisable(true);
         }
 
         LeaveGroupButton.setOnAction(this::LeaveGroup);

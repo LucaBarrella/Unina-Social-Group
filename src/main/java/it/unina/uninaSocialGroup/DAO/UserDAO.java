@@ -6,61 +6,7 @@ import it.unina.uninaSocialGroup.Model.User;
 import java.sql.*;
 
 public class UserDAO {
-    /**
-     * UserAlreadyExists
-     * Controlla che la matricola inserita non esista gia nel db.
-     * @param Matricola
-     * @return true or false
-     */
-    public boolean UserAlreadyExists(String Matricola) {
-        Connection connect = null;
-        String query = "SELECT 1 FROM utente WHERE Matricola = ?";
-        PreparedStatement ps = null;
-        ResultSet resultSet = null;
-        try {
-            connect = DatabaseConnectionManager.createDatabaseConnection();
-            ps = connect.prepareStatement(query);
-            ps.setString(1, Matricola);
-            resultSet = ps.executeQuery();
-            if (!resultSet.next()) {
-                return false;
-            }
-            return true;
-        } catch (SQLException sql) {
-            sql.printStackTrace();
-        }
-        return false;
-    }
-
-    /**
-     * addNewUser
-     * Inserisce un nuovo utente nel db
-     * @param Matricola dell'utente
-     * @param name Nome dell'utente
-     * @param surname Cognome dell'utente
-     * @param birthDate Data di nascita dell'utente
-     * @param registrationDate Data di registrazione dell'utente
-     */
-    public void addNewUser(String Matricola, String name, String surname, Date birthDate, Date registrationDate, String AuthID){
-        Connection connect = null;
-        String query = "INSERT INTO utente (Matricola, Nome, Cognome, Data_di_Nascita, Data_di_Registrazione, ID_Autenticazione) VALUES (?, ?, ?, ?, ?, ?)";
-        PreparedStatement psInsert = null;
-        try {
-            connect = DatabaseConnectionManager.createDatabaseConnection();
-            psInsert = connect.prepareStatement(query);
-            psInsert.setString(1, Matricola);
-            psInsert.setString(2, name);
-            psInsert.setString(3, surname);
-            psInsert.setDate(4, birthDate);
-            psInsert.setDate(5, registrationDate);
-            psInsert.setString(6, AuthID);
-            psInsert.executeUpdate();
-            System.out.println("User added successfully!");
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("User not added!");
-        }
-    }
+    Connection connect = DatabaseConnectionManager.createDatabaseConnection();
 
     /**
      * getMatricolaByEmail
@@ -70,7 +16,6 @@ public class UserDAO {
      */
     public String getMatricolaByEmail(String email){
         String matricola = null;
-        Connection connect = null;
         String query = "SELECT Matricola FROM Utente WHERE Matricola IN (" +
                             "SELECT U.Matricola FROM Utente U JOIN Autenticazione A "+
                                 "ON U.ID_Autenticazione = A.ID_Autenticazione "+
@@ -78,7 +23,6 @@ public class UserDAO {
         PreparedStatement ps = null;
         ResultSet resultSet = null;
         try {
-            connect = DatabaseConnectionManager.createDatabaseConnection();
             ps = connect.prepareStatement(query);
             ps.setString(1, email);
             resultSet = ps.executeQuery();
@@ -99,12 +43,10 @@ public class UserDAO {
      */
     public User getUserData(String matricola){
         User user = null;
-        Connection connect = null;
         String query = "SELECT * FROM Utente WHERE Matricola = ?";
         PreparedStatement ps = null;
         ResultSet resultSet = null;
         try {
-            connect = DatabaseConnectionManager.createDatabaseConnection();
             ps = connect.prepareStatement(query);
             ps.setString(1, matricola);
             resultSet = ps.executeQuery();
@@ -130,7 +72,6 @@ public class UserDAO {
      */
     public User getUserByEmail(String email){
         User user = null;
-        Connection connect = null;
         String query = "SELECT * " +
                 "FROM Utente U JOIN Autenticazione A " +
                 "ON U.ID_Autenticazione = A.ID_Autenticazione " +
@@ -138,7 +79,6 @@ public class UserDAO {
         PreparedStatement ps = null;
         ResultSet resultSet = null;
         try {
-            connect = DatabaseConnectionManager.createDatabaseConnection();
             ps = connect.prepareStatement(query);
             ps.setString(1, email);
             resultSet = ps.executeQuery();

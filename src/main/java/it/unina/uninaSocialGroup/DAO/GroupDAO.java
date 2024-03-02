@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GroupDAO {
+    Connection connect = DatabaseConnectionManager.createDatabaseConnection();
+
     /**
      * getGroupsBySearchField
      * Restituisce una lista di gruppi filtrati per la barra di ricerca
@@ -23,8 +25,8 @@ public class GroupDAO {
     public List<Group> getGroupsBySearchField(String searchBarFieldText) {
         List<Group> listGroups = new ArrayList<>();
 
-        try (Connection connection = DatabaseConnectionManager.createDatabaseConnection()) {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM gruppo WHERE nome_Gruppo LIKE ? OR categoria_Gruppo LIKE ?");
+        try{
+            PreparedStatement statement = connect.prepareStatement("SELECT * FROM gruppo WHERE nome_Gruppo LIKE ? OR categoria_Gruppo LIKE ?");
             statement.setString(1, "%" + searchBarFieldText + "%");
             statement.setString(2, "%" + searchBarFieldText + "%");
             ResultSet resultSet = statement.executeQuery();
@@ -57,8 +59,7 @@ public class GroupDAO {
         String query = "SELECT DISTINCT G.* FROM Gruppo G LEFT JOIN Partecipa P ON G.ID_Gruppo = P.ID_Gruppo " +
                        "WHERE P.Matricola = ? OR G.GestoreGruppo = ?";
         try{
-            Connection db = DatabaseConnectionManager.createDatabaseConnection();
-            ps = db.prepareStatement(query);
+            ps = connect.prepareStatement(query);
             ps.setString(1, matricola);
             ps.setString(2, matricola);
             ResultSet resultSet = ps.executeQuery();
@@ -85,8 +86,7 @@ public class GroupDAO {
         PreparedStatement ps = null;
         String query = "SELECT G.* FROM Gruppo G WHERE G.GestoreGruppo = ?";
         try{
-            Connection db = DatabaseConnectionManager.createDatabaseConnection();
-            ps = db.prepareStatement(query);
+            ps = connect.prepareStatement(query);
             ps.setString(1, matricola);
             ResultSet resultSet = ps.executeQuery();
             while(resultSet.next()){
@@ -111,8 +111,7 @@ public class GroupDAO {
         PreparedStatement ps = null;
         String query = "INSERT INTO Gruppo (Nome_Gruppo, Data_di_Creazione, Categoria_Gruppo, GestoreGruppo) VALUES (?, ?, ?, ?)";
         try {
-            Connection db = DatabaseConnectionManager.createDatabaseConnection();
-            ps = db.prepareStatement(query);
+            ps = connect.prepareStatement(query);
             ps.setString(1, GroupName);
             ps.setDate(2, Date.valueOf(LocalDate.now()));
             ps.setString(3, GroupCategory);
@@ -143,8 +142,7 @@ public class GroupDAO {
                             "WHERE G.ID_Gruppo = ? " +
                             ") AS Membri;";
         try{
-            Connection db = DatabaseConnectionManager.createDatabaseConnection();
-            ps = db.prepareStatement(query);
+            ps = connect.prepareStatement(query);
             ps.setString(1, IDGroup);
             ps.setString(2, IDGroup);
             ResultSet resultSet = ps.executeQuery();
@@ -165,12 +163,10 @@ public class GroupDAO {
      */
     public Group getGroup(String IDGroup){
         Group group = null;
-        Connection connect = null;
         String query = "SELECT * FROM Gruppo WHERE ID_Gruppo = ?";
         PreparedStatement ps = null;
         ResultSet resultSet = null;
         try {
-            connect = DatabaseConnectionManager.createDatabaseConnection();
             ps = connect.prepareStatement(query);
             ps.setString(1, IDGroup);
             resultSet = ps.executeQuery();
@@ -208,8 +204,7 @@ public class GroupDAO {
                         "WHERE G.ID_Gruppo = ? " +
                         ");";
         try{
-            Connection db = DatabaseConnectionManager.createDatabaseConnection();
-            ps = db.prepareStatement(query);
+            ps = connect.prepareStatement(query);
             ps.setString(1, IDGroup);
             ps.setString(2, IDGroup);
             ResultSet resultSet = ps.executeQuery();
@@ -230,11 +225,9 @@ public class GroupDAO {
      * @param Matricola
      */
     public void addNewMemberToGroup(Group group, String Matricola){
-        Connection connect = null;
         String query = "INSERT INTO Partecipa (Matricola, ID_Gruppo) VALUES (?, ?)";
         PreparedStatement psInsert = null;
         try {
-            connect = DatabaseConnectionManager.createDatabaseConnection();
             psInsert = connect.prepareStatement(query);
             psInsert.setString(1, Matricola);
             psInsert.setString(2, group.getIDGruppo());
@@ -252,7 +245,6 @@ public class GroupDAO {
      * @return true or false
      */
     public boolean isUserMemberOfGroup(Group group, String matricola){
-        Connection connect = null;
         String query = "SELECT U.Matricola, U.Nome, U.Cognome " +
                 "FROM Utente U " +
                 "WHERE U.Matricola = ? AND " +
@@ -262,7 +254,6 @@ public class GroupDAO {
         ResultSet resultSet = null;
         String idgroup = group.getIDGruppo();
         try {
-            connect = DatabaseConnectionManager.createDatabaseConnection();
             ps = connect.prepareStatement(query);
             ps.setString(1, matricola);
             ps.setString(2, idgroup);
@@ -285,11 +276,9 @@ public class GroupDAO {
      * @param Matricola
      */
     public void RemoveMemberToGroup(Group group, String Matricola){
-        Connection connect = null;
         String query = "DELETE FROM Partecipa WHERE Matricola = ? AND ID_Gruppo = ?";
         PreparedStatement psInsert = null;
         try {
-            connect = DatabaseConnectionManager.createDatabaseConnection();
             psInsert = connect.prepareStatement(query);
             psInsert.setString(1, Matricola);
             psInsert.setString(2, group.getIDGruppo());

@@ -11,6 +11,8 @@ import java.sql.*;
 import java.time.LocalDate;
 
 public class PostDAO {
+    Connection connect = DatabaseConnectionManager.createDatabaseConnection();
+
     /**
      * CreateNewPost
      * Inserisce un nuovo post nel db.
@@ -23,8 +25,7 @@ public class PostDAO {
         PreparedStatement ps = null;
         String query = "INSERT INTO Post (Categoria, Data_Pubblicazione, Messaggio_Scritto, Percorso_File, Estensione, Tipo_Post, Matricola, ID_Gruppo) VALUES (?,current_date,?,NULL,NULL,'Post_Testuale',?,?)";
         try {
-            Connection db = DatabaseConnectionManager.createDatabaseConnection();
-            ps = db.prepareStatement(query);
+            ps = connect.prepareStatement(query);
             ps.setString(1, Category);
             ps.setString(2, Message);
             ps.setString(3, Matricola);
@@ -44,7 +45,6 @@ public class PostDAO {
      */
     public String getPostPlusLike(int Month, String IDGroup) {
         String post = null;
-        Connection connect = null;
         String query = "SELECT p.Messaggio_Scritto, COUNT(l.ID_Post) AS Numero_Like " +
                         "FROM Post p " +
                         "JOIN Likes l ON p.ID_Post = l.ID_Post " +
@@ -56,7 +56,6 @@ public class PostDAO {
         PreparedStatement ps = null;
         ResultSet resultSet = null;
         try {
-            connect = DatabaseConnectionManager.createDatabaseConnection();
             ps = connect.prepareStatement(query);
             ps.setString(1, IDGroup);
             ps.setInt(2, Month);
@@ -79,7 +78,6 @@ public class PostDAO {
      */
     public String getPostMinusLike(int Month, String IDGroup) {
         String post = null;
-        Connection connect = null;
         String query = "SELECT p.Messaggio_Scritto, COUNT(l.ID_Post) AS Numero_Like " +
                         "FROM Post p " +
                         "JOIN Likes l ON p.ID_Post = l.ID_Post " +
@@ -91,7 +89,6 @@ public class PostDAO {
         PreparedStatement ps = null;
         ResultSet resultSet = null;
         try {
-            connect = DatabaseConnectionManager.createDatabaseConnection();
             ps = connect.prepareStatement(query);
             ps.setString(1, IDGroup);
             ps.setInt(2, Month);
@@ -114,7 +111,6 @@ public class PostDAO {
      */
     public String getPostPlusComments(int Month, String IDGroup) {
         String post = null;
-        Connection connect = null;
         String query = "SELECT p.Messaggio_Scritto " +
                         "FROM Post p " +
                         "LEFT JOIN Commento c ON p.ID_Post = c.ID_Post " +
@@ -126,7 +122,6 @@ public class PostDAO {
         PreparedStatement ps = null;
         ResultSet resultSet = null;
         try {
-            connect = DatabaseConnectionManager.createDatabaseConnection();
             ps = connect.prepareStatement(query);
             ps.setString(1, IDGroup);
             ps.setInt(2, Month);
@@ -149,7 +144,6 @@ public class PostDAO {
      */
     public String getPostMinusComments(int Month, String IDGroup) {
         String post = null;
-        Connection connect = null;
         String query = "SELECT p.Messaggio_Scritto " +
                         "FROM Post p " +
                         "LEFT JOIN Commento c ON p.ID_Post = c.ID_Post " +
@@ -161,7 +155,6 @@ public class PostDAO {
         PreparedStatement ps = null;
         ResultSet resultSet = null;
         try {
-            connect = DatabaseConnectionManager.createDatabaseConnection();
             ps = connect.prepareStatement(query);
             ps.setString(1, IDGroup);
             ps.setInt(2, Month);
@@ -184,7 +177,6 @@ public class PostDAO {
      */
     public int getAveragePost(int Month, String IDGroup) {
         int result = 0;
-        Connection connect = null;
         String query = "SELECT AVG(num_post) AS Numero_Medio_Post_Pubblicati " +
                             "FROM (" +
                             "SELECT COUNT(*) AS num_post " +
@@ -195,7 +187,6 @@ public class PostDAO {
         PreparedStatement ps = null;
         ResultSet resultSet = null;
         try {
-            connect = DatabaseConnectionManager.createDatabaseConnection();
             ps = connect.prepareStatement(query);
             ps.setString(1, IDGroup);
             ps.setInt(2, Month);
@@ -217,13 +208,11 @@ public class PostDAO {
      */
     public void getAllPosts(Group group) {
         List<Post> dataList = new ArrayList<>();
-        Connection connect = null;
         PreparedStatement ps = null;
         ResultSet resultSet = null;
         String IDGroup = group.getIDGruppo();
         String query = "SELECT * FROM post NATURAL JOIN utente WHERE id_gruppo = ?";
         try {
-            connect = DatabaseConnectionManager.createDatabaseConnection();
             ps = connect.prepareStatement(query);
             ps.setString(1, IDGroup);
             resultSet = ps.executeQuery();
@@ -248,11 +237,9 @@ public class PostDAO {
      * @param IDPost
      */
     public void addLike(String matricola, String IDPost){
-        Connection connect = null;
         String query = "INSERT INTO Likes (matricola, id_post, data_like, ora_like) VALUES (?,?, current_date, current_time)";
         PreparedStatement ps = null;
         try {
-            connect = DatabaseConnectionManager.createDatabaseConnection();
             ps = connect.prepareStatement(query);
             ps.setString(1, matricola);
             ps.setString(2, IDPost);
@@ -269,11 +256,9 @@ public class PostDAO {
      * @param IDPost
      */
     public void RemoveLike(String matricola, String IDPost){
-        Connection connect = null;
         String query = "DELETE FROM Likes WHERE Matricola = ? AND ID_Post = ?";
         PreparedStatement ps = null;
         try {
-            connect = DatabaseConnectionManager.createDatabaseConnection();
             ps = connect.prepareStatement(query);
             ps.setString(1, matricola);
             ps.setString(2, IDPost);
@@ -293,11 +278,10 @@ public class PostDAO {
         int numberOfLike = 0;
         PreparedStatement ps = null;
         String query = "SELECT COUNT(*) AS NumeroLike " +
-                "FROM Likes " +
-                "WHERE ID_Post = ?";
+                        "FROM Likes " +
+                        "WHERE ID_Post = ?";
         try{
-            Connection db = DatabaseConnectionManager.createDatabaseConnection();
-            ps = db.prepareStatement(query);
+            ps = connect.prepareStatement(query);
             ps.setString(1, IDPost);
             ResultSet resultSet = ps.executeQuery();
             while(resultSet.next()){
@@ -317,12 +301,10 @@ public class PostDAO {
      * @return true or false
      */
     public boolean isLikeAlreadyAdd(String matricola, String IDPost){
-        Connection connect = null;
         String query = "SELECT 1 FROM Likes WHERE Matricola = ? AND ID_Post = ?";
         PreparedStatement ps = null;
         ResultSet resultSet = null;
         try {
-            connect = DatabaseConnectionManager.createDatabaseConnection();
             ps = connect.prepareStatement(query);
             ps.setString(1, matricola);
             ps.setString(2, IDPost);

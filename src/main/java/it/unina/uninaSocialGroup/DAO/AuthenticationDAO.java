@@ -9,6 +9,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class AuthenticationDAO {
+      Connection connect = DatabaseConnectionManager.createDatabaseConnection();
+
       /**
        * CheckCredentials
        * Controlla se sono presenti nel database le credenziali inserite
@@ -17,12 +19,10 @@ public class AuthenticationDAO {
        * @return true or false
        */
       public boolean CheckCredentials(String email, String password) {
-            Connection connect = null;
             String query = "SELECT 1 FROM autenticazione WHERE Email = ? AND Password = ?";
             PreparedStatement ps = null;
             ResultSet resultSet = null;
             try {
-                  connect = DatabaseConnectionManager.createDatabaseConnection();
                   ps = connect.prepareStatement(query);
                   ps.setString(1, email);
                   ps.setString(2, password);

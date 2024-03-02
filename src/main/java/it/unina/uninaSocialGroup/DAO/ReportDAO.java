@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReportDAO {
+
     /**
      * getGroupsReport
      * Restituisce i dati report mensili di ogni gruppo creato da un utente

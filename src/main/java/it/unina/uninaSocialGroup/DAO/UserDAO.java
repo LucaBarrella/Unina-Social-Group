@@ -41,9 +41,9 @@ public class UserDAO {
      * @param birthDate Data di nascita dell'utente
      * @param registrationDate Data di registrazione dell'utente
      */
-    public void addNewUser(String Matricola, String name, String surname, Date birthDate, Date registrationDate){
+    public void addNewUser(String Matricola, String name, String surname, Date birthDate, Date registrationDate, String AuthID){
         Connection connect = null;
-        String query = "INSERT INTO utente (Matricola, Nome, Cognome, Data_di_Nascita, Data_di_Registrazione) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO utente (Matricola, Nome, Cognome, Data_di_Nascita, Data_di_Registrazione, ID_Autenticazione) VALUES (?, ?, ?, ?, ?, ?)";
         PreparedStatement psInsert = null;
         try {
             connect = DatabaseConnectionManager.createDatabaseConnection();
@@ -53,6 +53,7 @@ public class UserDAO {
             psInsert.setString(3, surname);
             psInsert.setDate(4, birthDate);
             psInsert.setDate(5, registrationDate);
+            psInsert.setString(6, AuthID);
             psInsert.executeUpdate();
             System.out.println("User added successfully!");
         } catch (SQLException e) {

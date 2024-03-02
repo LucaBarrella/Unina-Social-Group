@@ -14,7 +14,7 @@ import java.io.IOException;
 
 public class LoginController {
     @FXML
-    private Button SwitchToSignUpButton, LoginButton;
+    private Button LoginButton;
     @FXML
     private TextField emailField;
     @FXML
@@ -27,7 +27,6 @@ public class LoginController {
     @FXML
     public void initialize() {
         NoEmailPassword.setVisible(false);
-        SwitchToSignUpButton.setOnAction(this::SwitchToSignUpButton);
         LoginButton.setOnAction(this::signIn);
     }
 
@@ -63,19 +62,6 @@ public class LoginController {
             alert.setHeaderText(null);
             alert.setContentText("Accesso non riuscito, utente non trovato!");
             alert.showAndWait();
-        }
-    }
-
-    /**
-     * SwitchToSignUpButton
-     * Metodo che viene chiamato quando viene cliccato il bottone REGISTRAZIONE
-     * Scambia la scena con la RegistrationPage
-     */
-    private void SwitchToSignUpButton(ActionEvent event) {
-        try {
-            switchScene.switchToScene(event, "/it/unina/uninaSocialGroup/view/RegistrationPage.fxml", "leftToRight");
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 

@@ -1,9 +1,11 @@
 package it.unina.uninaSocialGroup.Model;
 
 public class Authentication {
+    private String IDAutenticazione;
     private String Email;
     private String Password;
     private User Matricola;
+
     public String getEmail() {
         return Email;
     }
@@ -11,6 +13,7 @@ public class Authentication {
     public void setEmail(String email) {
         Email = email;
     }
+
 
     public String getPassword() {
         return Password;

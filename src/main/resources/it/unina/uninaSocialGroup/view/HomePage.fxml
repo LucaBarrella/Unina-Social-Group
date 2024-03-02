@@ -169,9 +169,41 @@
                </GridPane>
                <TabPane fx:id="tabPane" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #FFFFFF;" tabClosingPolicy="UNAVAILABLE" GridPane.rowIndex="1">
                   <tabs>
-                     <Tab text="Consigliati">
+                     <Tab text="Home">
                         <content>
-                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <ImageView fitHeight="185.0" fitWidth="182.0" layoutX="103.0" layoutY="52.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../images/Login.gif" />
+                                       </image>
+                                    </ImageView>
+                                    <Label alignment="CENTER" layoutX="319.0" layoutY="87.0" prefHeight="85.0" prefWidth="494.0" style="-fx-text-fill: Grey;" text="Bentornato!" textAlignment="CENTER">
+                                       <font>
+                                          <Font size="82.0" />
+                                       </font>
+                                    </Label>
+                                    <Hyperlink fx:id="UninaWebSite" layoutX="285.0" layoutY="314.0" prefHeight="48.0" prefWidth="374.0" text="Visita il sito web ufficiale Unina">
+                                       <font>
+                                          <Font size="25.0" />
+                                       </font>
+                                    </Hyperlink>
+                                    <ImageView fitHeight="111.0" fitWidth="101.0" layoutX="152.0" layoutY="288.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../images/school.gif" />
+                                       </image>
+                                    </ImageView>
+                                    <Hyperlink fx:id="Segrepass" layoutX="464.0" layoutY="436.0" text="Prenota qui i tuoi esami">
+                                       <font>
+                                          <Font size="25.0" />
+                                       </font>
+                                    </Hyperlink>
+                                    <ImageView fitHeight="142.0" fitWidth="113.0" layoutX="327.0" layoutY="404.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../images/exam.gif" />
+                                       </image>
+                                    </ImageView>
+                                 </children></AnchorPane>
                         </content>
                      </Tab>
                      <Tab fx:id="ProfileTab" text="Profilo">

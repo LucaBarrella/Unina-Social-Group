@@ -22,11 +22,6 @@
                   <Insets left="40.0" top="130.0" />
                </VBox.margin>
             </ImageView>
-            <Button fx:id="SwitchToSignUpButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="161.0" stylesheets="@../style/label.css" text="Registrazione">
-               <VBox.margin>
-                  <Insets left="60.0" />
-               </VBox.margin>
-            </Button>
          </children>
       </VBox>
       <TextField fx:id="emailField" layoutX="402.0" layoutY="167.0" prefHeight="50.0" prefWidth="250.0" promptText="Email" style="-fx-background-radius: 0;">

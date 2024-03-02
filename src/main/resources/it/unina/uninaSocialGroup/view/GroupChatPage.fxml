@@ -54,7 +54,7 @@
                      <graphic>
                         <ImageView fitHeight="89.0" fitWidth="92.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../images/Back.gif" />
+                              <Image url="@../images/HomePage.gif" />
                            </image>
                         </ImageView>
                      </graphic>

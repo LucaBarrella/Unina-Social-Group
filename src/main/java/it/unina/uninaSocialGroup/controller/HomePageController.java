@@ -12,6 +12,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.event.ActionEvent;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
@@ -19,7 +22,10 @@ import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
+import java.awt.*;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 public class HomePageController{
@@ -28,9 +34,10 @@ public class HomePageController{
     private @FXML TableColumn<Group, String> NameColumn, CreationDateColumn, CategoryColumn;
     private @FXML ToggleButton CreatedGroups;
     private @FXML Circle Circle;
-    private @FXML ChoiceBox<Integer> MonthBox;
+    private @FXML ChoiceBox<String> MonthBox;
     private @FXML Text ChatText;
-    private Integer[] Months = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
+    private @FXML Hyperlink UninaWebSite, Segrepass;
+    private String[] Months = {"Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicemre"};
     private @FXML TableView TableReport;
     private @FXML TableColumn<Group, String> NameGroupColumn;
     private @FXML TableColumn<Post, String> PostPlusLikeColumn, PostMinusLikeColumn, PostPlusCommentColumn, PostMinusCommentColumn;
@@ -51,6 +58,7 @@ public class HomePageController{
     private Tab ProfileTab, GroupsTab, ReportTab;
     @FXML
     private Button profileButton, groupButton, reportButton;
+
     public HomePageController(){
         allGroups = FXCollections.observableArrayList();
     }
@@ -61,11 +69,14 @@ public class HomePageController{
         displayName();
         LoadDataTableUserGroups();
         LogOutButton.setOnAction(this::Logout);
+        //Aggiungi i mesi alla ChoiceBox
         MonthBox.getItems().addAll(Months);
         profileButton.setOnAction(this::goToProfileTab);
         groupButton.setOnAction(this::goToGroupsTab);
         reportButton.setOnAction(this::goToReportTab);
         TranslateTransition transition = new TranslateTransition(Duration.seconds(0.4), Circle);
+        //Quando viene attivato il togglebutton, trasla il cerchio verso destra
+        //Altrimenti quando viene disattivato, riportalo al punto di partenza
         CreatedGroups.selectedProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) {
                 transition.setToX(30);
@@ -76,8 +87,10 @@ public class HomePageController{
             }
             transition.play();
         });
+        //Chiama il metodo LoadDataTableReport dopo che è statoscelto un mese dalla MonthBox
         MonthBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            LoadDataTableReport(newValue);
+            int monthInt = java.util.Arrays.asList(Months).indexOf(newValue) + 1;
+            LoadDataTableReport(monthInt);
         });
         GroupDAO groupDao = new GroupDAO();
         allGroups.addAll(groupDao.getGroupsBySearchField(searchField.getText()));
@@ -92,7 +105,7 @@ public class HomePageController{
                     setGraphic(null);
                 } else {
                     try {
-                        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/it/unina/uninaSocialGroup/view/GroupCell.fxml"));
+                        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/it/unina/uninaSocialGroup/view/SearchBar.fxml"));
                         HBox hbox = fxmlLoader.load();
                         SearchBarController controller = fxmlLoader.getController();
                         controller.setGroup(item, searchField, HomePageController.this);
@@ -104,6 +117,7 @@ public class HomePageController{
                 }
             }
         });
+        //A seconda del tab su cui sta, fare un contorno giallo alla immagine associata al tab a sinistra della HomePgae
         tabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldTab, newTab) -> {
             if (oldTab == ProfileTab) {
                 profileButton.getStyleClass().remove("button-selected");
@@ -124,6 +138,7 @@ public class HomePageController{
         OpenButton.setVisible(false);
         OpenButton.setDisable(true);
         ChatText.setVisible(false);
+        //Quando viene scelto un gruppo dalla tabella, msotrare il bottone per aprire la chat
         TableGroups.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 OpenButton.setVisible(true);
@@ -136,33 +151,77 @@ public class HomePageController{
             }
         });
         OpenButton.setOnAction(this::goToGroupChat);
+        UninaWebSite.setOnAction(e -> {
+                try {
+                    Desktop.getDesktop().browse(new URI("https://www.unina.it/home;jsessionid=DC037C4CC141CFA2AFBB715EF93B8997.node_publisher12"));
+                } catch (IOException | URISyntaxException er) {
+                    er.printStackTrace();
+                }
+        });
+        Segrepass.setOnAction(e -> {
+            try {
+                Desktop.getDesktop().browse(new URI("https://www.segrepass1.unina.it/logout.do?dove=Uscita"));
+            } catch (IOException | URISyntaxException er) {
+                er.printStackTrace();
+            }
+        });
     }
 
+    /**
+     * setUserEmail
+     * Metodo chiamato da alcuni controller per ottenere la email inserita dall'utente
+     */
     public void setUserEmail(String email){
         this.userEmail = email;
     }
 
+    /**
+     * goToProfileTab
+     * Metodo che viene chiamato quando viene cliccata la prima gif a sinistra
+     * Porta al tab del profilo
+     */
     private @FXML void goToProfileTab(ActionEvent event) {
         tabPane.getSelectionModel().select(ProfileTab);;
     }
+
+    /**
+     * goToGroupsTab
+     * Metodo che viene chiamato quando viene cliccata la second gif a sinistra
+     * Porta al tab dell'elenco gruppi
+     */
     private @FXML void goToGroupsTab(ActionEvent event) {
         tabPane.getSelectionModel().select(GroupsTab);
     }
+
+    /**
+     * goToReportTab
+     * Metodo che viene chiamato quando viene cliccata la terza gif a sinistra
+     * Porta al tab dei report mensili
+     */
     private @FXML void goToReportTab(ActionEvent event) {
         tabPane.getSelectionModel().select(ReportTab);
     }
 
+    /**
+     * LoadProfileData
+     * Metodo che mostra i dati dell'utente nel tab del profilo
+     */
     public void LoadProfileData() {
     UserDAO userDAO = new UserDAO();
-    User user = userDAO.getUserData(userDAO.getMatricolaByEmail(userEmail));
+    String matricola = userDAO.getMatricolaByEmail(userEmail);
+    User user = userDAO.getUserData(matricola);
     LabelMatricola.setText(user.getMatricola());
     LabelEmail.setText(userEmail);
     LabelName.setText(user.getNome());
     LabelSurname.setText(user.getCognome());
     LabelBirthDate.setText(user.getDataDiNascita().toString());
     LabelRegistrationDate.setText(user.getDataDiRegistrazione().toString());
-}
+    }
 
+    /**
+     * displayName
+     * Metodo che mostra il nome e cognome dell'utente
+     */
     public void displayName(){
         UserDAO user = new UserDAO();
         User result = user.getUserByEmail(userEmail);
@@ -171,6 +230,10 @@ public class HomePageController{
         LabelNameSurname.setText(name+ " " +surname);
     }
 
+    /**
+     * LoadDataTableUserGroups
+     * Metodo che mostra i gruppi di cui l'utente fa parte o è creatore
+     */
     public void LoadDataTableUserGroups(){
         UserDAO userDAO = new UserDAO();
         GroupDAO groupDAO = new GroupDAO();
@@ -184,7 +247,11 @@ public class HomePageController{
         TableGroups.getItems().addAll(dati);
     }
 
-
+    /**
+     * LoadDataTableAdminGroups
+     * Metodo che viene chiamato quando viene cliccato il togglebutton
+     * Mostra solo i gruppi di cui l'utente è creatore
+     */
     public void LoadDataTableAdminGroups(){
         UserDAO userDAO = new UserDAO();
         GroupDAO groupDAO = new GroupDAO();
@@ -198,6 +265,11 @@ public class HomePageController{
         TableGroups.getItems().addAll(dati);
     }
 
+    /**
+     * LoadDataTableReport
+     * Metodo che viene chiamato quando viene scelto un mese nel choicebox
+     * Mostra i dati mensili inerenti ai gruppi creati dall'utente
+     */
     public void LoadDataTableReport(Integer month){
         UserDAO userDAO = new UserDAO();
         ReportDAO reportDAO = new ReportDAO();
@@ -214,15 +286,24 @@ public class HomePageController{
         TableReport.getItems().addAll(dati);
     }
 
+    /**
+     * Logout
+     * Metodo che viene chiamato quando viene cliccato il bottone ESCI nell'angolo a sinistra della HomePage
+     * Scambia la scena con la LoginPage
+     */
     private @FXML void Logout(ActionEvent event) {
         try {
             switchScene.switchToScene(event, "/it/unina/uninaSocialGroup/view/LoginPage.fxml", "topToBottom");
-            System.out.println("Logout successful");
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * onSearch
+     * Metodo che viene chiamato quando viene usata la searchBar
+     * Mostra i gruppi cercati per nome o categoria
+     */
     public @FXML void onSearch(KeyEvent event) {
         String searchText = searchField.getText().toLowerCase();
 
@@ -238,6 +319,11 @@ public class HomePageController{
         }
     }
 
+    /**
+     * GroupCreation
+     * Metodo che viene chiamato quando viene cliccato il bottone CREA nel tab ELENCOGRUPPI
+     * Mostra un tab di creazione gruppo (GroupChatPage)
+     */
     private @FXML void GroupCreation(ActionEvent event) {
         if (newTab == null) {
             newTab = new Tab("Creazione Gruppo");
@@ -245,6 +331,7 @@ public class HomePageController{
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/it/unina/uninaSocialGroup/view/GroupCreationPage.fxml"));
                 Parent interfaceContent = fxmlLoader.load();
                 GroupCreationController controller = fxmlLoader.getController();
+                //Passa la email dell'utente
                 controller.setUserEmail(userEmail);
                 newTab.setContent(interfaceContent);
             } catch (IOException e) {
@@ -261,12 +348,19 @@ public class HomePageController{
         });
     }
 
+    /**
+     * goToGroupChat
+     * Metodo che viene chiamato quando viene cliccato il bottone APRI dopo aver scelto un gruppo
+     * Scambia la scena con GroupChatPage
+     */
     private @FXML void goToGroupChat(ActionEvent event) {
         try {
             Group selectedGroup = TableGroups.getSelectionModel().getSelectedItem();
             if (selectedGroup != null) {
                 GroupChatController group = new GroupChatController();
+                //Passa l'ID del gruppo selezionato
                 group.setGroupID(selectedGroup.getIDGruppo());
+                //Passa la email dell'utente
                 group.setUserEmail(userEmail);
             }
             switchScene.switchToScene(event, "/it/unina/uninaSocialGroup/view/GroupChatPage.fxml", "topToBottom");

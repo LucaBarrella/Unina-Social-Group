@@ -134,8 +134,8 @@ public class GroupChatController {
 
     /**
      * setUserEmail
-     * Funzione che viene chiamata nella HomePage e nella SearchBar
-     * Usata principalmente per ottenere la Email dell'utente dalla HomePage
+     * Metodo che viene chiamato nella HomePage e nella SearchBar
+     * Usato principalmente per ottenere la Email dell'utente dalla HomePage
      */
     public void setUserEmail(String userEmail) {
         this.userEmail = userEmail;
@@ -143,8 +143,8 @@ public class GroupChatController {
 
     /**
      * setGroupID
-     * Funzione che viene chiamata nella HomePage e nella SearchBar
-     * Usata principalmente per ottenere l'ID del gruppo scelto nella HomePage
+     * Metodo che viene chiamato nella HomePage e nella SearchBar
+     * Usato principalmente per ottenere l'ID del gruppo scelto nella HomePage
      */
     public void setGroupID(String groupId) {
         this.groupId = groupId;

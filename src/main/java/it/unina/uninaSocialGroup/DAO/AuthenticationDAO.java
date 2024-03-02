@@ -1,5 +1,6 @@
 package it.unina.uninaSocialGroup.DAO;
 
+import it.unina.uninaSocialGroup.Model.Authentication;
 import it.unina.uninaSocialGroup.Model.DatabaseConnectionManager;
 
 import java.sql.Connection;
@@ -35,26 +36,5 @@ public class AuthenticationDAO {
                   sql.printStackTrace();
                   return false;
             }
-      }
-
-    /**
-     * addNewUserToAuthTable
-     * Inserisce la email e la password di un nuovo utente nel db
-     * @param email dell'utente
-     * @param password dell'utente
-     */
-      public void addNewUserToAuthTable(String email, String password) {
-        Connection connect = null;
-        String query = "INSERT INTO autenticazione (Email, Password) VALUES (?,?)";
-        PreparedStatement ps = null;
-        try {
-            connect = DatabaseConnectionManager.createDatabaseConnection();
-            ps = connect.prepareStatement(query);
-            ps.setString(1, email);
-            ps.setString(2, password);
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
       }
 }

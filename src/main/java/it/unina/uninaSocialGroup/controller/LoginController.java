@@ -2,6 +2,7 @@ package it.unina.uninaSocialGroup.controller;
 
 import it.unina.uninaSocialGroup.DAO.AuthenticationDAO;
 import it.unina.uninaSocialGroup.Model.SwitchScene;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
@@ -28,6 +29,7 @@ public class LoginController {
     public void initialize() {
         NoEmailPassword.setVisible(false);
         LoginButton.setOnAction(this::signIn);
+        Platform.runLater(() -> LoginButton.requestFocus());
     }
 
     /**
@@ -64,5 +66,4 @@ public class LoginController {
             alert.showAndWait();
         }
     }
-
 }

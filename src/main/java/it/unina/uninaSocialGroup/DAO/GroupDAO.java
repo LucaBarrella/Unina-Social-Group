@@ -199,13 +199,13 @@ public class GroupDAO {
         String query = "SELECT U.Nome, U.Cognome " +
                         "FROM Utente U " +
                         "WHERE U.Matricola IN (" +
-                        "    SELECT P.Matricola " +
-                        "    FROM Partecipa P " +
-                        "    WHERE P.ID_Gruppo = ?) " +
+                        "SELECT P.Matricola " +
+                        "FROM Partecipa P " +
+                        "WHERE P.ID_Gruppo = ?) " +
                         "OR U.Matricola IN (" +
-                        "    SELECT G.GestoreGruppo " +
-                        "    FROM Gruppo G " +
-                        "    WHERE G.ID_Gruppo = ? " +
+                        "SELECT G.GestoreGruppo " +
+                        "FROM Gruppo G " +
+                        "WHERE G.ID_Gruppo = ? " +
                         ");";
         try{
             Connection db = DatabaseConnectionManager.createDatabaseConnection();
@@ -275,6 +275,27 @@ public class GroupDAO {
         } catch (SQLException sql) {
             sql.printStackTrace();
             return false;
+        }
+    }
+
+    /**
+     * RemoveMemberToGroup
+     * Rimuove un membro da un gruppo
+     * @param group
+     * @param Matricola
+     */
+    public void RemoveMemberToGroup(Group group, String Matricola){
+        Connection connect = null;
+        String query = "DELETE FROM Partecipa WHERE Matricola = ? AND ID_Gruppo = ?";
+        PreparedStatement psInsert = null;
+        try {
+            connect = DatabaseConnectionManager.createDatabaseConnection();
+            psInsert = connect.prepareStatement(query);
+            psInsert.setString(1, Matricola);
+            psInsert.setString(2, group.getIDGruppo());
+            psInsert.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }

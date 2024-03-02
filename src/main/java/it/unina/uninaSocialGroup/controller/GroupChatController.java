@@ -22,6 +22,7 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 public class GroupChatController {
     @FXML
@@ -29,7 +30,7 @@ public class GroupChatController {
     @FXML
     private Label groupName, NumberOfMembers;
     @FXML
-    private Button PostButton, BackButton;
+    private Button PostButton, BackButton, LeaveGroupButton;
     @FXML
     private TextArea PostTextArea;
     @FXML
@@ -75,6 +76,46 @@ public class GroupChatController {
         //Se l'utente non fa parte del gruppo, allora si impedisce di pubblicare post
         if (!isUserInMembers) {
             PostButton.setDisable(true);
+        }
+
+        LeaveGroupButton.setOnAction(this::LeaveGroup);
+    }
+
+
+    /**
+     * LeaveGroup
+     * Metodo che viene chiamato quando viene cliccato il bottone ABBANDONA
+     * Rimuove l'utente dal gruppo
+     */
+    public void LeaveGroup(ActionEvent event){
+        UserDAO userDAO = new UserDAO();
+        //Mostra una domanda di conferma all'utente
+        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmationAlert.setTitle("Conferma");
+        confirmationAlert.setHeaderText(null);
+        confirmationAlert.setContentText("Sei sicuro di voler uscire dal gruppo?");
+        Optional<ButtonType> result = confirmationAlert.showAndWait();
+        //Se viene cliccato OK allora aggiungi l'utente al gruppo
+        if (result.get() == ButtonType.OK){
+            GroupDAO groupDAO = new GroupDAO();
+            Group group = groupDAO.getGroup(groupId);
+            String matricola = userDAO.getMatricolaByEmail(userEmail);
+            groupDAO.RemoveMemberToGroup(group, matricola);
+            try {
+                //Scambia la scena con la HomePage
+                FXMLLoader loader = switchScene.createFXML("/it/unina/uninaSocialGroup/view/HomePage.fxml");
+                switchScene.loadSceneAndShow(event, loader);
+                //Mostra un messaggio di conferma
+                Platform.runLater(() -> {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Gruppo Abbandonato");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Sei uscito dal gruppo : " + group.getNomeGruppo());
+                    alert.showAndWait();
+                });
+            } catch(IOException ex){
+                ex.printStackTrace();
+            }
         }
     }
 

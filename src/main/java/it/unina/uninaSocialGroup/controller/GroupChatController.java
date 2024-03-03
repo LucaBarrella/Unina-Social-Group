@@ -158,11 +158,11 @@ public class GroupChatController {
         String text = PostTextArea.getText();
         if (text != null && !text.trim().isEmpty()) {
             GroupDAO group = new GroupDAO();
-            PostDAO postDAO = new PostDAO();
+            PostDAO post = new PostDAO();
             UserDAO user = new UserDAO();
             String category = group.getGroup(groupId).getCategoriaGruppo();
             String matricola = user.getMatricolaByEmail(userEmail);
-            postDAO.CreateNewPost(category,text,matricola,groupId);
+            post.CreateNewPost(category,text,matricola,groupId);
             PostTextArea.clear();
             //ricarica la lista dei post
             fillListView();

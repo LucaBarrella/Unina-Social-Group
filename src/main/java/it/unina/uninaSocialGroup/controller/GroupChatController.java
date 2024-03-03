@@ -124,7 +124,7 @@ public class GroupChatController {
     }
 
     /**
-     * displayName
+     * displayMembers
      * Metodo che mostra i membri del gruppo
      */
     public void displayMembers() {
@@ -214,7 +214,7 @@ public class GroupChatController {
      * Dopo aver caricato il VBox, ottiene il controller associato e imposta il post specificato.
      * Infine, restituisce il VBox caricato (o null se il caricamento non è riuscito).
      */
-    private VBox loadVBoxFromFXML(Post post) {
+    public VBox loadVBoxFromFXML(Post post) {
         VBox vBox = null;
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/it/unina/uninaSocialGroup/view/PostDetailsPage.fxml"));
@@ -232,7 +232,7 @@ public class GroupChatController {
      * Metodo che mostra i post pubblicati sul gruppo.
      * Si prendono i post dal db, li si aggiungono al VBox e poi alla ListView
      */
-    private void fillListView() {
+    public void fillListView() {
         ObservableList<VBox> vBoxList = FXCollections.observableArrayList();
         PostDAO postDAO = new PostDAO();
         GroupDAO groupDAO = new GroupDAO();
@@ -254,7 +254,8 @@ public class GroupChatController {
      */
     public @FXML void BackToHomePage(ActionEvent event){
             try {
-                switchScene.switchToScene(event, "/it/unina/uninaSocialGroup/view/HomePage.fxml", "topToBottom");
+                FXMLLoader loader = switchScene.createFXML("/it/unina/uninaSocialGroup/view/HomePage.fxml");
+                switchScene.loadSceneAndShow(event, loader);
             } catch (IOException e) {
                 e.printStackTrace();
             }

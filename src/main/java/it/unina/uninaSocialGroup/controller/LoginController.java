@@ -39,7 +39,7 @@ public class LoginController {
      * In caso affermativo, scambia la scena con la HomePage
      * In caso negativo, mostra un messaggio di errore
      */
-    private void signIn(ActionEvent event){
+    public void signIn(ActionEvent event){
         //Se non viene scritto nulla nel campo Email o Password, si mostra un messaggio di avvertenza
         if(emailField.getText().isEmpty() || passwordField.getText().isEmpty()){
             NoEmailPassword.setVisible(true);

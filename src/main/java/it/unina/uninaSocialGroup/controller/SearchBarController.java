@@ -46,14 +46,21 @@ public class SearchBarController {
                 //Passa la email dell'utente alla GroupChat
                 groupchat.setUserEmail(userEmail);
                 switchScene.loadSceneAndShow(e, loader);
-                //Mostra un messaggio di avvertenza
-                Platform.runLater(() -> {
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Attenzione!");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Unisciti al gruppo per pubblicare post");
-                    alert.showAndWait();
-                });
+
+                GroupDAO groupDAO = new GroupDAO();
+                UserDAO userDAO = new UserDAO();
+                String matricola = userDAO.getMatricolaByEmail(userEmail);
+
+                //Se l'utente non fa parte del gruppo, mostra un messaggio di avvertenza
+                if (!groupDAO.isUserMemberOfGroup(group, matricola)) {
+                    Platform.runLater(() -> {
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Attenzione!");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Unisciti al gruppo per pubblicare post");
+                        alert.showAndWait();
+                    });
+                }
             } catch(IOException ex){
                 ex.printStackTrace();
             }

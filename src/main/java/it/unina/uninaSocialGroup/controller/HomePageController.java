@@ -64,7 +64,7 @@ public class HomePageController{
     }
     @FXML
     public void initialize() {
-        CreationGroupButton.setOnAction(this::GroupCreation);
+        CreationGroupButton.setOnAction(this::GroupCreationTab);
         LoadProfileData();
         displayName();
         LoadDataTableUserGroups();
@@ -180,7 +180,7 @@ public class HomePageController{
      * Metodo che viene chiamato quando viene cliccata la prima gif a sinistra
      * Porta al tab del profilo
      */
-    private @FXML void goToProfileTab(ActionEvent event) {
+    public @FXML void goToProfileTab(ActionEvent event) {
         tabPane.getSelectionModel().select(ProfileTab);;
     }
 
@@ -189,7 +189,7 @@ public class HomePageController{
      * Metodo che viene chiamato quando viene cliccata la second gif a sinistra
      * Porta al tab dell'elenco gruppi
      */
-    private @FXML void goToGroupsTab(ActionEvent event) {
+    public @FXML void goToGroupsTab(ActionEvent event) {
         tabPane.getSelectionModel().select(GroupsTab);
     }
 
@@ -198,7 +198,7 @@ public class HomePageController{
      * Metodo che viene chiamato quando viene cliccata la terza gif a sinistra
      * Porta al tab dei report mensili
      */
-    private @FXML void goToReportTab(ActionEvent event) {
+    public @FXML void goToReportTab(ActionEvent event) {
         tabPane.getSelectionModel().select(ReportTab);
     }
 
@@ -291,9 +291,10 @@ public class HomePageController{
      * Metodo che viene chiamato quando viene cliccato il bottone ESCI nell'angolo a sinistra della HomePage
      * Scambia la scena con la LoginPage
      */
-    private @FXML void Logout(ActionEvent event) {
+    public @FXML void Logout(ActionEvent event) {
         try {
-            switchScene.switchToScene(event, "/it/unina/uninaSocialGroup/view/LoginPage.fxml", "topToBottom");
+            FXMLLoader loader = switchScene.createFXML("/it/unina/uninaSocialGroup/view/LoginPage.fxml");
+            switchScene.loadSceneAndShow(event, loader);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -320,11 +321,11 @@ public class HomePageController{
     }
 
     /**
-     * GroupCreation
+     * GroupCreationTab
      * Metodo che viene chiamato quando viene cliccato il bottone CREA nel tab ELENCOGRUPPI
      * Mostra un tab di creazione gruppo (GroupChatPage)
      */
-    private @FXML void GroupCreation(ActionEvent event) {
+    public @FXML void GroupCreationTab(ActionEvent event) {
         if (newTab == null) {
             newTab = new Tab("Creazione Gruppo");
             try {
@@ -353,17 +354,19 @@ public class HomePageController{
      * Metodo che viene chiamato quando viene cliccato il bottone APRI dopo aver scelto un gruppo
      * Scambia la scena con GroupChatPage
      */
-    private @FXML void goToGroupChat(ActionEvent event) {
+    public @FXML void goToGroupChat(ActionEvent event) {
         try {
             Group selectedGroup = TableGroups.getSelectionModel().getSelectedItem();
             if (selectedGroup != null) {
+                String IdSelectedGroup = selectedGroup.getIDGruppo();
                 GroupChatController group = new GroupChatController();
                 //Passa l'ID del gruppo selezionato
-                group.setGroupID(selectedGroup.getIDGruppo());
+                group.setGroupID(IdSelectedGroup);
                 //Passa la email dell'utente
                 group.setUserEmail(userEmail);
             }
-            switchScene.switchToScene(event, "/it/unina/uninaSocialGroup/view/GroupChatPage.fxml", "topToBottom");
+            FXMLLoader loader = switchScene.createFXML("/it/unina/uninaSocialGroup/view/GroupChatPage.fxml");
+            switchScene.loadSceneAndShow(event, loader);
         } catch (IOException e) {
             e.printStackTrace();
         }

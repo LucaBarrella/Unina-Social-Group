@@ -6,7 +6,7 @@ import it.unina.uninaSocialGroup.Model.User;
 import java.sql.*;
 
 public class UserDAO {
-    Connection connect = DatabaseConnectionManager.createDatabaseConnection();
+    private static Connection connect = DatabaseConnectionManager.createDatabaseConnection();
 
     /**
      * getMatricolaByEmail

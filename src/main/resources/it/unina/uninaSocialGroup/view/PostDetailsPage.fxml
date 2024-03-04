@@ -37,7 +37,7 @@
          </VBox.margin></Region>
       <HBox prefHeight="100.0" prefWidth="200.0">
          <children>
-            <Button fx:id="likeButton" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0">
+            <Button fx:id="likeButton" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
                <font>
                   <Font size="1.0" />
                </font>
@@ -51,12 +51,15 @@
                   <Insets left="20.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="commentButton" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0">
+            <Button fx:id="commentButton" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
                <font>
                   <Font size="1.0" />
                </font>
                <graphic>
-                  <ImageView fx:id="commentButtonImage" fitHeight="45.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="commentButtonImage" fitHeight="45.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/comment.gif" />
+                     </image></ImageView>
                </graphic>
                <HBox.margin>
                   <Insets left="20.0" />

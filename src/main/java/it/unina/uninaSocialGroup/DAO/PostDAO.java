@@ -11,7 +11,7 @@ import java.sql.*;
 import java.time.LocalDate;
 
 public class PostDAO {
-    Connection connect = DatabaseConnectionManager.createDatabaseConnection();
+    private static Connection connect = DatabaseConnectionManager.createDatabaseConnection();
 
     /**
      * CreateNewPost
@@ -255,7 +255,7 @@ public class PostDAO {
      * @param matricola
      * @param IDPost
      */
-    public void RemoveLike(String matricola, String IDPost){
+    public void removeLike(String matricola, String IDPost){
         String query = "DELETE FROM Likes WHERE Matricola = ? AND ID_Post = ?";
         PreparedStatement ps = null;
         try {

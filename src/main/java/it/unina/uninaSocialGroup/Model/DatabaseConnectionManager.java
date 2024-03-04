@@ -16,7 +16,7 @@ public class DatabaseConnectionManager {
      * Effettua la connessione al database
      * @return connection
      */
-    public static Connection createDatabaseConnection() {
+    public static Connection createDatabaseConnection(){
         Connection connection = null;
         try {
             Class.forName(JDBCDriver);

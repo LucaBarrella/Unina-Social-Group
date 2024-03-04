@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GroupDAO {
-    Connection connect = DatabaseConnectionManager.createDatabaseConnection();
+    private static Connection connect = DatabaseConnectionManager.createDatabaseConnection();
 
     /**
      * getGroupsBySearchField

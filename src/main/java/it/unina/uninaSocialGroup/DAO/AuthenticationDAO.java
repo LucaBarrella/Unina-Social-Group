@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class AuthenticationDAO {
-      Connection connect = DatabaseConnectionManager.createDatabaseConnection();
+      private static Connection connect = DatabaseConnectionManager.createDatabaseConnection();
 
       /**
        * CheckCredentials

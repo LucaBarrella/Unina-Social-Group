@@ -158,11 +158,11 @@ public class GroupChatController {
         String text = PostTextArea.getText();
         if (text != null && !text.trim().isEmpty()) {
             GroupDAO group = new GroupDAO();
-            PostDAO post = new PostDAO();
+            PostDAO postDAO = new PostDAO();
             UserDAO user = new UserDAO();
             String category = group.getGroup(groupId).getCategoriaGruppo();
             String matricola = user.getMatricolaByEmail(userEmail);
-            post.CreateNewPost(category,text,matricola,groupId);
+            postDAO.CreateNewPost(category,text,matricola,groupId);
             PostTextArea.clear();
             //ricarica la lista dei post
             fillListView();
@@ -220,6 +220,7 @@ public class GroupChatController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/it/unina/uninaSocialGroup/view/PostDetailsPage.fxml"));
             vBox = loader.load();
             PostDetailsController controller = loader.getController();
+            controller.setEmail(userEmail);
             controller.setPost(post);
         } catch (IOException e) {
             e.printStackTrace();

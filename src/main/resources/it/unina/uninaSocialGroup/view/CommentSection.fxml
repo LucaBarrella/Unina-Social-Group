@@ -57,11 +57,11 @@
                   <children>
                      <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #09F;">
                         <children>
-                              <Button mnemonicParsing="false" style="-fx-background-color: transparent;">
+                              <Button fx:id="BackButton" mnemonicParsing="false" style="-fx-background-color: transparent;">
                                  <graphic>
                                     <ImageView fitHeight="75.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@../images/HomePage.gif" />
+                                          <Image url="@../images/Back.gif" />
                                        </image>
                                     </ImageView>
                                  </graphic>

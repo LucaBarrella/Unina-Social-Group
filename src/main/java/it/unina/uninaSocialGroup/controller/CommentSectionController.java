@@ -4,9 +4,11 @@ import it.unina.uninaSocialGroup.DAO.CommentDAO;
 import it.unina.uninaSocialGroup.DAO.PostDAO;
 import it.unina.uninaSocialGroup.Model.Comment;
 import it.unina.uninaSocialGroup.Model.Post;
+import it.unina.uninaSocialGroup.Model.SwitchScene;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
@@ -19,18 +21,20 @@ import java.util.List;
 public class CommentSectionController {
 
     private @FXML ListView<VBox> commentListView;
-    private @FXML Button commentButton;
+    private @FXML Button commentButton, BackButton;
     private @FXML TextArea CommentTextArea;
     private @FXML Label usernameAuthor;
     private @FXML Text postText;
     private  @FXML HBox HBoxComment;
     private static String postID;
     private String matricola;
+    private SwitchScene switchScene = new SwitchScene();
 
     @FXML
     public void initialize() {
         HBoxComment.setVisible(false);
         commentButton.setOnAction(event -> HBoxComment.setVisible(true));
+        BackButton.setOnAction(this::BackToGroupChat);
         CommentTextArea.setOnKeyPressed(event -> {
             switch (event.getCode()) {
                 case ENTER:
@@ -101,7 +105,7 @@ public class CommentSectionController {
      * Dopo aver caricato il VBox, ottiene il controller associato e imposta il commento specificato.
      * Infine, restituisce il VBox caricato (o null se il caricamento non è riuscito).
      */
-    private VBox loadVBoxFromFXML(Comment comment) {
+    public VBox loadVBoxFromFXML(Comment comment) {
         VBox vBox = null;
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/it/unina/uninaSocialGroup/view/CommentDetailes.fxml"));
@@ -119,7 +123,7 @@ public class CommentSectionController {
      * Metodo che mostra i commenti pubblicati sul post.
      * Si prendono i comment dal db, li si aggiungono al VBox e poi alla ListView
      */
-    private void fillListView() {
+    public void fillListView() {
         ObservableList<VBox> vBoxList = FXCollections.observableArrayList();
         CommentDAO commentDAO = new CommentDAO();
         PostDAO postDAO = new PostDAO();
@@ -133,5 +137,18 @@ public class CommentSectionController {
 
         commentListView.setItems(vBoxList);
     }
-    //TODO: Aggiungere bottone per tornare indietro
+
+    /**
+     * BackToGroupChat
+     * Metodo che viene chiamato quando viene cliccata la gif della freccia
+     * Scambia la scena con la GroupChat
+     */
+    public @FXML void BackToGroupChat(ActionEvent event){
+        try {
+            FXMLLoader loader = switchScene.createFXML("/it/unina/uninaSocialGroup/view/GroupChatPage.fxml");
+            switchScene.loadSceneAndShow(event, loader);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

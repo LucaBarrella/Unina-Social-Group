@@ -18,9 +18,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.util.Duration;
-
-import javax.swing.text.html.ImageView;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;

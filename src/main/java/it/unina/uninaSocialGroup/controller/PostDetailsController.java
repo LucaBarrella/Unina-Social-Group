@@ -87,7 +87,7 @@ public class PostDetailsController extends ListCell<Post> {
      * Controlla lo stato del like (se gia stato messo oppure no)
      * A seconda dello stato, cambia l'immagine del like (cuore)
      */
-    private void handleLikeButton(ActionEvent actionEvent) {
+    public void handleLikeButton(ActionEvent actionEvent) {
         if (likeStatus){
             likeButtonImage.setImage(new Image("file:src/main/resources/it/unina/uninaSocialGroup/images/LikeIsNotPressed.png"));
             postDAO.removeLike(matricola, post.getIDPost());
@@ -104,7 +104,7 @@ public class PostDetailsController extends ListCell<Post> {
      * Metodo che viene chiamato quando viene cliccato il bottone del Commento
      * Mostra i commenti che sono stati messi a quel post
      */
-    private void handleCommentButton(ActionEvent actionEvent) {
+    public void handleCommentButton(ActionEvent actionEvent) {
         try {
             SwitchScene switchScene = new SwitchScene();
             FXMLLoader loader = switchScene.createFXML("/it/unina/uninaSocialGroup/view/CommentSection.fxml");

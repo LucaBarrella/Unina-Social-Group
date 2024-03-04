@@ -21,7 +21,6 @@ public class CommentDAO {
      * @return commentList
      */
     public void getCommentByPost(Post post) {
-        PostDAO postDAO = new PostDAO();
         List<Comment> commentList = new ArrayList<>();
         PreparedStatement ps = null;
         String query = "SELECT * FROM Commento NATURAL JOIN utente WHERE ID_Post = ? ORDER BY data_di_pubblicazione DESC, ora_di_pubblicazione DESC";

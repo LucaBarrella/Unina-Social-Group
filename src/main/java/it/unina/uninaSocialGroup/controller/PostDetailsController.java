@@ -18,7 +18,7 @@ import java.io.IOException;
 
 public class PostDetailsController extends ListCell<Post> {
     private Post post;
-    private @FXML Label usernameAuthor;
+    private @FXML Label usernameAuthor, likeCounter, commentCounter;
     private @FXML Text postText;
     private @FXML Button likeButton, commentButton;
     private @FXML ImageView likeButtonImage;
@@ -41,6 +41,16 @@ public class PostDetailsController extends ListCell<Post> {
         setLabelAuthor(post.getCreatorePost());
         setLabelContent(post.getMessaggioTestuale());
         setLikeStatus(matricola, post.getIDPost());
+        setLikesNumber(post.getIDPost());
+        setCommentsNumber(post.getIDPost());
+    }
+
+    private void setLikesNumber(String IDPost) {
+        this.likeCounter.setText(String.valueOf(postDAO.getNumberOfLike(IDPost)));
+    }
+
+    private void setCommentsNumber(String IDPost) {
+        this.commentCounter.setText(String.valueOf(postDAO.getNumberOfComment(IDPost)));
     }
 
     /**
@@ -97,6 +107,7 @@ public class PostDetailsController extends ListCell<Post> {
             postDAO.addLike(matricola, post.getIDPost());
             likeStatus = true;
         }
+        setLikesNumber(post.getIDPost());
     }
 
     /**

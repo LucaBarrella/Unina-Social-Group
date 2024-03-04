@@ -1,0 +1,34 @@
+.list-cell {
+    -fx-background-color: transparent;
+}
+
+.list-cell:filled:selected {
+    -fx-background-color: transparent;
+    -fx-text-fill: black;
+}
+
+.button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+.label-button:hover {
+    -fx-background-color: #808080; /* Colore di sfondo del bottone quando il mouse passa sopra */
+}
+
+.label-button:pressed {
+    -fx-background-color: #A9A9A9; /* Colore di sfondo del bottone quando viene premuto */
+}
+.join-button {
+    -fx-background-radius: 50;
+    -fx-text-fill: white;
+    -fx-background-color: #32CD32; /* Verde base */
+    -fx-border-color: transparent;
+}
+
+.join-button:hover {
+    -fx-background-color: #7CFC00; /* Verde medio quando il mouse passa sopra */
+}
+
+.join-button:pressed {
+    -fx-background-color: #006400; /* Verde scuro quando viene premuto */
+}

@@ -1,9 +1,6 @@
 .toggle-button-container {
     -fx-cursor: hand;
-    -fx-pref-height: 36px;
-    -fx-border-width: 0;
-    -fx-border-radius: 20px;
-    -fx-background-color: #E74B3C;
+    -fx-background-color: #D3D3D3;
 }
 
 .toggle-button-container:focused {

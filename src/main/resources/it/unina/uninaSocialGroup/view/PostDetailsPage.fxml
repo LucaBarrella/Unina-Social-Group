@@ -51,6 +51,11 @@
                   <Insets left="20.0" />
                </HBox.margin>
             </Button>
+            <Label fx:id="likeCounter" text="NLike">
+               <HBox.margin>
+                  <Insets top="15.0" />
+               </HBox.margin>
+            </Label>
             <Button fx:id="commentButton" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
                <font>
                   <Font size="1.0" />
@@ -62,9 +67,14 @@
                      </image></ImageView>
                </graphic>
                <HBox.margin>
-                  <Insets left="20.0" />
+                  <Insets left="10.0" />
                </HBox.margin>
             </Button>
+            <Label fx:id="commentCounter" text="Ncommenti">
+               <padding>
+                  <Insets left="5.0" top="15.0" />
+               </padding>
+            </Label>
          </children>
          <VBox.margin>
             <Insets bottom="10.0" />

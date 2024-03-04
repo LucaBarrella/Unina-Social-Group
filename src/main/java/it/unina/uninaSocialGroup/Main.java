@@ -44,6 +44,7 @@ public class Main extends javafx.application.Application {
         primaryStage.setTitle("Unina Social Group");
         primaryStage.setScene(new Scene(root));
         primaryStage.resizableProperty().setValue(false);
+        primaryStage.centerOnScreen();
         primaryStage.show();
     }
 }

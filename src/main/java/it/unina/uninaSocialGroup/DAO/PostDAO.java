@@ -3,12 +3,11 @@ package it.unina.uninaSocialGroup.DAO;
 import it.unina.uninaSocialGroup.Model.DatabaseConnectionManager;
 import it.unina.uninaSocialGroup.Model.Group;
 import it.unina.uninaSocialGroup.Model.Post;
-import it.unina.uninaSocialGroup.Model.User;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import java.sql.*;
-import java.time.LocalDate;
 
 public class PostDAO {
     private static Connection connect = DatabaseConnectionManager.createDatabaseConnection();
@@ -317,6 +316,32 @@ public class PostDAO {
             sql.printStackTrace();
         }
         return numberOfLike;
+    }
+
+    /**
+     * getNumberOfComment
+     * Restituisce il numero di commenti messi ad un post
+     *
+     * @param IDPost
+     * @return numberOfComment
+     */
+    public int getNumberOfComment(String IDPost) {
+        int numberOfComment = 0;
+        PreparedStatement ps = null;
+        String query = "SELECT COUNT(*) AS NumeroCommenti " +
+                "FROM Commento " +
+                "WHERE ID_Post = ?";
+        try {
+            ps = connect.prepareStatement(query);
+            ps.setString(1, IDPost);
+            ResultSet resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                numberOfComment = resultSet.getInt("NumeroCommenti");
+            }
+        } catch (SQLException sql) {
+            sql.printStackTrace();
+        }
+        return numberOfComment;
     }
 
     /**

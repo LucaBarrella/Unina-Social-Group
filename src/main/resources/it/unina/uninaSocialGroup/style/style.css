@@ -1,0 +1,17 @@
+.list-cell-vbox {
+    -fx-background-color: transparent;
+}
+
+.list-cell-vbox:filled:selected {
+    -fx-background-color: transparent;
+    -fx-text-fill: black;
+}
+
+.list-cell-searchBar {
+    -fx-background-color: white;
+}
+
+.list-cell-searchBar:filled:selected {
+    -fx-background-color: white;
+    -fx-text-fill: black;
+}

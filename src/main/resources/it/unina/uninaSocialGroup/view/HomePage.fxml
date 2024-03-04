@@ -144,12 +144,12 @@
                   <children>
                      <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #09F;">
                         <children>
-                           <Label contentDisplay="CENTER" prefHeight="53.0" prefWidth="113.0" text="Ciao" textFill="WHITE">
+                           <Label contentDisplay="CENTER" prefHeight="53.0" prefWidth="100.0" text="Ciao" textFill="WHITE">
                               <font>
                                  <Font name="System Italic" size="36.0" />
                               </font>
                               <padding>
-                                 <Insets left="20.0" right="20.0" />
+                                 <Insets left="20.0" right="10.0" />
                               </padding>
                            </Label>
                            <Label fx:id="LabelNameSurname" contentDisplay="CENTER" prefHeight="53.0" prefWidth="524.0" text="Nome Cognome">
@@ -167,7 +167,7 @@
                      </HBox>
                   </children>
                </GridPane>
-               <TabPane fx:id="tabPane" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #FFFFFF;" tabClosingPolicy="UNAVAILABLE" GridPane.rowIndex="1">
+               <TabPane fx:id="tabPane" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white;" tabClosingPolicy="UNAVAILABLE" GridPane.rowIndex="1">
                   <tabs>
                      <Tab text="Home">
                         <content>
@@ -203,7 +203,8 @@
                                           <Image url="@../images/exam.gif" />
                                        </image>
                                     </ImageView>
-                                 </children></AnchorPane>
+                                 </children>
+                           </AnchorPane>
                         </content>
                      </Tab>
                      <Tab fx:id="ProfileTab" text="Profilo">
@@ -259,9 +260,9 @@
                         <content>
                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                               <children>
-                                 <ToggleButton fx:id="CreatedGroups" alignment="CENTER_LEFT" layoutX="815.0" layoutY="72.0" mnemonicParsing="false" prefHeight="16.0" prefWidth="63.0" style="-fx-background-radius: 50;" stylesheets="@../style/toggleButton.css">
+                                 <ToggleButton fx:id="CreatedGroups" alignment="CENTER_LEFT" layoutX="815.0" layoutY="72.0" mnemonicParsing="false" prefHeight="16.0" prefWidth="63.0" style="-fx-background-radius: 50;" styleClass="toggle-button-container" stylesheets="@../style/toggleButton.css">
                                     <graphic>
-                                       <Circle fx:id="Circle" fill="WHITE" radius="9.0" />
+                                       <Circle fx:id="Circle" fill="WHITE" radius="10.0" />
                                     </graphic>
                                  </ToggleButton>
                                  <Text layoutX="797.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gruppi creati da te">
@@ -275,7 +276,7 @@
                                        <TableColumn fx:id="CategoryColumn" prefWidth="217.0" text="Categoria" />
                                     </columns>
                                  </TableView>
-                                    <Button fx:id="CreationGroupButton" layoutX="796.0" layoutY="249.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="78.0" style="-fx-background-color: red;" text="Crea" textFill="WHITE">
+                                    <Button fx:id="CreationGroupButton" layoutX="796.0" layoutY="249.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="78.0" styleClass="bu" stylesheets="@../style/button.css" text="Crea" textFill="WHITE">
                                        <font>
                                           <Font name="System Bold" size="18.0" />
                                        </font></Button>
@@ -283,7 +284,7 @@
                                        <font>
                                           <Font size="20.0" />
                                        </font></Text>
-                                    <Button fx:id="OpenButton" layoutX="796.0" layoutY="415.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="78.0" style="-fx-background-color: red;" text="Apri" textFill="WHITE">
+                                    <Button fx:id="OpenButton" layoutX="796.0" layoutY="415.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="78.0" stylesheets="@../style/button.css" text="Apri" textFill="WHITE">
                                        <font>
                                           <Font name="System Bold" size="18.0" />
                                        </font>
@@ -336,5 +337,5 @@
          </GridPane>
       </children>
    </GridPane>
-      <ListView fx:id="groupListView" layoutX="855.0" layoutY="70.0" prefHeight="200.0" prefWidth="374.0" visible="false" AnchorPane.rightAnchor="0.0" />   </children>
+      <ListView fx:id="groupListView" layoutX="855.0" layoutY="70.0" prefHeight="200.0" prefWidth="374.0" stylesheets="@../style/style.css" visible="false" AnchorPane.rightAnchor="0.0" />   </children>
 </AnchorPane>

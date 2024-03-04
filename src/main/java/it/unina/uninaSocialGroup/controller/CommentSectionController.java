@@ -121,7 +121,7 @@ public class CommentSectionController {
     /**
      * fillListView
      * Metodo che mostra i commenti pubblicati sul post.
-     * Si prendono i comment dal db, li si aggiungono al VBox e poi alla ListView
+     * Si prendono i commenti dal db, li si aggiungono al VBox e poi alla ListView
      */
     public void fillListView() {
         ObservableList<VBox> vBoxList = FXCollections.observableArrayList();

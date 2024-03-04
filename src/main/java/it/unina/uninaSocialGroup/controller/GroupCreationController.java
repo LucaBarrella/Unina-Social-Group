@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
@@ -18,11 +19,13 @@ public class GroupCreationController {
     private Button CreationGroupButton;
     @FXML
     private TextField NameGroupField,CategoryGroupField;
+    private @FXML Label NoNameCategory;
     private SwitchScene switchScene = new SwitchScene();
     private String userEmail;
     @FXML
     public void initialize(){
         CreationGroupButton.setOnAction(this::GroupCreation);
+        NoNameCategory.setVisible(false);
     }
 
     /**
@@ -40,6 +43,11 @@ public class GroupCreationController {
      * Viene creato nel database il nuovo gruppo con i dettagli scritti sull'interfaccia.
      */
     public @FXML void GroupCreation(ActionEvent event){
+        //Se non viene scritto nulla nel campo Email o Password, si mostra un messaggio di avvertenza
+        if(NameGroupField.getText().isEmpty() || CategoryGroupField.getText().isEmpty()){
+            NoNameCategory.setVisible(true);
+            return;
+        }
         UserDAO user = new UserDAO();
         GroupDAO group = new GroupDAO();
         String matricola = user.getMatricolaByEmail(userEmail);

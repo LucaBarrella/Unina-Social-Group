@@ -1,10 +1,13 @@
 package it.unina.uninaSocialGroup.Model;
 
+import java.util.List;
+
 public class Post {
     private String IDPost;
     private String Categoria;
     private String MessaggioTestuale;
     private String CreatorePost;
+    private List<Comment> Commenti;
 
     public String getIDPost() {
         return IDPost;
@@ -36,6 +39,14 @@ public class Post {
 
     public void setCreatorePost(String creatorePost) {
         CreatorePost = creatorePost;
+    }
+
+    public List<Comment> getCommenti() {
+        return Commenti;
+    }
+
+    public void setCommenti(List<Comment> commenti) {
+        Commenti = commenti;
     }
 
     public Post(String IDPost, String categoria, String messaggioTestuale, String creatorePost) {

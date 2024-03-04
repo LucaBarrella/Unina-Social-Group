@@ -1,7 +1,9 @@
 package it.unina.uninaSocialGroup.controller;
 
 import it.unina.uninaSocialGroup.DAO.CommentDAO;
+import it.unina.uninaSocialGroup.DAO.PostDAO;
 import it.unina.uninaSocialGroup.Model.Comment;
+import it.unina.uninaSocialGroup.Model.Post;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,7 +16,7 @@ import javafx.scene.text.Text;
 import java.io.IOException;
 import java.util.List;
 
-public class CommentController {
+public class CommentSectionController {
 
     private @FXML ListView<VBox> commentListView;
     private @FXML Button commentButton;
@@ -41,13 +43,20 @@ public class CommentController {
         });
     }
 
+    /**
+     * CreateComment
+     * Metodo che viene chiamato quando viene cliccato INVIO sulla tastiera
+     * Il commento appena scritto viene salvato nel database e mostrato a schermo
+     */
     public void CreateComment(){
         String text = CommentTextArea.getText();
         if (text != null && !text.trim().isEmpty()) {
             CommentDAO commentDAO = new CommentDAO();
             commentDAO.createNewComment(text, matricola, postID);
             CommentTextArea.clear();
+            //Ricarica la lista dei commenti
             fillListView();
+            //Mostra un messaggio di conferma
             Platform.runLater(() -> {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Commento Pubblicato");
@@ -58,19 +67,40 @@ public class CommentController {
         }
     }
 
+    /**
+     * setOriginalPost
+     * Metodo che mostra i dati del post, ovvero l'autore e il messaggio scritto
+     */
     public void setOriginalPost(String creatorePost, String messaggioTestuale) {
         this.usernameAuthor.setText(creatorePost);
         this.postText.setText(messaggioTestuale);
     }
+
+    /**
+     * setPostID
+     * Metodo che viene chiamato nel PostDetailsController
+     * Utilizzato per ottenere l'id del post
+     */
         public void setPostID(String postId) {
         this.postID = postId;
         fillListView();
     }
 
-    public void setEmail(String email) {
-        this.matricola = email;
+    /**
+     * setMatricola
+     * Metodo che viene chiamato nel PostDetailsController
+     * Utilizzato per ottenere la matricola dell'utente
+     */
+    public void setMatricola(String matricola) {
+        this.matricola = matricola;
     }
 
+    /**
+     * loadVBoxFromFXML
+     * Metodo che carica un VBox da un file FXML. Il file FXML è specificato dal percorso.
+     * Dopo aver caricato il VBox, ottiene il controller associato e imposta il commento specificato.
+     * Infine, restituisce il VBox caricato (o null se il caricamento non è riuscito).
+     */
     private VBox loadVBoxFromFXML(Comment comment) {
         VBox vBox = null;
         try {
@@ -84,10 +114,18 @@ public class CommentController {
         return vBox;
     }
 
+    /**
+     * fillListView
+     * Metodo che mostra i commenti pubblicati sul post.
+     * Si prendono i comment dal db, li si aggiungono al VBox e poi alla ListView
+     */
     private void fillListView() {
         ObservableList<VBox> vBoxList = FXCollections.observableArrayList();
         CommentDAO commentDAO = new CommentDAO();
-        List<Comment> comments = commentDAO.getCommentByPost(postID);
+        PostDAO postDAO = new PostDAO();
+        Post post = postDAO.getPostByID(postID);
+        commentDAO.getCommentByPost(post);
+        List<Comment> comments = post.getCommenti();
 
         for (Comment comment : comments) {
             vBoxList.add(loadVBoxFromFXML(comment));

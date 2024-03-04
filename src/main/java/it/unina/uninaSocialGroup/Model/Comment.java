@@ -1,42 +1,44 @@
 package it.unina.uninaSocialGroup.Model;
 
+import java.sql.Time;
+
 public class Comment {
     private String ID_Commento;
     private String ID_Post;
-    private String Matricola;
+    private String AutoreCommento;
     private String Testo;
-    private String DataOra;
+    private Time OraPubblicazione;
 
-    public Comment(String ID_Commento, String ID_Post, String Matricola, String Testo, String DataOra) {
+    public Comment(String ID_Commento, String ID_Post, String AutoreCommento, String Testo, Time Ora) {
         this.ID_Commento = ID_Commento;
         this.ID_Post = ID_Post;
-        this.Matricola = Matricola;
+        this.AutoreCommento = AutoreCommento;
         this.Testo = Testo;
-        this.DataOra = DataOra;
+        this.OraPubblicazione = Ora;
     }
 
-    public String getID_Commento() {
+    public String getIDCommento() {
         return ID_Commento;
     }
 
-    public void setID_Commento(String ID_Commento) {
+    public void setIDCommento(String ID_Commento) {
         this.ID_Commento = ID_Commento;
     }
 
-    public String getID_Post() {
+    public String getIDPost() {
         return ID_Post;
     }
 
-    public void setID_Post(String ID_Post) {
+    public void setIDPost(String ID_Post) {
         this.ID_Post = ID_Post;
     }
 
-    public String getMatricola() {
-        return Matricola;
+    public String getAutoreCommento() {
+        return AutoreCommento;
     }
 
-    public void setMatricola(String matricola) {
-        Matricola = matricola;
+    public void setAutoreCommento(String autoreCommento) {
+        AutoreCommento = autoreCommento;
     }
 
     public String getTesto() {
@@ -47,11 +49,22 @@ public class Comment {
         Testo = testo;
     }
 
-    public String getDataOra() {
-        return DataOra;
+    public Time getOraPubblicazione() {
+        return OraPubblicazione;
     }
 
-    public void setDataOra(String dataOra) {
-        DataOra = dataOra;
+    public void setOraPubblicazione(Time ora) {
+        OraPubblicazione = ora;
+    }
+
+    @Override
+    public String toString() {
+        return "Comment{" +
+                "ID_Commento='" + ID_Commento + '\'' +
+                ", ID_Post='" + ID_Post + '\'' +
+                ", AutoreCommento='" + AutoreCommento + '\'' +
+                ", Testo='" + Testo + '\'' +
+                ", Ora='" + OraPubblicazione + '\'' +
+                '}';
     }
 }

@@ -27,7 +27,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.shape.Circle?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unina.uninaSocialGroup.controller.CommentController">
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unina.uninaSocialGroup.controller.CommentSectionController">
    <children>
       <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <columnConstraints>
@@ -72,15 +72,13 @@
                                     <Insets left="10.0" />
                                  </HBox.margin>
                               </Button>
-                              <Label prefHeight="22.0" prefWidth="145.0" text="Numero Membri :" HBox.hgrow="SOMETIMES">
-                                 <HBox.margin>
-                                    <Insets left="20.0" right="20.0" />
-                                 </HBox.margin>
+                              <Label text="Commenti">
                                  <font>
-                                    <Font size="14.0" />
+                                    <Font size="39.0" />
                                  </font>
-                              </Label>
-                              <Label fx:id="NumberOfMembers" prefHeight="27.0" prefWidth="69.0" text="Label" />
+                                 <HBox.margin>
+                                    <Insets left="70.0" />
+                                 </HBox.margin></Label>
                               <Button fx:id="commentButton" mnemonicParsing="false" style="-fx-background-color: transparent;">
                                  <font>
                                     <Font size="1.0" />
@@ -91,13 +89,11 @@
                                           <Image url="@../images/JoinInGroup.gif" />
                                        </image>
                                     </ImageView>
-                                 </graphic></Button>
+                                 </graphic>
+                                 <HBox.margin>
+                                    <Insets left="50.0" />
+                                 </HBox.margin></Button>
                               <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                           <TextField fx:id="searchField" minWidth="0" prefHeight="39.0" prefWidth="244.0" promptText="Cerca Gruppo">
-                              <HBox.margin>
-                                 <Insets right="50.0" />
-                              </HBox.margin>
-                           </TextField>
                         </children>
                      </HBox>
                   </children>

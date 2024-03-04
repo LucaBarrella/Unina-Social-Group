@@ -152,7 +152,7 @@ public class GroupChatController {
     /**
      * CreatePost
      * Metodo che viene chiamato quando viene cliccato INVIO sulla tastiera.
-     * Il post appena scritto viene salvato nel database
+     * Il post appena scritto viene salvato nel database e mostrato a schermo
      */
     public void CreatePost(){
         String text = PostTextArea.getText();
@@ -220,7 +220,7 @@ public class GroupChatController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/it/unina/uninaSocialGroup/view/PostDetailsPage.fxml"));
             vBox = loader.load();
             PostDetailsController controller = loader.getController();
-            controller.setEmail(userEmail);
+            controller.setMatricolaWithEmail(userEmail);
             controller.setPost(post);
         } catch (IOException e) {
             e.printStackTrace();

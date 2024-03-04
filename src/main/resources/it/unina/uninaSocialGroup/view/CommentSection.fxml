@@ -178,7 +178,7 @@
                                     <Insets left="100.0" right="100.0" />
                                  </padding>
                               </HBox>
-                              <ListView fx:id="commentListView" prefHeight="200.0" prefWidth="200.0">
+                              <ListView fx:id="commentListView" prefHeight="200.0" prefWidth="200.0" stylesheets="@../style/listView.css">
                                  <VBox.margin>
                                     <Insets bottom="30.0" left="100.0" right="100.0" top="30.0" />
                                  </VBox.margin>

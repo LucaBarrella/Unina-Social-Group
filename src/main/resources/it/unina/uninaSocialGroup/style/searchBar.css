@@ -7,7 +7,7 @@
     -fx-text-fill: black;
 }
 
-.button {
+.label-button {
     -fx-background-color: transparent;
     -fx-border-color: transparent;
 }

@@ -14,7 +14,7 @@ import javafx.scene.control.TextField;
 
 import java.io.IOException;
 
-public class GroupCreationController {
+public class GroupCreationBoundary {
     @FXML
     private Button CreationGroupButton;
     @FXML

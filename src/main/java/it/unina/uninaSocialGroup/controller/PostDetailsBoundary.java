@@ -16,7 +16,7 @@ import javafx.scene.text.Text;
 
 import java.io.IOException;
 
-public class PostDetailsController extends ListCell<Post> {
+public class PostDetailsBoundary extends ListCell<Post> {
     private Post post;
     private @FXML Label usernameAuthor, likeCounter, commentCounter;
     private @FXML Text postText;
@@ -120,7 +120,7 @@ public class PostDetailsController extends ListCell<Post> {
             SwitchScene switchScene = new SwitchScene();
             FXMLLoader loader = switchScene.createFXML("/it/unina/uninaSocialGroup/view/CommentSection.fxml");
             switchScene.loadSceneAndShow(actionEvent, loader);
-            CommentSectionController commentSectionController = loader.getController();
+            CommentSectionBoundary commentSectionController = loader.getController();
             commentSectionController.setMatricola(this.matricola);
             commentSectionController.setPostID(post.getIDPost());
             commentSectionController.setOriginalPost(post.getCreatorePost(), post.getMessaggioTestuale());

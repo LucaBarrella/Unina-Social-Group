@@ -321,7 +321,6 @@ public class PostDAO {
     /**
      * getNumberOfComment
      * Restituisce il numero di commenti messi ad un post
-     *
      * @param IDPost
      * @return numberOfComment
      */

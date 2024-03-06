@@ -7,7 +7,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox prefHeight="0.0" prefWidth="601.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unina.uninaSocialGroup.controller.CommentDetailsController">   <children>
+<VBox prefHeight="0.0" prefWidth="601.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unina.uninaSocialGroup.controller.CommentDetailsBoundary">   <children>
     <HBox prefHeight="54.0" prefWidth="600.0">
         <children>
             <ImageView fx:id="profileImage" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">

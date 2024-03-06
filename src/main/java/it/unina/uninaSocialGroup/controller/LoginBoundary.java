@@ -17,7 +17,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class LoginController {
+public class LoginBoundary {
     @FXML
     private Button LoginButton;
     @FXML
@@ -27,6 +27,7 @@ public class LoginController {
     private SwitchScene switchScene = new SwitchScene();
     @FXML
     private Label NoEmailPassword;
+    LogicalController logic = new LogicalController();
 
 
     @FXML
@@ -44,19 +45,12 @@ public class LoginController {
      * In caso negativo, mostra un messaggio di errore
      */
     public void signIn(ActionEvent event){
-        //Se non viene scritto nulla nel campo Email o Password, si mostra un messaggio di avvertenza
-        if(emailField.getText().isEmpty() || passwordField.getText().isEmpty()){
-            NoEmailPassword.setVisible(true);
-            return;
-        }
-        AuthenticationDAO authenticate = new AuthenticationDAO();
-        boolean result = authenticate.CheckCredentials(emailField.getText(), passwordField.getText());
+        boolean result = logic.signIn(emailField.getText(), passwordField.getText());
         if(result){
             try {
                 FXMLLoader loader = switchScene.createFXML("/it/unina/uninaSocialGroup/view/HomePage.fxml");
-                HomePageController homePageController = new HomePageController();
-                //Passa la email inserita alla HomePage
-                homePageController.setUserEmail(emailField.getText());
+                //Passa la email al LogicalController
+                logic.setUserEmail(emailField.getText());
                 Parent root = loader.load();
                 Scene scene = new Scene(root);
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

@@ -7,15 +7,12 @@ import it.unina.uninaSocialGroup.Model.SwitchScene;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.Optional;
 
-public class SearchBarController {
+public class SearchBarBoundary {
     @FXML
     private Button groupNameButton;
     @FXML
@@ -23,7 +20,7 @@ public class SearchBarController {
     @FXML
     private Label memberCountLabel;
     private TextField searchField;
-    private HomePageController homePageController;
+    private HomePageBoundary homePageController;
     private static String userEmail;
     private SwitchScene switchScene = new SwitchScene();
 
@@ -32,7 +29,7 @@ public class SearchBarController {
      * setGroup
      * Metodo che mostra i gruppi (cercati per nome o categoria)
      */
-    public void setGroup(Group group, TextField searchField, HomePageController homePageController) {
+    public void setGroup(Group group, TextField searchField, HomePageBoundary homePageController) {
         this.searchField = searchField;
         this.homePageController = homePageController;
         groupNameButton.setText(group.getNomeGruppo());
@@ -40,7 +37,7 @@ public class SearchBarController {
             try {
                 //Scambia la scena con la chat del gruppo
                 FXMLLoader loader = switchScene.createFXML("/it/unina/uninaSocialGroup/view/GroupChatPage.fxml");
-                GroupChatController groupchat = new GroupChatController();
+                GroupChatBoundary groupchat = new GroupChatBoundary();
                 //Passa l'ID del gruppo alla GroupChat
                 groupchat.setGroupID(group.getIDGruppo());
                 //Passa la email dell'utente alla GroupChat
@@ -88,7 +85,7 @@ public class SearchBarController {
                     try {
                         //Scambia la scena con la chat del gruppo
                         FXMLLoader loader = switchScene.createFXML("/it/unina/uninaSocialGroup/view/GroupChatPage.fxml");
-                        GroupChatController groupchat = new GroupChatController();
+                        GroupChatBoundary groupchat = new GroupChatBoundary();
                         //Passa l'ID del gruppo alla GroupChat
                         groupchat.setGroupID(group.getIDGruppo());
                         //Passa la email dell'utente alla GroupChat

@@ -27,7 +27,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.shape.Circle?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unina.uninaSocialGroup.controller.HomePageController">
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unina.uninaSocialGroup.controller.HomePageBoundary">
    <children>
       <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <columnConstraints>
@@ -144,7 +144,7 @@
                   <children>
                      <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #09F;">
                         <children>
-                           <Label contentDisplay="CENTER" prefHeight="53.0" prefWidth="100.0" text="Ciao" textFill="WHITE">
+                           <Label contentDisplay="CENTER" prefHeight="53.0" prefWidth="110.0" text="Ciao" textFill="WHITE">
                               <font>
                                  <Font name="System Italic" size="36.0" />
                               </font>

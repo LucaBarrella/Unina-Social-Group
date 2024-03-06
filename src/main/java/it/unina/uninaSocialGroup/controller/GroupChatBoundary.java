@@ -1,7 +1,6 @@
 package it.unina.uninaSocialGroup.controller;
 
 import javafx.application.Platform;
-import javafx.util.Duration;
 import it.unina.uninaSocialGroup.DAO.GroupDAO;
 import it.unina.uninaSocialGroup.DAO.UserDAO;
 import it.unina.uninaSocialGroup.Model.Group;
@@ -9,7 +8,6 @@ import it.unina.uninaSocialGroup.Model.Post;
 import it.unina.uninaSocialGroup.DAO.PostDAO;
 import it.unina.uninaSocialGroup.Model.SwitchScene;
 import it.unina.uninaSocialGroup.Model.User;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -22,7 +20,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
-public class GroupChatController {
+
+public class GroupChatBoundary {
     @FXML
     private ListView<VBox> postListView;
     @FXML
@@ -216,7 +215,7 @@ public class GroupChatController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/it/unina/uninaSocialGroup/view/PostDetailsPage.fxml"));
             vBox = loader.load();
-            PostDetailsController controller = loader.getController();
+            PostDetailsBoundary controller = loader.getController();
             controller.setMatricolaWithEmail(userEmail);
             controller.setPost(post);
         } catch (IOException e) {

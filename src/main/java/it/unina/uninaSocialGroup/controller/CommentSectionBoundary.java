@@ -18,7 +18,7 @@ import javafx.scene.text.Text;
 import java.io.IOException;
 import java.util.List;
 
-public class CommentSectionController {
+public class CommentSectionBoundary {
 
     private @FXML ListView<VBox> commentListView;
     private @FXML Button commentButton, BackButton;
@@ -110,7 +110,7 @@ public class CommentSectionController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/it/unina/uninaSocialGroup/view/CommentDetailes.fxml"));
             vBox = loader.load();
-            CommentDetailsController controller = loader.getController();
+            CommentDetailsBoundary controller = loader.getController();
             controller.setComment(comment);
         } catch (IOException e) {
             e.printStackTrace();

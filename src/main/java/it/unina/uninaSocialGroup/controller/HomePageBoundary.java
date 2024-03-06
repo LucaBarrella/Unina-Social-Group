@@ -28,7 +28,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 
-public class HomePageController{
+public class HomePageBoundary {
     private @FXML Label LabelNameSurname, LabelMatricola, LabelName, LabelBirthDate, LabelEmail, LabelSurname, LabelRegistrationDate;
     private @FXML TableView<Group> TableGroups;
     private @FXML TableColumn<Group, String> NameColumn, CreationDateColumn, CategoryColumn;
@@ -58,8 +58,8 @@ public class HomePageController{
     private Tab ProfileTab, GroupsTab, ReportTab;
     @FXML
     private Button profileButton, groupButton, reportButton;
-
-    public HomePageController(){
+    LogicalController logic = new LogicalController();
+    public HomePageBoundary(){
         allGroups = FXCollections.observableArrayList();
     }
     @FXML
@@ -107,8 +107,8 @@ public class HomePageController{
                     try {
                         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/it/unina/uninaSocialGroup/view/SearchBar.fxml"));
                         HBox hbox = fxmlLoader.load();
-                        SearchBarController controller = fxmlLoader.getController();
-                        controller.setGroup(item, searchField, HomePageController.this);
+                        SearchBarBoundary controller = fxmlLoader.getController();
+                        controller.setGroup(item, searchField, HomePageBoundary.this);
                         controller.setUserEmail(userEmail);
                         setGraphic(hbox);
                     } catch (IOException e) {
@@ -168,14 +168,6 @@ public class HomePageController{
     }
 
     /**
-     * setUserEmail
-     * Metodo chiamato da alcuni controller per ottenere la email inserita dall'utente
-     */
-    public void setUserEmail(String email){
-        this.userEmail = email;
-    }
-
-    /**
      * goToProfileTab
      * Metodo che viene chiamato quando viene cliccata la prima gif a sinistra
      * Porta al tab del profilo
@@ -207,15 +199,12 @@ public class HomePageController{
      * Metodo che mostra i dati dell'utente nel tab del profilo
      */
     public void LoadProfileData() {
-    UserDAO userDAO = new UserDAO();
-    String matricola = userDAO.getMatricolaByEmail(userEmail);
-    User user = userDAO.getUserData(matricola);
-    LabelMatricola.setText(user.getMatricola());
-    LabelEmail.setText(userEmail);
-    LabelName.setText(user.getNome());
-    LabelSurname.setText(user.getCognome());
-    LabelBirthDate.setText(user.getDataDiNascita().toString());
-    LabelRegistrationDate.setText(user.getDataDiRegistrazione().toString());
+    LabelMatricola.setText(logic.getMatricolaUser());
+    LabelEmail.setText(logic.getEmailUser());
+    LabelName.setText(logic.getNameUser());
+    LabelSurname.setText(logic.getSurnameUser());
+    LabelBirthDate.setText(logic.getBirthDateUser());
+    LabelRegistrationDate.setText(logic.getRegistrationDateUser());
     }
 
     /**
@@ -223,10 +212,8 @@ public class HomePageController{
      * Metodo che mostra il nome e cognome dell'utente
      */
     public void displayName(){
-        UserDAO user = new UserDAO();
-        User result = user.getUserByEmail(userEmail);
-        String name = result.getNome();
-        String surname = result.getCognome();
+        String name = logic.getNameUser();
+        String surname = logic.getSurnameUser();
         LabelNameSurname.setText(name+ " " +surname);
     }
 
@@ -235,11 +222,7 @@ public class HomePageController{
      * Metodo che mostra i gruppi di cui l'utente fa parte o è creatore
      */
     public void LoadDataTableUserGroups(){
-        UserDAO userDAO = new UserDAO();
-        GroupDAO groupDAO = new GroupDAO();
-        User user = userDAO.getUserByEmail(userEmail);
-        groupDAO.getUserGroups(user);
-        List<Group> dati = user.getGruppiUtente();
+        List dati = logic.getUserGroups();
         NameColumn.setCellValueFactory(new PropertyValueFactory<>("NomeGruppo"));
         CreationDateColumn.setCellValueFactory(new PropertyValueFactory<>("DataDiCreazione"));
         CategoryColumn.setCellValueFactory(new PropertyValueFactory<>("CategoriaGruppo"));
@@ -253,11 +236,7 @@ public class HomePageController{
      * Mostra solo i gruppi di cui l'utente è creatore
      */
     public void LoadDataTableAdminGroups(){
-        UserDAO userDAO = new UserDAO();
-        GroupDAO groupDAO = new GroupDAO();
-        User user = userDAO.getUserByEmail(userEmail);
-        groupDAO.getAdminGroups(user);
-        List<Group> dati = user.getGruppiCreati();
+        List dati = logic.getAdminGroups();
         NameColumn.setCellValueFactory(new PropertyValueFactory<>("NomeGruppo"));
         CreationDateColumn.setCellValueFactory(new PropertyValueFactory<>("DataDiCreazione"));
         CategoryColumn.setCellValueFactory(new PropertyValueFactory<>("CategoriaGruppo"));
@@ -270,12 +249,8 @@ public class HomePageController{
      * Metodo che viene chiamato quando viene scelto un mese nel choicebox
      * Mostra i dati mensili inerenti ai gruppi creati dall'utente
      */
-    public void LoadDataTableReport(Integer month){
-        UserDAO userDAO = new UserDAO();
-        ReportDAO reportDAO = new ReportDAO();
-        User user = userDAO.getUserByEmail(userEmail);
-        reportDAO.getGroupsReport(user,month);
-        List<Report> dati = user.getReportMensili();
+    public void LoadDataTableReport(Integer Month){
+        List dati = logic.getReportGroups(Month);
         NameGroupColumn.setCellValueFactory(new PropertyValueFactory<>("NomeGruppo"));
         PostPlusLikeColumn.setCellValueFactory(new PropertyValueFactory<>("PostPiuLike"));
         PostMinusLikeColumn.setCellValueFactory(new PropertyValueFactory<>("PostMenoLike"));
@@ -311,10 +286,12 @@ public class HomePageController{
         if (searchText.isEmpty()) {
             groupListView.setVisible(false);
         } else {
+            String groupName = logic.getGroupName();
+            String categoryGroup = logic.getGroupCategory();
             groupListView.setVisible(true);
-            ObservableList<Group> filteredGroups = allGroups.filtered(group ->
-                    group.getNomeGruppo().toLowerCase().contains(searchText) ||
-                            group.getCategoriaGruppo().toLowerCase().contains(searchText)
+            ObservableList<Group> filteredGroups = allGroups.filtered(logic ->
+                    groupName.toLowerCase().contains(searchText) ||
+                            categoryGroup.toLowerCase().contains(searchText)
             );
             groupListView.setItems(filteredGroups);
         }
@@ -331,7 +308,7 @@ public class HomePageController{
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/it/unina/uninaSocialGroup/view/GroupCreationPage.fxml"));
                 Parent interfaceContent = fxmlLoader.load();
-                GroupCreationController controller = fxmlLoader.getController();
+                GroupCreationBoundary controller = fxmlLoader.getController();
                 //Passa la email dell'utente
                 controller.setUserEmail(userEmail);
                 newTab.setContent(interfaceContent);
@@ -359,7 +336,7 @@ public class HomePageController{
             Group selectedGroup = TableGroups.getSelectionModel().getSelectedItem();
             if (selectedGroup != null) {
                 String IdSelectedGroup = selectedGroup.getIDGruppo();
-                GroupChatController group = new GroupChatController();
+                GroupChatBoundary group = new GroupChatBoundary();
                 //Passa l'ID del gruppo selezionato
                 group.setGroupID(IdSelectedGroup);
                 //Passa la email dell'utente

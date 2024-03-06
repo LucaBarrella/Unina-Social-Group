@@ -1,7 +1,5 @@
-package it.unina.uninaSocialGroup.controller;
+package it.unina.uninaSocialGroup.Boundary;
 
-import it.unina.uninaSocialGroup.DAO.GroupDAO;
-import it.unina.uninaSocialGroup.DAO.UserDAO;
 import it.unina.uninaSocialGroup.Model.SwitchScene;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -21,20 +19,11 @@ public class GroupCreationBoundary {
     private TextField NameGroupField,CategoryGroupField;
     private @FXML Label NoNameCategory;
     private SwitchScene switchScene = new SwitchScene();
-    private String userEmail;
+    LogicalController logic = new LogicalController();
     @FXML
     public void initialize(){
         CreationGroupButton.setOnAction(this::GroupCreation);
         NoNameCategory.setVisible(false);
-    }
-
-    /**
-     * setUserEmail
-     * Funzione che viene chiamata nella HomePage
-     * Usata principalmente per ottenere la Email dell'utente dalla HomePage
-     */
-    public void setUserEmail(String email){
-        this.userEmail = email;
     }
 
     /**
@@ -48,10 +37,7 @@ public class GroupCreationBoundary {
             NoNameCategory.setVisible(true);
             return;
         }
-        UserDAO user = new UserDAO();
-        GroupDAO group = new GroupDAO();
-        String matricola = user.getMatricolaByEmail(userEmail);
-        group.addNewGroup(NameGroupField.getText(),CategoryGroupField.getText(),matricola);
+        logic.NewGroup(NameGroupField.getText(),CategoryGroupField.getText());
         try {
             FXMLLoader loader = switchScene.createFXML("/it/unina/uninaSocialGroup/view/HomePage.fxml");
             switchScene.loadSceneAndShow(event, loader);

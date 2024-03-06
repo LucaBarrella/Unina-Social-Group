@@ -1,4 +1,4 @@
-package it.unina.uninaSocialGroup.controller;
+package it.unina.uninaSocialGroup.Boundary;
 
 import it.unina.uninaSocialGroup.Model.Comment;
 import javafx.fxml.FXML;
@@ -11,6 +11,7 @@ public class CommentDetailsBoundary {
     private Label usernameAuthor;
     @FXML
     private Text commentText;
+    LogicalController logic = new LogicalController();
 
     /**
      * setComment
@@ -19,8 +20,8 @@ public class CommentDetailsBoundary {
      */
     public void setComment(Comment comment) {
         this.comment = comment;
-        setLabelAuthor(comment.getAutoreCommento());
-        setLabelContent(comment.getTesto());
+        setLabelAuthor(logic.getCommentAuthor(comment));
+        setLabelContent(logic.getCommentContent(comment));
     }
 
     /**

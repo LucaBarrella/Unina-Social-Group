@@ -1,7 +1,6 @@
-package it.unina.uninaSocialGroup.controller;
+package it.unina.uninaSocialGroup.Boundary;
 
 import it.unina.uninaSocialGroup.DAO.PostDAO;
-import it.unina.uninaSocialGroup.DAO.UserDAO;
 import it.unina.uninaSocialGroup.Model.Post;
 import it.unina.uninaSocialGroup.Model.SwitchScene;
 import javafx.event.ActionEvent;
@@ -22,10 +21,8 @@ public class PostDetailsBoundary extends ListCell<Post> {
     private @FXML Text postText;
     private @FXML Button likeButton, commentButton;
     private @FXML ImageView likeButtonImage;
-    private String matricola;
-    private PostDAO postDAO = new PostDAO();
-    private UserDAO userDAO = new UserDAO();
     private Boolean likeStatus = false;
+    LogicalController logic = new LogicalController();
 
     public void initialize() {
         likeButton.setOnAction(this::handleLikeButton);
@@ -36,21 +33,20 @@ public class PostDetailsBoundary extends ListCell<Post> {
      * setPost
      * Metodo che mostra i dettagli del post
      */
-    public void setPost(Post post) {
-        this.post = post;
-        setLabelAuthor(post.getCreatorePost());
-        setLabelContent(post.getMessaggioTestuale());
-        setLikeStatus(matricola, post.getIDPost());
-        setLikesNumber(post.getIDPost());
-        setCommentsNumber(post.getIDPost());
+    public void setPostDetails() {
+        setLabelAuthor(logic.getPostAuthor());
+        setLabelContent(logic.getPostContent());
+        setLikeStatus();
+        setLikesNumber();
+        setCommentsNumber();
     }
 
-    private void setLikesNumber(String IDPost) {
-        this.likeCounter.setText(String.valueOf(postDAO.getNumberOfLike(IDPost)));
+    private void setLikesNumber() {
+        this.likeCounter.setText(String.valueOf(logic.numberOfLike()));
     }
 
-    private void setCommentsNumber(String IDPost) {
-        this.commentCounter.setText(String.valueOf(postDAO.getNumberOfComment(IDPost)));
+    private void setCommentsNumber() {
+        this.commentCounter.setText(String.valueOf(logic.numberOfComment()));
     }
 
     /**
@@ -73,8 +69,9 @@ public class PostDetailsBoundary extends ListCell<Post> {
      * setLikeStatus
      * Metodo che modifica lo stato del like a seconda se è gia stato messo oppure no
      */
-    public void setLikeStatus(String matricola, String postID) {
-    if (postDAO.isLikeAlreadyAdd(matricola, postID)) {
+    public void setLikeStatus() {
+        boolean status = logic.CheckStatusLike();
+    if (status) {
         likeStatus = true;
         likeButtonImage.setImage(new Image("file:src/main/resources/it/unina/uninaSocialGroup/images/LikeIsPressed.png"));
     } else {
@@ -82,14 +79,6 @@ public class PostDetailsBoundary extends ListCell<Post> {
         likeButtonImage.setImage(new Image("file:src/main/resources/it/unina/uninaSocialGroup/images/LikeIsNotPressed.png"));
     }
 }
-
-    /**
-     * Metodo che viene chiamato nel GroupChatController
-     * Utilizzato per ottenere la matricola dell'utente a partire dalla sua email
-     */
-    public void setMatricolaWithEmail(String userEmail) {
-        this.matricola = userDAO.getMatricolaByEmail(userEmail);
-    }
 
     /**
      * handleLikeButton
@@ -100,14 +89,14 @@ public class PostDetailsBoundary extends ListCell<Post> {
     public void handleLikeButton(ActionEvent actionEvent) {
         if (likeStatus){
             likeButtonImage.setImage(new Image("file:src/main/resources/it/unina/uninaSocialGroup/images/LikeIsNotPressed.png"));
-            postDAO.removeLike(matricola, post.getIDPost());
+            logic.removeLike();
             likeStatus = false;
         } else {
             likeButtonImage.setImage(new Image("file:src/main/resources/it/unina/uninaSocialGroup/images/LikeIsPressed.png"));
-            postDAO.addLike(matricola, post.getIDPost());
+            logic.addLike();
             likeStatus = true;
         }
-        setLikesNumber(post.getIDPost());
+        setLikesNumber();
     }
 
     /**
@@ -120,10 +109,6 @@ public class PostDetailsBoundary extends ListCell<Post> {
             SwitchScene switchScene = new SwitchScene();
             FXMLLoader loader = switchScene.createFXML("/it/unina/uninaSocialGroup/view/CommentSection.fxml");
             switchScene.loadSceneAndShow(actionEvent, loader);
-            CommentSectionBoundary commentSectionController = loader.getController();
-            commentSectionController.setMatricola(this.matricola);
-            commentSectionController.setPostID(post.getIDPost());
-            commentSectionController.setOriginalPost(post.getCreatorePost(), post.getMessaggioTestuale());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -1,8 +1,5 @@
-package it.unina.uninaSocialGroup.controller;
+package it.unina.uninaSocialGroup.Boundary;
 
-import it.unina.uninaSocialGroup.DAO.GroupDAO;
-import it.unina.uninaSocialGroup.DAO.ReportDAO;
-import it.unina.uninaSocialGroup.DAO.UserDAO;
 import it.unina.uninaSocialGroup.Model.*;
 import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
@@ -45,7 +42,6 @@ public class HomePageBoundary {
     @FXML
     private Button LogOutButton, CreationGroupButton, OpenButton;
     private SwitchScene switchScene = new SwitchScene();
-    private static String userEmail;
     @FXML
     private ListView<Group> groupListView;
     @FXML
@@ -92,8 +88,8 @@ public class HomePageBoundary {
             int monthInt = java.util.Arrays.asList(Months).indexOf(newValue) + 1;
             LoadDataTableReport(monthInt);
         });
-        GroupDAO groupDao = new GroupDAO();
-        allGroups.addAll(groupDao.getGroupsBySearchField(searchField.getText()));
+        List groups = logic.getGroupsBySF(searchField.getText());
+        allGroups.addAll(groups);
         groupListView.setItems(allGroups);
         groupListView.setCellFactory(param -> new ListCell<>() {
             @Override
@@ -109,7 +105,6 @@ public class HomePageBoundary {
                         HBox hbox = fxmlLoader.load();
                         SearchBarBoundary controller = fxmlLoader.getController();
                         controller.setGroup(item, searchField, HomePageBoundary.this);
-                        controller.setUserEmail(userEmail);
                         setGraphic(hbox);
                     } catch (IOException e) {
                         throw new RuntimeException(e);
@@ -286,12 +281,10 @@ public class HomePageBoundary {
         if (searchText.isEmpty()) {
             groupListView.setVisible(false);
         } else {
-            String groupName = logic.getGroupName();
-            String categoryGroup = logic.getGroupCategory();
             groupListView.setVisible(true);
-            ObservableList<Group> filteredGroups = allGroups.filtered(logic ->
-                    groupName.toLowerCase().contains(searchText) ||
-                            categoryGroup.toLowerCase().contains(searchText)
+            ObservableList<Group> filteredGroups = allGroups.filtered(group ->
+                    group.getNomeGruppo().toLowerCase().contains(searchText) ||
+                            group.getCategoriaGruppo().toLowerCase().contains(searchText)
             );
             groupListView.setItems(filteredGroups);
         }
@@ -308,9 +301,6 @@ public class HomePageBoundary {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/it/unina/uninaSocialGroup/view/GroupCreationPage.fxml"));
                 Parent interfaceContent = fxmlLoader.load();
-                GroupCreationBoundary controller = fxmlLoader.getController();
-                //Passa la email dell'utente
-                controller.setUserEmail(userEmail);
                 newTab.setContent(interfaceContent);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -335,12 +325,7 @@ public class HomePageBoundary {
         try {
             Group selectedGroup = TableGroups.getSelectionModel().getSelectedItem();
             if (selectedGroup != null) {
-                String IdSelectedGroup = selectedGroup.getIDGruppo();
-                GroupChatBoundary group = new GroupChatBoundary();
-                //Passa l'ID del gruppo selezionato
-                group.setGroupID(IdSelectedGroup);
-                //Passa la email dell'utente
-                group.setUserEmail(userEmail);
+                logic.setGroup(selectedGroup);
             }
             FXMLLoader loader = switchScene.createFXML("/it/unina/uninaSocialGroup/view/GroupChatPage.fxml");
             switchScene.loadSceneAndShow(event, loader);

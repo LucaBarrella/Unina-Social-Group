@@ -1,6 +1,5 @@
-package it.unina.uninaSocialGroup.controller;
+package it.unina.uninaSocialGroup.Boundary;
 
-import it.unina.uninaSocialGroup.DAO.AuthenticationDAO;
 import it.unina.uninaSocialGroup.Model.SwitchScene;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -45,12 +44,17 @@ public class LoginBoundary {
      * In caso negativo, mostra un messaggio di errore
      */
     public void signIn(ActionEvent event){
-        boolean result = logic.signIn(emailField.getText(), passwordField.getText());
+        //Se non viene scritto nulla nel campo Email o Password, si mostra un messaggio di avvertenza
+        if(emailField.getText().isEmpty() || passwordField.getText().isEmpty()){
+            NoEmailPassword.setVisible(true);
+            return;
+        }
+        boolean result = logic.checkCredentials(emailField.getText(), passwordField.getText());
         if(result){
             try {
                 FXMLLoader loader = switchScene.createFXML("/it/unina/uninaSocialGroup/view/HomePage.fxml");
                 //Passa la email al LogicalController
-                logic.setUserEmail(emailField.getText());
+                logic.setUser(emailField.getText());
                 Parent root = loader.load();
                 Scene scene = new Scene(root);
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

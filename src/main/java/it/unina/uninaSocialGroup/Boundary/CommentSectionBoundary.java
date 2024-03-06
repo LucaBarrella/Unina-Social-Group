@@ -1,4 +1,4 @@
-package it.unina.uninaSocialGroup.controller;
+package it.unina.uninaSocialGroup.Boundary;
 
 import it.unina.uninaSocialGroup.DAO.CommentDAO;
 import it.unina.uninaSocialGroup.DAO.PostDAO;
@@ -26,12 +26,12 @@ public class CommentSectionBoundary {
     private @FXML Label usernameAuthor;
     private @FXML Text postText;
     private  @FXML HBox HBoxComment;
-    private static String postID;
-    private String matricola;
     private SwitchScene switchScene = new SwitchScene();
+    LogicalController logic = new LogicalController();
 
     @FXML
     public void initialize() {
+        setOriginalPost();
         HBoxComment.setVisible(false);
         commentButton.setOnAction(event -> HBoxComment.setVisible(true));
         BackButton.setOnAction(this::BackToGroupChat);
@@ -55,8 +55,7 @@ public class CommentSectionBoundary {
     public void CreateComment(){
         String text = CommentTextArea.getText();
         if (text != null && !text.trim().isEmpty()) {
-            CommentDAO commentDAO = new CommentDAO();
-            commentDAO.createNewComment(text, matricola, postID);
+            logic.createComment(text);
             CommentTextArea.clear();
             //Ricarica la lista dei commenti
             fillListView();
@@ -75,28 +74,9 @@ public class CommentSectionBoundary {
      * setOriginalPost
      * Metodo che mostra i dati del post, ovvero l'autore e il messaggio scritto
      */
-    public void setOriginalPost(String creatorePost, String messaggioTestuale) {
-        this.usernameAuthor.setText(creatorePost);
-        this.postText.setText(messaggioTestuale);
-    }
-
-    /**
-     * setPostID
-     * Metodo che viene chiamato nel PostDetailsController
-     * Utilizzato per ottenere l'id del post
-     */
-        public void setPostID(String postId) {
-        this.postID = postId;
-        fillListView();
-    }
-
-    /**
-     * setMatricola
-     * Metodo che viene chiamato nel PostDetailsController
-     * Utilizzato per ottenere la matricola dell'utente
-     */
-    public void setMatricola(String matricola) {
-        this.matricola = matricola;
+    public void setOriginalPost() {
+        this.usernameAuthor.setText(logic.getPostAuthor());
+        this.postText.setText(logic.getPostContent());
     }
 
     /**
@@ -125,11 +105,7 @@ public class CommentSectionBoundary {
      */
     public void fillListView() {
         ObservableList<VBox> vBoxList = FXCollections.observableArrayList();
-        CommentDAO commentDAO = new CommentDAO();
-        PostDAO postDAO = new PostDAO();
-        Post post = postDAO.getPostByID(postID);
-        commentDAO.getCommentByPost(post);
-        List<Comment> comments = post.getCommenti();
+        List<Comment> comments = logic.ListComments();
 
         for (Comment comment : comments) {
             vBoxList.add(loadVBoxFromFXML(comment));

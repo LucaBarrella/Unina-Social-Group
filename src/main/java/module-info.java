@@ -7,6 +7,6 @@ module it.unina.uninaSocialGroup {
     opens it.unina.uninaSocialGroup.Model to javafx.base;
     opens it.unina.uninaSocialGroup to javafx.fxml;
     exports it.unina.uninaSocialGroup;
-    exports it.unina.uninaSocialGroup.Boundary;
-    opens it.unina.uninaSocialGroup.Boundary to javafx.fxml;
+    exports it.unina.uninaSocialGroup.controller;
+    opens it.unina.uninaSocialGroup.controller to javafx.fxml;
 }

@@ -1,15 +1,55 @@
-.list-view .scroll-bar {
-    -fx-opacity: 0;
+.list-view {
+    -fx-background-color: transparent;
 }
 
-.list-view .scroll-bar:horizontal .increment-button,
-.list-view .scroll-bar:horizontal .decrement-button,
-.list-view .scroll-bar:vertical .increment-button,
-.list-view .scroll-bar:vertical .decrement-button {
-    -fx-padding: 0;
+.list-view .list-cell {
+    -fx-background-color: transparent; /* Imposta la listView trasparente */
 }
 
-.list-view .scroll-bar:horizontal .thumb,
-.list-view .scroll-bar:vertical .thumb {
+.list-view .list-cell .label {
+    -fx-text-fill: black; /* Imposta il colore del testo delle label a nero */
+}
+
+.list-view .list-cell:filled:selected {
+    -fx-background-color: transparent; /* Rimuove il colore blu quando la cella viene selezionata */
+    -fx-text-fill: black; /* Imposta il colore del testo a nero quando la cella viene selezionata */
+}
+
+.list-view .list-cell:empty {
+    -fx-background-color: transparent; /* Imposta il colore di sfondo delle celle vuote allo stesso colore di sfondo della ListView */
+}
+
+.list-view .scroll-bar:vertical {
+    -fx-background-color: transparent;
+}
+.list-view .scroll-bar:vertical .increment-button {
+    -fx-background-color: transparent;
+}
+
+.list-view-SearchBar {
+    -fx-background-color: transparent
+}
+
+.list-view-SearchBar .list-cell {
+    -fx-background-color: white; /* Imposta la listView trasparente */
+}
+
+.list-view-SearchBar .list-cell .label {
+    -fx-text-fill: black; /* Imposta il colore del testo delle label a nero */
+}
+
+.list-view-SearchBar .list-cell:filled:selected {
+    -fx-background-color: transparent; /* Rimuove il colore blu quando la cella viene selezionata */
+    -fx-text-fill: black; /* Imposta il colore del testo a nero quando la cella viene selezionata */
+}
+
+.list-view-SearchBar .list-cell:empty {
+    -fx-background-color: transparent; /* Imposta il colore di sfondo delle celle vuote allo stesso colore di sfondo della ListView */
+}
+
+.list-view-SearchBar .scroll-bar:vertical {
+    -fx-background-color: transparent;
+}
+.list-view-SearchBar .scroll-bar:vertical .increment-button {
     -fx-background-color: transparent;
 }

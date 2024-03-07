@@ -27,7 +27,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.shape.Circle?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unina.uninaSocialGroup.controller.HomePageBoundary">
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unina.uninaSocialGroup.Boundary.HomePageBoundary">
    <children>
       <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <columnConstraints>
@@ -144,7 +144,7 @@
                   <children>
                      <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #09F;">
                         <children>
-                           <Label contentDisplay="CENTER" prefHeight="53.0" prefWidth="100.0" text="Ciao" textFill="WHITE">
+                           <Label contentDisplay="CENTER" prefHeight="53.0" prefWidth="110.0" text="Ciao" textFill="WHITE">
                               <font>
                                  <Font name="System Italic" size="36.0" />
                               </font>
@@ -221,14 +221,23 @@
                                        <Font name="System Bold" size="30.0" />
                                     </font>
                                  </Text>
-                                 <Label fx:id="LabelMatricola" layoutX="141.0" layoutY="274.0" text="matricola" />
-                                 <Label fx:id="LabelEmail" layoutX="141.0" layoutY="414.0" text="email" />
+                                 <Label fx:id="LabelMatricola" layoutX="141.0" layoutY="274.0" text="matricola">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font></Label>
+                                 <Label fx:id="LabelEmail" layoutX="141.0" layoutY="414.0" text="email">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font></Label>
                                  <Text layoutX="106.0" layoutY="391.0" strokeType="OUTSIDE" strokeWidth="0.0" text="- Email">
                                     <font>
                                        <Font name="System Bold" size="30.0" />
                                     </font>
                                  </Text>
-                                 <Label fx:id="LabelName" layoutX="451.0" layoutY="274.0" text="nome" />
+                                 <Label fx:id="LabelName" layoutX="451.0" layoutY="274.0" text="nome">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font></Label>
                                  <Text layoutX="419.0" layoutY="251.0" strokeType="OUTSIDE" strokeWidth="0.0" text="- Nome">
                                     <font>
                                        <Font name="System Bold" size="30.0" />
@@ -239,14 +248,23 @@
                                        <Font name="System Bold" size="30.0" />
                                     </font>
                                  </Text>
-                                 <Label fx:id="LabelSurname" layoutX="455.0" layoutY="414.0" text="cognome" />
-                                 <Label fx:id="LabelBirthDate" layoutX="784.0" layoutY="274.0" text="datadinascita" />
+                                 <Label fx:id="LabelSurname" layoutX="455.0" layoutY="414.0" text="cognome">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font></Label>
+                                 <Label fx:id="LabelBirthDate" layoutX="784.0" layoutY="274.0" text="datadinascita">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font></Label>
                                  <Text layoutX="749.0" layoutY="251.0" strokeType="OUTSIDE" strokeWidth="0.0" text="- Data di nascita">
                                     <font>
                                        <Font name="System Bold" size="30.0" />
                                     </font>
                                  </Text>
-                                 <Label fx:id="LabelRegistrationDate" layoutX="784.0" layoutY="414.0" text="datadiregistrazione" />
+                                 <Label fx:id="LabelRegistrationDate" layoutX="784.0" layoutY="414.0" text="datadiregistrazione">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font></Label>
                                  <Text layoutX="749.0" layoutY="391.0" strokeType="OUTSIDE" strokeWidth="0.0" text="- Data di registrazione">
                                     <font>
                                        <Font name="System Bold" size="30.0" />
@@ -337,5 +355,5 @@
          </GridPane>
       </children>
    </GridPane>
-      <ListView fx:id="groupListView" layoutX="855.0" layoutY="70.0" prefHeight="200.0" prefWidth="374.0" stylesheets="@../style/style.css" visible="false" AnchorPane.rightAnchor="0.0" />   </children>
+      <ListView fx:id="groupListView" layoutX="855.0" layoutY="70.0" prefHeight="200.0" prefWidth="374.0" styleClass="list-view-SearchBar" stylesheets="@../style/listView.css" visible="false" AnchorPane.rightAnchor="0.0" />   </children>
 </AnchorPane>

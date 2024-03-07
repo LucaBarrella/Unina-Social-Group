@@ -18,7 +18,7 @@ import javafx.scene.text.Text;
 import java.io.IOException;
 import java.util.List;
 
-public class CommentSectionController {
+public class CommentSectionBoundary {
 
     private @FXML ListView<VBox> commentListView;
     private @FXML Button commentButton, BackButton;
@@ -27,7 +27,8 @@ public class CommentSectionController {
     private @FXML Text postText;
     private  @FXML HBox HBoxComment;
     private static String postID;
-    private String matricola;
+    private static LogicalController logic = new LogicalController();
+    private String matricola = logic.getMatricolaUser();
     private SwitchScene switchScene = new SwitchScene();
 
     @FXML
@@ -55,6 +56,7 @@ public class CommentSectionController {
     public void CreateComment(){
         String text = CommentTextArea.getText();
         if (text != null && !text.trim().isEmpty()) {
+            //TODO
             CommentDAO commentDAO = new CommentDAO();
             commentDAO.createNewComment(text, matricola, postID);
             CommentTextArea.clear();
@@ -91,15 +93,6 @@ public class CommentSectionController {
     }
 
     /**
-     * setMatricola
-     * Metodo che viene chiamato nel PostDetailsController
-     * Utilizzato per ottenere la matricola dell'utente
-     */
-    public void setMatricola(String matricola) {
-        this.matricola = matricola;
-    }
-
-    /**
      * loadVBoxFromFXML
      * Metodo che carica un VBox da un file FXML. Il file FXML è specificato dal percorso.
      * Dopo aver caricato il VBox, ottiene il controller associato e imposta il commento specificato.
@@ -110,7 +103,8 @@ public class CommentSectionController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/it/unina/uninaSocialGroup/view/CommentDetailes.fxml"));
             vBox = loader.load();
-            CommentDetailsController controller = loader.getController();
+            //TODO
+            CommentDetailsBoundary controller = loader.getController();
             controller.setComment(comment);
         } catch (IOException e) {
             e.printStackTrace();
@@ -125,6 +119,7 @@ public class CommentSectionController {
      */
     public void fillListView() {
         ObservableList<VBox> vBoxList = FXCollections.observableArrayList();
+        //TODO
         CommentDAO commentDAO = new CommentDAO();
         PostDAO postDAO = new PostDAO();
         Post post = postDAO.getPostByID(postID);

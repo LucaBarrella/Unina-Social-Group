@@ -7,15 +7,12 @@ import it.unina.uninaSocialGroup.Model.SwitchScene;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.Optional;
 
-public class SearchBarController {
+public class SearchBarBoundary {
     @FXML
     private Button groupNameButton;
     @FXML
@@ -23,16 +20,17 @@ public class SearchBarController {
     @FXML
     private Label memberCountLabel;
     private TextField searchField;
-    private HomePageController homePageController;
-    private static String userEmail;
+    private HomePageBoundary homePageController;
     private SwitchScene switchScene = new SwitchScene();
-
+    private static LogicalController logic = new LogicalController();
+    String matricola = logic.getMatricolaUser();
+    GroupDAO groupDAO = new GroupDAO();
 
     /**
      * setGroup
      * Metodo che mostra i gruppi (cercati per nome o categoria)
      */
-    public void setGroup(Group group, TextField searchField, HomePageController homePageController) {
+    public void setGroup(Group group, TextField searchField, HomePageBoundary homePageController) {
         this.searchField = searchField;
         this.homePageController = homePageController;
         groupNameButton.setText(group.getNomeGruppo());
@@ -40,18 +38,13 @@ public class SearchBarController {
             try {
                 //Scambia la scena con la chat del gruppo
                 FXMLLoader loader = switchScene.createFXML("/it/unina/uninaSocialGroup/view/GroupChatPage.fxml");
-                GroupChatController groupchat = new GroupChatController();
+                GroupChatBoundary groupchat = new GroupChatBoundary();
                 //Passa l'ID del gruppo alla GroupChat
+                //TODO
                 groupchat.setGroupID(group.getIDGruppo());
-                //Passa la email dell'utente alla GroupChat
-                groupchat.setUserEmail(userEmail);
                 switchScene.loadSceneAndShow(e, loader);
-
-                GroupDAO groupDAO = new GroupDAO();
-                UserDAO userDAO = new UserDAO();
-                String matricola = userDAO.getMatricolaByEmail(userEmail);
-
                 //Se l'utente non fa parte del gruppo, mostra un messaggio di avvertenza
+                //TODO
                 if (!groupDAO.isUserMemberOfGroup(group, matricola)) {
                     Platform.runLater(() -> {
                         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -66,11 +59,8 @@ public class SearchBarController {
             }
         });
 
-        GroupDAO groupDAO = new GroupDAO();
-        UserDAO userDAO = new UserDAO();
-        String matricola = userDAO.getMatricolaByEmail(userEmail);
-
         //Se l'utente già fa parte del gruppo, non verrà mostrato il bottone per parteciparci
+        //TODO
         if (groupDAO.isUserMemberOfGroup(group, matricola)) {
             joinButton.setVisible(false);
             joinButton.setDisable(true);
@@ -83,16 +73,16 @@ public class SearchBarController {
                 confirmationAlert.setContentText("Sei sicuro di voler unirti a questo gruppo?");
                 Optional<ButtonType> result = confirmationAlert.showAndWait();
                 //Se viene cliccato OK allora aggiungi l'utente al gruppo
+                //TODO
                 if (result.get() == ButtonType.OK){
                     groupDAO.addNewMemberToGroup(group, matricola);
                     try {
                         //Scambia la scena con la chat del gruppo
                         FXMLLoader loader = switchScene.createFXML("/it/unina/uninaSocialGroup/view/GroupChatPage.fxml");
-                        GroupChatController groupchat = new GroupChatController();
+                        GroupChatBoundary groupchat = new GroupChatBoundary();
                         //Passa l'ID del gruppo alla GroupChat
+                        //TODO
                         groupchat.setGroupID(group.getIDGruppo());
-                        //Passa la email dell'utente alla GroupChat
-                        groupchat.setUserEmail(userEmail);
                         switchScene.loadSceneAndShow(e, loader);
                         //Mostra un messaggio di conferma
                         Platform.runLater(() -> {
@@ -108,23 +98,15 @@ public class SearchBarController {
                 }
             });
         }
-
+        //TODO
         categoryButton.setText(group.getCategoriaGruppo());
         categoryButton.setOnAction(e -> {
             this.searchField.setText(group.getCategoriaGruppo());
             homePageController.onSearch(null);
         });
-
+        //TODO
         int memberCount = groupDAO.getNumberOfMemberGroup(group.getIDGruppo());
         memberCountLabel.setText(String.valueOf(memberCount) + " membri");
     }
 
-    /**
-     * setUserEmail
-     * Funzione che viene chiamata nella HomePage
-     * Usata principalmente per ottenere la Email dell'utente dalla HomePage
-     */
-    public void setUserEmail(String email){
-        this.userEmail = email;
-    }
 }

@@ -1,7 +1,6 @@
 package it.unina.uninaSocialGroup.controller;
 
 import javafx.application.Platform;
-import javafx.util.Duration;
 import it.unina.uninaSocialGroup.DAO.GroupDAO;
 import it.unina.uninaSocialGroup.DAO.UserDAO;
 import it.unina.uninaSocialGroup.Model.Group;
@@ -9,7 +8,6 @@ import it.unina.uninaSocialGroup.Model.Post;
 import it.unina.uninaSocialGroup.DAO.PostDAO;
 import it.unina.uninaSocialGroup.Model.SwitchScene;
 import it.unina.uninaSocialGroup.Model.User;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -22,7 +20,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
-public class GroupChatController {
+public class GroupChatBoundary {
     @FXML
     private ListView<VBox> postListView;
     @FXML
@@ -35,9 +33,9 @@ public class GroupChatController {
     private HBox HBoxPost;
     @FXML
     private ComboBox<User> members;
-    private static String userEmail;
     private static String groupId;
     private SwitchScene switchScene = new SwitchScene();
+    private static LogicalController logic = new LogicalController();
 
     @FXML
     public void initialize() {
@@ -57,11 +55,10 @@ public class GroupChatController {
             }
         });
         displayMembers();
-        UserDAO userDAO = new UserDAO();
-        User currentUser = userDAO.getUserByEmail(userEmail);
-        String currentUserName = currentUser.getNome() + " " + currentUser.getCognome();
+        String currentUserName = logic.getNameUser() + " " + logic.getSurnameUser();
 
         //Controlla se l'utente fa parte del gruppo che si sta visualizzando
+        //TODO
         boolean isUserInMembers = false;
         for (User member : members.getItems()) {
             String memberName = member.getNome() + " " + member.getCognome();
@@ -89,19 +86,18 @@ public class GroupChatController {
      * Rimuove l'utente dal gruppo
      */
     public void LeaveGroup(ActionEvent event){
-        UserDAO userDAO = new UserDAO();
         //Mostra una domanda di conferma all'utente
         Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
         confirmationAlert.setTitle("Conferma");
         confirmationAlert.setHeaderText(null);
         confirmationAlert.setContentText("Sei sicuro di voler uscire dal gruppo?");
         Optional<ButtonType> result = confirmationAlert.showAndWait();
+        //TODO
+        GroupDAO groupDAO = new GroupDAO();
+        Group group = groupDAO.getGroup(groupId);
         //Se viene cliccato OK allora aggiungi l'utente al gruppo
         if (result.get() == ButtonType.OK){
-            GroupDAO groupDAO = new GroupDAO();
-            Group group = groupDAO.getGroup(groupId);
-            String matricola = userDAO.getMatricolaByEmail(userEmail);
-            groupDAO.RemoveMemberToGroup(group, matricola);
+            logic.removeMember(group);
             try {
                 //Scambia la scena con la HomePage
                 FXMLLoader loader = switchScene.createFXML("/it/unina/uninaSocialGroup/view/HomePage.fxml");
@@ -111,6 +107,7 @@ public class GroupChatController {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Gruppo Abbandonato");
                     alert.setHeaderText(null);
+                    //TODO
                     alert.setContentText("Sei uscito dal gruppo : " + group.getNomeGruppo());
                     alert.showAndWait();
                 });
@@ -139,6 +136,7 @@ public class GroupChatController {
                 }
             }
         });
+        //TODO
         GroupDAO groupDAO = new GroupDAO();
         Group group = groupDAO.getGroup(groupId);
         groupDAO.getGroupMembers(group);
@@ -156,9 +154,9 @@ public class GroupChatController {
         if (text != null && !text.trim().isEmpty()) {
             GroupDAO group = new GroupDAO();
             PostDAO postDAO = new PostDAO();
-            UserDAO user = new UserDAO();
+            //TODO
             String category = group.getGroup(groupId).getCategoriaGruppo();
-            String matricola = user.getMatricolaByEmail(userEmail);
+            String matricola = logic.getMatricolaUser();
             postDAO.CreateNewPost(category,text,matricola,groupId);
             PostTextArea.clear();
             //ricarica la lista dei post
@@ -175,15 +173,6 @@ public class GroupChatController {
     }
 
     /**
-     * setUserEmail
-     * Metodo che viene chiamato nella HomePage e nella SearchBar
-     * Usato principalmente per ottenere la Email dell'utente dalla HomePage
-     */
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
-    }
-
-    /**
      * setGroupID
      * Metodo che viene chiamato nella HomePage e nella SearchBar
      * Usato principalmente per ottenere l'ID del gruppo scelto nella HomePage
@@ -197,6 +186,7 @@ public class GroupChatController {
      * Metodo che mostra il nome e il numero di membri del gruppo sull'interfaccia
      */
     public void displayData(){
+        //TODO
         GroupDAO groupDAO = new GroupDAO();
         Group result = groupDAO.getGroup(groupId);
         String name = result.getNomeGruppo();
@@ -216,8 +206,8 @@ public class GroupChatController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/it/unina/uninaSocialGroup/view/PostDetailsPage.fxml"));
             vBox = loader.load();
-            PostDetailsController controller = loader.getController();
-            controller.setMatricolaWithEmail(userEmail);
+            //TODO
+            PostDetailsBoundary controller = loader.getController();
             controller.setPost(post);
         } catch (IOException e) {
             e.printStackTrace();
@@ -234,6 +224,7 @@ public class GroupChatController {
         ObservableList<VBox> vBoxList = FXCollections.observableArrayList();
         PostDAO postDAO = new PostDAO();
         GroupDAO groupDAO = new GroupDAO();
+        //TODO
         Group group = groupDAO.getGroup(groupId);
         postDAO.getAllPosts(group);
         List<Post> posts = group.getPostPubblicati();

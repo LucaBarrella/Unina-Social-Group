@@ -14,27 +14,18 @@ import javafx.scene.control.TextField;
 
 import java.io.IOException;
 
-public class GroupCreationController {
+public class GroupCreationBoundary {
     @FXML
     private Button CreationGroupButton;
     @FXML
     private TextField NameGroupField,CategoryGroupField;
     private @FXML Label NoNameCategory;
     private SwitchScene switchScene = new SwitchScene();
-    private String userEmail;
+    private static LogicalController logic = new LogicalController();
     @FXML
     public void initialize(){
         CreationGroupButton.setOnAction(this::GroupCreation);
         NoNameCategory.setVisible(false);
-    }
-
-    /**
-     * setUserEmail
-     * Funzione che viene chiamata nella HomePage
-     * Usata principalmente per ottenere la Email dell'utente dalla HomePage
-     */
-    public void setUserEmail(String email){
-        this.userEmail = email;
     }
 
     /**
@@ -48,10 +39,7 @@ public class GroupCreationController {
             NoNameCategory.setVisible(true);
             return;
         }
-        UserDAO user = new UserDAO();
-        GroupDAO group = new GroupDAO();
-        String matricola = user.getMatricolaByEmail(userEmail);
-        group.addNewGroup(NameGroupField.getText(),CategoryGroupField.getText(),matricola);
+        logic.NewGroup(NameGroupField.getText(),CategoryGroupField.getText());
         try {
             FXMLLoader loader = switchScene.createFXML("/it/unina/uninaSocialGroup/view/HomePage.fxml");
             switchScene.loadSceneAndShow(event, loader);

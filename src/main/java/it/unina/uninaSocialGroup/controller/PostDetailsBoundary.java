@@ -16,15 +16,15 @@ import javafx.scene.text.Text;
 
 import java.io.IOException;
 
-public class PostDetailsController extends ListCell<Post> {
+public class PostDetailsBoundary extends ListCell<Post> {
     private Post post;
     private @FXML Label usernameAuthor, likeCounter, commentCounter;
     private @FXML Text postText;
     private @FXML Button likeButton, commentButton;
     private @FXML ImageView likeButtonImage;
-    private String matricola;
+    private static LogicalController logic = new LogicalController();
+    private String matricola = logic.getMatricolaUser();
     private PostDAO postDAO = new PostDAO();
-    private UserDAO userDAO = new UserDAO();
     private Boolean likeStatus = false;
 
     public void initialize() {
@@ -37,19 +37,22 @@ public class PostDetailsController extends ListCell<Post> {
      * Metodo che mostra i dettagli del post
      */
     public void setPost(Post post) {
+        //TODO
         this.post = post;
         setLabelAuthor(post.getCreatorePost());
         setLabelContent(post.getMessaggioTestuale());
-        setLikeStatus(matricola, post.getIDPost());
+        setLikeStatus(post.getIDPost());
         setLikesNumber(post.getIDPost());
         setCommentsNumber(post.getIDPost());
     }
 
     private void setLikesNumber(String IDPost) {
+        //TODO
         this.likeCounter.setText(String.valueOf(postDAO.getNumberOfLike(IDPost)));
     }
 
     private void setCommentsNumber(String IDPost) {
+        //TODO
         this.commentCounter.setText(String.valueOf(postDAO.getNumberOfComment(IDPost)));
     }
 
@@ -73,7 +76,8 @@ public class PostDetailsController extends ListCell<Post> {
      * setLikeStatus
      * Metodo che modifica lo stato del like a seconda se è gia stato messo oppure no
      */
-    public void setLikeStatus(String matricola, String postID) {
+    public void setLikeStatus(String postID) {
+        //TODO
     if (postDAO.isLikeAlreadyAdd(matricola, postID)) {
         likeStatus = true;
         likeButtonImage.setImage(new Image("file:src/main/resources/it/unina/uninaSocialGroup/images/LikeIsPressed.png"));
@@ -84,14 +88,6 @@ public class PostDetailsController extends ListCell<Post> {
 }
 
     /**
-     * Metodo che viene chiamato nel GroupChatController
-     * Utilizzato per ottenere la matricola dell'utente a partire dalla sua email
-     */
-    public void setMatricolaWithEmail(String userEmail) {
-        this.matricola = userDAO.getMatricolaByEmail(userEmail);
-    }
-
-    /**
      * handleLikeButton
      * Metodo che viene chiamato quando viene cliccato il bottone del Like
      * Controlla lo stato del like (se gia stato messo oppure no)
@@ -100,13 +96,16 @@ public class PostDetailsController extends ListCell<Post> {
     public void handleLikeButton(ActionEvent actionEvent) {
         if (likeStatus){
             likeButtonImage.setImage(new Image("file:src/main/resources/it/unina/uninaSocialGroup/images/LikeIsNotPressed.png"));
+            //TODO
             postDAO.removeLike(matricola, post.getIDPost());
             likeStatus = false;
         } else {
             likeButtonImage.setImage(new Image("file:src/main/resources/it/unina/uninaSocialGroup/images/LikeIsPressed.png"));
+            //TODO
             postDAO.addLike(matricola, post.getIDPost());
             likeStatus = true;
         }
+        //TODO
         setLikesNumber(post.getIDPost());
     }
 
@@ -120,8 +119,8 @@ public class PostDetailsController extends ListCell<Post> {
             SwitchScene switchScene = new SwitchScene();
             FXMLLoader loader = switchScene.createFXML("/it/unina/uninaSocialGroup/view/CommentSection.fxml");
             switchScene.loadSceneAndShow(actionEvent, loader);
-            CommentSectionController commentSectionController = loader.getController();
-            commentSectionController.setMatricola(this.matricola);
+            CommentSectionBoundary commentSectionController = loader.getController();
+            //TODO
             commentSectionController.setPostID(post.getIDPost());
             commentSectionController.setOriginalPost(post.getCreatorePost(), post.getMessaggioTestuale());
         } catch (IOException e) {

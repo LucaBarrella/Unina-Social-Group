@@ -1,6 +1,5 @@
 package it.unina.uninaSocialGroup.controller;
 
-import it.unina.uninaSocialGroup.DAO.AuthenticationDAO;
 import it.unina.uninaSocialGroup.Model.SwitchScene;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -17,7 +16,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class LoginController {
+public class LoginBoundary {
     @FXML
     private Button LoginButton;
     @FXML
@@ -27,6 +26,7 @@ public class LoginController {
     private SwitchScene switchScene = new SwitchScene();
     @FXML
     private Label NoEmailPassword;
+    private static LogicalController logic = new LogicalController();
 
 
     @FXML
@@ -49,14 +49,11 @@ public class LoginController {
             NoEmailPassword.setVisible(true);
             return;
         }
-        AuthenticationDAO authenticate = new AuthenticationDAO();
-        boolean result = authenticate.CheckCredentials(emailField.getText(), passwordField.getText());
+        boolean result = logic.checkCredentials(emailField.getText(), passwordField.getText());
         if(result){
             try {
                 FXMLLoader loader = switchScene.createFXML("/it/unina/uninaSocialGroup/view/HomePage.fxml");
-                HomePageController homePageController = new HomePageController();
-                //Passa la email inserita alla HomePage
-                homePageController.setUserEmail(emailField.getText());
+                logic.setUser(emailField.getText());
                 Parent root = loader.load();
                 Scene scene = new Scene(root);
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

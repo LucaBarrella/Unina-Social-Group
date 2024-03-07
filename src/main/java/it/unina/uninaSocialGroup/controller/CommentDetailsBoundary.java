@@ -5,7 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.text.Text;
 
-public class CommentDetailsController {
+public class CommentDetailsBoundary {
     private Comment comment;
     @FXML
     private Label usernameAuthor;
@@ -19,6 +19,7 @@ public class CommentDetailsController {
      */
     public void setComment(Comment comment) {
         this.comment = comment;
+        //TODO
         setLabelAuthor(comment.getAutoreCommento());
         setLabelContent(comment.getTesto());
     }

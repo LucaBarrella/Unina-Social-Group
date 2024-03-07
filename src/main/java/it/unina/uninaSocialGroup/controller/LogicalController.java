@@ -1,10 +1,8 @@
 package it.unina.uninaSocialGroup.controller;
 
-import it.unina.uninaSocialGroup.DAO.AuthenticationDAO;
-import it.unina.uninaSocialGroup.DAO.GroupDAO;
-import it.unina.uninaSocialGroup.DAO.ReportDAO;
-import it.unina.uninaSocialGroup.DAO.UserDAO;
+import it.unina.uninaSocialGroup.DAO.*;
 import it.unina.uninaSocialGroup.Model.Group;
+import it.unina.uninaSocialGroup.Model.Post;
 import it.unina.uninaSocialGroup.Model.Report;
 import it.unina.uninaSocialGroup.Model.User;
 
@@ -13,15 +11,18 @@ import java.util.List;
 public class LogicalController {
     private static String userEmail;
     private static User user;
+    private static Group group;
     AuthenticationDAO authenticateDAO;
     UserDAO userDAO;
     GroupDAO groupDAO;
     ReportDAO reportDAO;
+    PostDAO postDAO;
     public LogicalController() {
         this.authenticateDAO = new AuthenticationDAO();
         this.userDAO = new UserDAO();
         this.groupDAO = new GroupDAO();
         this.reportDAO = new ReportDAO();
+        this.postDAO = new PostDAO();
     }
     public boolean checkCredentials(String email, String password) {
         return authenticateDAO.CheckCredentials(email, password);
@@ -84,7 +85,61 @@ public class LogicalController {
         groupDAO.addNewGroup(NameGroup,category,getMatricolaUser());
     }
 
-    public void removeMember(Group group){
+    public void removeMember(){
         groupDAO.RemoveMemberToGroup(group, user.getMatricola());
+    }
+
+    public void setGroup(Group group){
+        this.group = group;
+    }
+
+    public void setGroup(Group group,String searchField){
+        this.group = group;
+    }
+
+    public String getGroupID(){
+        return group.getIDGruppo();
+    }
+
+    public String getGroupName(){
+        return group.getNomeGruppo();
+    }
+
+    public List<User> getGroupMembers(){
+        groupDAO.getGroupMembers(group);
+        List<User> members = group.getListaPartecipanti();
+        return members;
+    }
+
+    public void createPost(String text){
+        String category = group.getCategoriaGruppo();
+        String matricola = getMatricolaUser();
+        String groupId = group.getIDGruppo();
+        postDAO.CreateNewPost(category,text,matricola,groupId);
+    }
+
+    public int numberOfMembers(){
+        return groupDAO.getNumberOfMemberGroup(group.getIDGruppo());
+    }
+
+    public List<Post> ListPosts(){
+        List<Post> posts;
+        postDAO.getAllPosts(group);
+        posts = group.getPostPubblicati();
+        return posts;
+    }
+
+    public boolean isUserMemberOfGroup(){
+        boolean isUserInMembers = false;
+        isUserInMembers = groupDAO.isUserMemberOfGroup(group, getMatricolaUser());
+        return isUserInMembers;
+    }
+
+    public void JoinGroup(){
+        groupDAO.addNewMemberToGroup(group, getMatricolaUser());
+    }
+
+    public String getGroupCategory(){
+        return group.getCategoriaGruppo();
     }
 }

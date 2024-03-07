@@ -23,29 +23,23 @@ public class SearchBarBoundary {
     private HomePageBoundary homePageController;
     private SwitchScene switchScene = new SwitchScene();
     private static LogicalController logic = new LogicalController();
-    String matricola = logic.getMatricolaUser();
-    GroupDAO groupDAO = new GroupDAO();
 
     /**
      * setGroup
      * Metodo che mostra i gruppi (cercati per nome o categoria)
      */
     public void setGroup(Group group, TextField searchField, HomePageBoundary homePageController) {
+        logic.setGroup(group, String.valueOf(searchField));
         this.searchField = searchField;
         this.homePageController = homePageController;
-        groupNameButton.setText(group.getNomeGruppo());
+        groupNameButton.setText(logic.getGroupName());
         groupNameButton.setOnAction(e -> {
             try {
                 //Scambia la scena con la chat del gruppo
                 FXMLLoader loader = switchScene.createFXML("/it/unina/uninaSocialGroup/view/GroupChatPage.fxml");
-                GroupChatBoundary groupchat = new GroupChatBoundary();
-                //Passa l'ID del gruppo alla GroupChat
-                //TODO
-                groupchat.setGroupID(group.getIDGruppo());
                 switchScene.loadSceneAndShow(e, loader);
                 //Se l'utente non fa parte del gruppo, mostra un messaggio di avvertenza
-                //TODO
-                if (!groupDAO.isUserMemberOfGroup(group, matricola)) {
+                if (!logic.isUserMemberOfGroup()) {
                     Platform.runLater(() -> {
                         Alert alert = new Alert(Alert.AlertType.INFORMATION);
                         alert.setTitle("Attenzione!");
@@ -60,8 +54,7 @@ public class SearchBarBoundary {
         });
 
         //Se l'utente già fa parte del gruppo, non verrà mostrato il bottone per parteciparci
-        //TODO
-        if (groupDAO.isUserMemberOfGroup(group, matricola)) {
+        if (logic.isUserMemberOfGroup()) {
             joinButton.setVisible(false);
             joinButton.setDisable(true);
         } else {
@@ -73,16 +66,11 @@ public class SearchBarBoundary {
                 confirmationAlert.setContentText("Sei sicuro di voler unirti a questo gruppo?");
                 Optional<ButtonType> result = confirmationAlert.showAndWait();
                 //Se viene cliccato OK allora aggiungi l'utente al gruppo
-                //TODO
                 if (result.get() == ButtonType.OK){
-                    groupDAO.addNewMemberToGroup(group, matricola);
+                    logic.JoinGroup();
                     try {
                         //Scambia la scena con la chat del gruppo
                         FXMLLoader loader = switchScene.createFXML("/it/unina/uninaSocialGroup/view/GroupChatPage.fxml");
-                        GroupChatBoundary groupchat = new GroupChatBoundary();
-                        //Passa l'ID del gruppo alla GroupChat
-                        //TODO
-                        groupchat.setGroupID(group.getIDGruppo());
                         switchScene.loadSceneAndShow(e, loader);
                         //Mostra un messaggio di conferma
                         Platform.runLater(() -> {
@@ -98,14 +86,12 @@ public class SearchBarBoundary {
                 }
             });
         }
-        //TODO
-        categoryButton.setText(group.getCategoriaGruppo());
+        categoryButton.setText(logic.getGroupCategory());
         categoryButton.setOnAction(e -> {
-            this.searchField.setText(group.getCategoriaGruppo());
+            this.searchField.setText(logic.getGroupCategory());
             homePageController.onSearch(null);
         });
-        //TODO
-        int memberCount = groupDAO.getNumberOfMemberGroup(group.getIDGruppo());
+        int memberCount = logic.numberOfMembers();
         memberCountLabel.setText(String.valueOf(memberCount) + " membri");
     }
 

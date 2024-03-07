@@ -45,7 +45,6 @@ public class HomePageBoundary {
     @FXML
     private Button LogOutButton, CreationGroupButton, OpenButton;
     private SwitchScene switchScene = new SwitchScene();
-    private static String userEmail;
     @FXML
     private ListView<Group> groupListView;
     @FXML

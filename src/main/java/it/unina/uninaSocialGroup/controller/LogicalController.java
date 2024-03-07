@@ -127,7 +127,7 @@ public class LogicalController {
     }
 
     public boolean isUserMemberOfGroup(){
-        boolean isUserInMembers = false;
+        boolean isUserInMembers;
         isUserInMembers = groupDAO.isUserMemberOfGroup(group, getMatricolaUser());
         return isUserInMembers;
     }

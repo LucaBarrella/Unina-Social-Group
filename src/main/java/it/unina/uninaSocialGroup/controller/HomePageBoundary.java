@@ -108,6 +108,7 @@ public class HomePageBoundary {
                     try {
                         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/it/unina/uninaSocialGroup/view/SearchBar.fxml"));
                         HBox hbox = fxmlLoader.load();
+                        //TODO
                         SearchBarBoundary controller = fxmlLoader.getController();
                         controller.setGroup(item, searchField, HomePageBoundary.this);
                         setGraphic(hbox);
@@ -289,6 +290,7 @@ public class HomePageBoundary {
             groupListView.setVisible(false);
         } else {
             groupListView.setVisible(true);
+            //TODO
             ObservableList<Group> filteredGroups = allGroups.filtered(group ->
                     group.getNomeGruppo().toLowerCase().contains(searchText) ||
                             group.getCategoriaGruppo().toLowerCase().contains(searchText)
@@ -332,11 +334,7 @@ public class HomePageBoundary {
         try {
             Group selectedGroup = TableGroups.getSelectionModel().getSelectedItem();
             if (selectedGroup != null) {
-                String IdSelectedGroup = selectedGroup.getIDGruppo();
-                GroupChatBoundary group = new GroupChatBoundary();
-                //Passa l'ID del gruppo selezionato
-                //TODO
-                group.setGroupID(IdSelectedGroup);
+                logic.setGroup(selectedGroup);
             }
             FXMLLoader loader = switchScene.createFXML("/it/unina/uninaSocialGroup/view/GroupChatPage.fxml");
             switchScene.loadSceneAndShow(event, loader);

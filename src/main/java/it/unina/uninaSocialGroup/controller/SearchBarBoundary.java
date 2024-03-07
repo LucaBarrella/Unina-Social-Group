@@ -38,10 +38,6 @@ public class SearchBarBoundary {
             try {
                 //Scambia la scena con la chat del gruppo
                 FXMLLoader loader = switchScene.createFXML("/it/unina/uninaSocialGroup/view/GroupChatPage.fxml");
-                GroupChatBoundary groupchat = new GroupChatBoundary();
-                //Passa l'ID del gruppo alla GroupChat
-                //TODO
-                groupchat.setGroupID(group.getIDGruppo());
                 switchScene.loadSceneAndShow(e, loader);
                 //Se l'utente non fa parte del gruppo, mostra un messaggio di avvertenza
                 //TODO
@@ -79,10 +75,6 @@ public class SearchBarBoundary {
                     try {
                         //Scambia la scena con la chat del gruppo
                         FXMLLoader loader = switchScene.createFXML("/it/unina/uninaSocialGroup/view/GroupChatPage.fxml");
-                        GroupChatBoundary groupchat = new GroupChatBoundary();
-                        //Passa l'ID del gruppo alla GroupChat
-                        //TODO
-                        groupchat.setGroupID(group.getIDGruppo());
                         switchScene.loadSceneAndShow(e, loader);
                         //Mostra un messaggio di conferma
                         Platform.runLater(() -> {

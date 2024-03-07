@@ -33,7 +33,6 @@ public class GroupChatBoundary {
     private HBox HBoxPost;
     @FXML
     private ComboBox<User> members;
-    private static String groupId;
     private SwitchScene switchScene = new SwitchScene();
     private static LogicalController logic = new LogicalController();
 
@@ -55,19 +54,9 @@ public class GroupChatBoundary {
             }
         });
         displayMembers();
-        String currentUserName = logic.getNameUser() + " " + logic.getSurnameUser();
-
         //Controlla se l'utente fa parte del gruppo che si sta visualizzando
-        //TODO
         boolean isUserInMembers = false;
-        for (User member : members.getItems()) {
-            String memberName = member.getNome() + " " + member.getCognome();
-            if (memberName.equals(currentUserName)) {
-                isUserInMembers = true;
-                break;
-            }
-        }
-
+        isUserInMembers = logic.isUserMemberOfGroup();
         //Se l'utente non fa parte del gruppo, allora si impedisce di pubblicare post
         //e si impedisce di cliccare il tasto per abbandonare il gruppo
         if (!isUserInMembers) {
@@ -92,12 +81,9 @@ public class GroupChatBoundary {
         confirmationAlert.setHeaderText(null);
         confirmationAlert.setContentText("Sei sicuro di voler uscire dal gruppo?");
         Optional<ButtonType> result = confirmationAlert.showAndWait();
-        //TODO
-        GroupDAO groupDAO = new GroupDAO();
-        Group group = groupDAO.getGroup(groupId);
         //Se viene cliccato OK allora aggiungi l'utente al gruppo
         if (result.get() == ButtonType.OK){
-            logic.removeMember(group);
+            logic.removeMember();
             try {
                 //Scambia la scena con la HomePage
                 FXMLLoader loader = switchScene.createFXML("/it/unina/uninaSocialGroup/view/HomePage.fxml");
@@ -107,8 +93,7 @@ public class GroupChatBoundary {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Gruppo Abbandonato");
                     alert.setHeaderText(null);
-                    //TODO
-                    alert.setContentText("Sei uscito dal gruppo : " + group.getNomeGruppo());
+                    alert.setContentText("Sei uscito dal gruppo : " + logic.getGroupName());
                     alert.showAndWait();
                 });
             } catch(IOException ex){
@@ -136,11 +121,9 @@ public class GroupChatBoundary {
                 }
             }
         });
-        //TODO
-        GroupDAO groupDAO = new GroupDAO();
-        Group group = groupDAO.getGroup(groupId);
-        groupDAO.getGroupMembers(group);
-        ObservableList<User> memberList = FXCollections.observableArrayList(group.getListaPartecipanti());
+
+        List<User> member = logic.getGroupMembers();
+        ObservableList<User> memberList = FXCollections.observableArrayList(member);
         members.setItems(memberList);
     }
 
@@ -152,12 +135,7 @@ public class GroupChatBoundary {
     public void CreatePost(){
         String text = PostTextArea.getText();
         if (text != null && !text.trim().isEmpty()) {
-            GroupDAO group = new GroupDAO();
-            PostDAO postDAO = new PostDAO();
-            //TODO
-            String category = group.getGroup(groupId).getCategoriaGruppo();
-            String matricola = logic.getMatricolaUser();
-            postDAO.CreateNewPost(category,text,matricola,groupId);
+            logic.CreatePost(text);
             PostTextArea.clear();
             //ricarica la lista dei post
             fillListView();
@@ -173,25 +151,14 @@ public class GroupChatBoundary {
     }
 
     /**
-     * setGroupID
-     * Metodo che viene chiamato nella HomePage e nella SearchBar
-     * Usato principalmente per ottenere l'ID del gruppo scelto nella HomePage
-     */
-    public void setGroupID(String groupId) {
-        this.groupId = groupId;
-    }
-
-    /**
      * displayData
      * Metodo che mostra il nome e il numero di membri del gruppo sull'interfaccia
      */
     public void displayData(){
-        //TODO
-        GroupDAO groupDAO = new GroupDAO();
-        Group result = groupDAO.getGroup(groupId);
-        String name = result.getNomeGruppo();
+        String name = logic.getGroupName();
         groupName.setText(name);
-        NumberOfMembers.setText(String.valueOf(groupDAO.getNumberOfMemberGroup(groupId)));
+        int numberofMember = logic.numberOfMembers();
+        NumberOfMembers.setText(String.valueOf(numberofMember));
     }
 
 
@@ -222,12 +189,8 @@ public class GroupChatBoundary {
      */
     public void fillListView() {
         ObservableList<VBox> vBoxList = FXCollections.observableArrayList();
-        PostDAO postDAO = new PostDAO();
-        GroupDAO groupDAO = new GroupDAO();
-        //TODO
-        Group group = groupDAO.getGroup(groupId);
-        postDAO.getAllPosts(group);
-        List<Post> posts = group.getPostPubblicati();
+
+        List<Post> posts = logic.ListPosts();
 
         for (Post post : posts) {
             vBoxList.add(loadVBoxFromFXML(post));

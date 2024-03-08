@@ -204,4 +204,8 @@ public class LogicalController {
     public void setComment(Comment comment) {
         this.comment = comment;
     }
+
+    public void createNewComment(String text) {
+        commentDAO.createNewComment(text, user.getMatricola(), post.getIDPost());
+    }
 }

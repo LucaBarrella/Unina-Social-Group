@@ -1,7 +1,6 @@
 package it.unina.uninaSocialGroup.controller;
 
 import it.unina.uninaSocialGroup.Model.Comment;
-import it.unina.uninaSocialGroup.Model.Post;
 import it.unina.uninaSocialGroup.Model.SwitchScene;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -33,6 +32,7 @@ public class CommentSectionBoundary {
         setupButtonActions();
         setupCommentTextArea();
         setOriginalPost();
+        fillListView();
     }
 
     private void setupHBoxCommentVisibility() {
@@ -66,7 +66,9 @@ public class CommentSectionBoundary {
     public void CreateComment(){
         String text = CommentTextArea.getText();
         if (text != null && !text.trim().isEmpty()) {
-            //TODO
+            //Aggiunge il commento al database
+            logic.createNewComment(text);
+            //Pulisce la TextArea
             CommentTextArea.clear();
             //Ricarica la lista dei commenti
             fillListView();

@@ -42,7 +42,7 @@ public class PostDetailsBoundary extends ListCell<Post> {
     }
 
     private void setLikesNumber() {
-        //logic.setPost(post);
+        logic.setPost(post);
         likeCounter.setText(logic.getNumberOfLike(post.getIDPost()));
     }
 
@@ -55,7 +55,6 @@ public class PostDetailsBoundary extends ListCell<Post> {
      * Metodo che mostra l'autore del post
      */
     public void setLabelAuthor() {
-        logic.setPost(post);
         usernameAuthor.setText(logic.getAuthor());
     }
 
@@ -73,7 +72,11 @@ public class PostDetailsBoundary extends ListCell<Post> {
      */
     public void setLikeStatus() {
         logic.setPost(post);
-        logic.isLikeAlreadyAdd();
+        if (logic.isLikeAlreadyAdd()){
+            likeButtonImage.setImage(new Image("file:src/main/resources/it/unina/uninaSocialGroup/images/LikeIsPressed.png"));
+        } else {
+            likeButtonImage.setImage(new Image("file:src/main/resources/it/unina/uninaSocialGroup/images/LikeIsNotPressed.png"));
+        }
     }
 
     /**

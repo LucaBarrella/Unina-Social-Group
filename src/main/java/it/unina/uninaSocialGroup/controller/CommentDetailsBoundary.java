@@ -19,7 +19,7 @@ public class CommentDetailsBoundary {
      * ovvero l'autore e il contenuto del post
      */
     public void setComment(Comment comment) {
-        comment = this.comment;
+        this.comment = comment;
         logic.setComment(comment);
         setLabelAuthor();
         setLabelContent();

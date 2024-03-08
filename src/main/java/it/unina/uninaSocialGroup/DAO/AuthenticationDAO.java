@@ -30,7 +30,6 @@ public class AuthenticationDAO {
                   while (!resultSet.next()) {
                         return false;
                   }
-                  System.out.println("Utente trovato");
                   return true;
             } catch (SQLException sql) {
                   sql.printStackTrace();

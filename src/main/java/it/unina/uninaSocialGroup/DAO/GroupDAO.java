@@ -156,34 +156,6 @@ public class GroupDAO {
     }
 
     /**
-     * getGroup
-     * Restituisce il gruppo con l'id dato
-     * @param IDGroup
-     * @return group
-     */
-    public Group getGroup(String IDGroup){
-        Group group = null;
-        String query = "SELECT * FROM Gruppo WHERE ID_Gruppo = ?";
-        PreparedStatement ps = null;
-        ResultSet resultSet = null;
-        try {
-            ps = connect.prepareStatement(query);
-            ps.setString(1, IDGroup);
-            resultSet = ps.executeQuery();
-            if (resultSet.next()) {
-                group = new Group(
-                        resultSet.getString("ID_Gruppo"),
-                        resultSet.getString("Nome_Gruppo"),
-                        resultSet.getDate("Data_di_Creazione"),
-                        resultSet.getString("Categoria_Gruppo"));
-            }
-        } catch (SQLException sql) {
-            sql.printStackTrace();
-        }
-        return group;
-    }
-
-    /**
      * getGroupMembers
      * Restituisce i membri di un gruppo
      * @param group

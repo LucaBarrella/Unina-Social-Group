@@ -33,7 +33,6 @@ public class GroupChatBoundary {
     private HBox HBoxPost;
     @FXML
     private ComboBox<User> members;
-    private static String groupId;
     private SwitchScene switchScene = new SwitchScene();
     private static LogicalController logic = new LogicalController();
 
@@ -66,8 +65,14 @@ public class GroupChatBoundary {
             PostButton.setDisable(true);
             LeaveGroupButton.setVisible(false);
             LeaveGroupButton.setDisable(true);
+            Platform.runLater(() -> {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Attenzione");
+                alert.setHeaderText(null);
+                alert.setContentText("Unisciti al gruppo per pubblicare post");
+                alert.showAndWait();
+            });
         }
-
         LeaveGroupButton.setOnAction(this::LeaveGroup);
     }
 
@@ -174,7 +179,6 @@ public class GroupChatBoundary {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/it/unina/uninaSocialGroup/view/PostDetailsPage.fxml"));
             vBox = loader.load();
-            //TODO
             PostDetailsBoundary controller = loader.getController();
             controller.setPost(post);
         } catch (IOException e) {

@@ -78,7 +78,7 @@ public class HomePageBoundary {
         OpenButton.setOnAction(this::goToGroupChat);
     }
 
-    //TODO: Leggere come funziona questo metodo
+
     public void getTextFromSearchField(KeyEvent event) {
         if (searchField.getText().isEmpty()) {
             groupListView.setVisible(false);
@@ -106,7 +106,7 @@ public class HomePageBoundary {
             hBox = loader.load();
             SearchBarDetailsBoundary hboxController = loader.getController();
             hboxController.setGroup(group);
-            hboxController.setHomePageBoundary(this); //TODO: Mi sono passato il controller, da migliorare!
+            hboxController.setHomePageBoundary(this);
             groupListView.getItems().add(hBox);
         } catch (IOException e) {
             e.printStackTrace();

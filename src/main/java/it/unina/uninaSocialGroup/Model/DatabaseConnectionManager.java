@@ -21,16 +21,10 @@ public class DatabaseConnectionManager {
         try {
             Class.forName(JDBCDriver);
             connection = DriverManager.getConnection(DatabaseURL, DatabaseUser, DatabasePassword);
-            printConnectionStatus(connection);
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
         return connection;
-    }
-
-    private static void printConnectionStatus(Connection connection) {
-        String connectionStatus = (connection != null) ? "Connessione al database riuscita" : "Impossibile connettersi al database";
-        System.out.println(connectionStatus);
     }
 
 }

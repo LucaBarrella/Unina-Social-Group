@@ -55,7 +55,6 @@ public class SearchBarDetailsBoundary extends ListCell<Group> {
 }
 
     private void handleGroupNameButton(ActionEvent actionEvent) {
-
         logic.setGroup(this.group);
         FXMLLoader loader = switchScene.createFXML("/it/unina/uninaSocialGroup/view/GroupChatPage.fxml");
         try {

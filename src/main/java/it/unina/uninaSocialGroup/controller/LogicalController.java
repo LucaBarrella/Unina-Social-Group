@@ -4,6 +4,7 @@ import it.unina.uninaSocialGroup.DAO.*;
 import it.unina.uninaSocialGroup.Model.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.image.Image;
 
 import java.util.ArrayList;
@@ -103,10 +104,6 @@ public class LogicalController {
         this.group = group;
     }
 
-    public String getGroupID() {
-        return group.getIDGruppo();
-    }
-
     public String getGroupName() {
         return group.getNomeGruppo();
     }
@@ -158,12 +155,12 @@ public class LogicalController {
         this.post = post;
     }
 
-    public String getNumberOfLike(String idPost) {
-        return String.valueOf(postDAO.getNumberOfLike(idPost));
+    public String getNumberOfLike() {
+        return String.valueOf(postDAO.getNumberOfLike(post.getIDPost()));
     }
 
-    public String getNumberOfComments(String idPost) {
-        return String.valueOf(postDAO.getNumberOfComment(idPost));
+    public String getNumberOfComments() {
+        return String.valueOf(commentDAO.getNumberOfComment(post.getIDPost()));
     }
 
     public String getAuthor() {

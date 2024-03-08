@@ -63,4 +63,29 @@ public class CommentDAO {
             sql.printStackTrace();
         }
     }
+
+    /**
+     * getNumberOfComment
+     * Restituisce il numero di commenti messi ad un post
+     * @param IDPost
+     * @return numberOfComment
+     */
+    public int getNumberOfComment(String IDPost) {
+        int numberOfComment = 0;
+        PreparedStatement ps = null;
+        String query = "SELECT COUNT(*) AS NumeroCommenti " +
+                "FROM Commento " +
+                "WHERE ID_Post = ?";
+        try {
+            ps = connect.prepareStatement(query);
+            ps.setString(1, IDPost);
+            ResultSet resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                numberOfComment = resultSet.getInt("NumeroCommenti");
+            }
+        } catch (SQLException sql) {
+            sql.printStackTrace();
+        }
+        return numberOfComment;
+    }
 }

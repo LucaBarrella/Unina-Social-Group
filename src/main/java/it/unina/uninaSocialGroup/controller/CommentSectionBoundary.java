@@ -103,7 +103,6 @@ public class CommentSectionBoundary {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/it/unina/uninaSocialGroup/view/CommentDetailes.fxml"));
             vBox = loader.load();
-            //TODO
             CommentDetailsBoundary controller = loader.getController();
             controller.setComment(comment);
         } catch (IOException e) {

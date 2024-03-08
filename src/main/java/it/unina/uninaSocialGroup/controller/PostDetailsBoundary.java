@@ -43,11 +43,11 @@ public class PostDetailsBoundary extends ListCell<Post> {
 
     private void setLikesNumber() {
         logic.setPost(post);
-        likeCounter.setText(logic.getNumberOfLike(post.getIDPost()));
+        likeCounter.setText(logic.getNumberOfLike());
     }
 
     private void setCommentsNumber() {
-        commentCounter.setText(logic.getNumberOfComments(post.getIDPost()));
+        commentCounter.setText(logic.getNumberOfComments());
     }
 
     /**

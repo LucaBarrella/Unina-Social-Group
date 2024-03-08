@@ -230,32 +230,6 @@ public class PostDAO {
     }
 
     /**
-     * getPostByID
-     * Restituisce i dati di un post
-     * @param IDPost
-     * @return post
-     */
-    public Post getPostByID(String IDPost){
-        Post post = null;
-        String query = "SELECT * FROM Post WHERE ID_Post = ?";
-        PreparedStatement ps = null;
-        ResultSet resultSet = null;
-        try {
-            ps = connect.prepareStatement(query);
-            ps.setString(1, IDPost);
-            resultSet = ps.executeQuery();
-            if (resultSet.next()) {
-                post = new Post(
-                        resultSet.getString("ID_Post"), resultSet.getString("Categoria"),
-                        resultSet.getString("Messaggio_Scritto"), resultSet.getString("Matricola"));
-            }
-        } catch (SQLException sql) {
-            sql.printStackTrace();
-        }
-        return post;
-    }
-
-    /**
      * addLike
      * Aggiunge un nuovo like messo da un utente ad un post
      * @param matricola
@@ -318,30 +292,6 @@ public class PostDAO {
         return numberOfLike;
     }
 
-    /**
-     * getNumberOfComment
-     * Restituisce il numero di commenti messi ad un post
-     * @param IDPost
-     * @return numberOfComment
-     */
-    public int getNumberOfComment(String IDPost) {
-        int numberOfComment = 0;
-        PreparedStatement ps = null;
-        String query = "SELECT COUNT(*) AS NumeroCommenti " +
-                "FROM Commento " +
-                "WHERE ID_Post = ?";
-        try {
-            ps = connect.prepareStatement(query);
-            ps.setString(1, IDPost);
-            ResultSet resultSet = ps.executeQuery();
-            while (resultSet.next()) {
-                numberOfComment = resultSet.getInt("NumeroCommenti");
-            }
-        } catch (SQLException sql) {
-            sql.printStackTrace();
-        }
-        return numberOfComment;
-    }
 
     /**
      * isLikeAlreadyAdd

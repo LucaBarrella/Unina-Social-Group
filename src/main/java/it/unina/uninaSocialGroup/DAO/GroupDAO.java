@@ -26,7 +26,7 @@ public class GroupDAO {
         List<Group> listGroups = new ArrayList<>();
 
         try{
-            PreparedStatement statement = connect.prepareStatement("SELECT * FROM gruppo WHERE nome_Gruppo LIKE ? OR categoria_Gruppo LIKE ?");
+            PreparedStatement statement = connect.prepareStatement("SELECT * FROM gruppo WHERE LOWER(TRIM(categoria_Gruppo)) LIKE LOWER(?) OR LOWER(TRIM(nome_Gruppo)) LIKE LOWER(?)");
             statement.setString(1, "%" + searchBarFieldText + "%");
             statement.setString(2, "%" + searchBarFieldText + "%");
             ResultSet resultSet = statement.executeQuery();

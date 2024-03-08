@@ -1,8 +1,5 @@
 package it.unina.uninaSocialGroup.controller;
 
-import it.unina.uninaSocialGroup.DAO.GroupDAO;
-import it.unina.uninaSocialGroup.DAO.ReportDAO;
-import it.unina.uninaSocialGroup.DAO.UserDAO;
 import it.unina.uninaSocialGroup.Model.*;
 import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
@@ -46,7 +43,7 @@ public class HomePageBoundary {
     private Button LogOutButton, CreationGroupButton, OpenButton;
     private SwitchScene switchScene = new SwitchScene();
     @FXML
-    private ListView<Group> groupListView;
+    private ListView<HBox> groupListView;
     @FXML
     private TextField searchField;
     @FXML
@@ -62,21 +59,141 @@ public class HomePageBoundary {
     public HomePageBoundary(){
         allGroups = FXCollections.observableArrayList();
     }
-    @FXML
-    public void initialize() {
+    public @FXML void initialize() {
+        setupButtons();
+        loadData();
+        setupChoiceBox();
+        setupTabPaneListener();
+        setupGroupTableListener();
+        setupOpenButton();
+        setupWebLinks();
+        setupToggleButtonListener();
+    }
+    private void setupButtons() {
         CreationGroupButton.setOnAction(this::GroupCreationTab);
-        LoadProfileData();
-        displayName();
-        LoadDataTableUserGroups();
         LogOutButton.setOnAction(this::Logout);
-        //Aggiungi i mesi alla ChoiceBox
-        MonthBox.getItems().addAll(Months);
         profileButton.setOnAction(this::goToProfileTab);
         groupButton.setOnAction(this::goToGroupsTab);
         reportButton.setOnAction(this::goToReportTab);
+        OpenButton.setOnAction(this::goToGroupChat);
+    }
+
+    //TODO: Leggere come funziona questo metodo
+    public void getTextFromSearchField(KeyEvent event) {
+        if (searchField.getText().isEmpty()) {
+            groupListView.setVisible(false);
+        } else {
+            groupListView.setVisible(true);
+            allGroups = logic.getGroupsBySearchField(searchField.getText());
+            groupListView.getItems().clear();
+            for (Group group : allGroups) {
+                loadVBoxFromFXML(group);
+            }
+        }
+    }
+
+    public void updateByCategoryButton(List<Group> filtredListByCategory) {
+        groupListView.getItems().clear();
+        for (Group group : filtredListByCategory) {
+            loadVBoxFromFXML(group);
+        }
+    }
+
+    //TODO: Leggere come funziona questo metodo
+    public HBox loadVBoxFromFXML(Group group) {
+        HBox hBox = null;
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/it/unina/uninaSocialGroup/view/SearchBar.fxml"));
+            hBox = loader.load();
+            SearchBarDetailsBoundary hboxController = loader.getController();
+            hboxController.setGroup(group);
+            hboxController.setHomePageBoundary(this); //TODO: Mi sono passato il controller, da migliorare!
+            groupListView.getItems().add(hBox);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return hBox;
+    }
+
+    private void loadData() {
+        LoadProfileData();
+        displayName();
+        LoadDataTableUserGroups();
+    }
+
+    private void setupChoiceBox() {
+        MonthBox.getItems().addAll(Months);
+        MonthBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            int monthInt = java.util.Arrays.asList(Months).indexOf(newValue) + 1;
+            LoadDataTableReport(monthInt);
+        });
+    }
+
+    private void setupTabPaneListener() {
+        tabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldTab, newTab) -> {
+            updateTabSelection(oldTab, newTab);
+        });
+    }
+
+    private void setupGroupTableListener() {
+        TableGroups.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            toggleOpenButtonAndChatText(newSelection != null);
+        });
+    }
+
+    private void setupOpenButton() {
+        OpenButton.setVisible(false);
+        OpenButton.setDisable(true);
+        ChatText.setVisible(false);
+    }
+
+    private void setupWebLinks() {
+        UninaWebSite.setOnAction(this::openUninaWebSite);
+        Segrepass.setOnAction(this::openSegrepassWebSite);
+    }
+
+    private void updateTabSelection(Tab oldTab, Tab newTab) {
+        if (oldTab == ProfileTab) {
+            profileButton.getStyleClass().remove("button-selected");
+        } else if (oldTab == GroupsTab) {
+            groupButton.getStyleClass().remove("button-selected");
+        } else if (oldTab == ReportTab) {
+            reportButton.getStyleClass().remove("button-selected");
+        }
+
+        if (newTab == ProfileTab) {
+            profileButton.getStyleClass().add("button-selected");
+        } else if (newTab == GroupsTab) {
+            groupButton.getStyleClass().add("button-selected");
+        } else if (newTab == ReportTab) {
+            reportButton.getStyleClass().add("button-selected");
+        }
+    }
+
+    private void toggleOpenButtonAndChatText(boolean isVisible) {
+        OpenButton.setVisible(isVisible);
+        OpenButton.setDisable(!isVisible);
+        ChatText.setVisible(isVisible);
+    }
+
+    private void openUninaWebSite(ActionEvent e) {
+        openWebLink("https://www.unina.it/home;jsessionid=DC037C4CC141CFA2AFBB715EF93B8997.node_publisher12");
+    }
+
+    private void openSegrepassWebSite(ActionEvent e) {
+        openWebLink("https://www.segrepass1.unina.it/logout.do?dove=Uscita");
+    }
+
+    private void openWebLink(String url) {
+        try {
+            Desktop.getDesktop().browse(new URI(url));
+        } catch (IOException | URISyntaxException er) {
+            er.printStackTrace();
+        }
+    }
+
+    private void setupToggleButtonListener() {
         TranslateTransition transition = new TranslateTransition(Duration.seconds(0.4), Circle);
-        //Quando viene attivato il togglebutton, trasla il cerchio verso destra
-        //Altrimenti quando viene disattivato, riportalo al punto di partenza
         CreatedGroups.selectedProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) {
                 transition.setToX(30);
@@ -87,111 +204,17 @@ public class HomePageBoundary {
             }
             transition.play();
         });
-        //Chiama il metodo LoadDataTableReport dopo che è statoscelto un mese dalla MonthBox
-        MonthBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            int monthInt = java.util.Arrays.asList(Months).indexOf(newValue) + 1;
-            LoadDataTableReport(monthInt);
-        });
-        List<Group> groups = logic.getGroupsBySF(searchField.getText());
-        allGroups.addAll(groups);
-        groupListView.setItems(allGroups);
-        groupListView.setCellFactory(param -> new ListCell<>() {
-            @Override
-            protected void updateItem(Group item, boolean empty) {
-                super.updateItem(item, empty);
-
-                if (empty || item == null) {
-                    setText(null);
-                    setGraphic(null);
-                } else {
-                    try {
-                        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/it/unina/uninaSocialGroup/view/SearchBar.fxml"));
-                        HBox hbox = fxmlLoader.load();
-                        //TODO
-                        SearchBarBoundary controller = fxmlLoader.getController();
-                        controller.setGroup(item, searchField, HomePageBoundary.this);
-                        setGraphic(hbox);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-            }
-        });
-        //A seconda del tab su cui sta, fare un contorno giallo alla immagine associata al tab a sinistra della HomePgae
-        tabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldTab, newTab) -> {
-            if (oldTab == ProfileTab) {
-                profileButton.getStyleClass().remove("button-selected");
-            } else if (oldTab == GroupsTab) {
-                groupButton.getStyleClass().remove("button-selected");
-            } else if (oldTab == ReportTab) {
-                reportButton.getStyleClass().remove("button-selected");
-            }
-
-            if (newTab == ProfileTab) {
-                profileButton.getStyleClass().add("button-selected");
-            } else if (newTab == GroupsTab) {
-                groupButton.getStyleClass().add("button-selected");
-            } else if (newTab == ReportTab) {
-                reportButton.getStyleClass().add("button-selected");
-            }
-        });
-        OpenButton.setVisible(false);
-        OpenButton.setDisable(true);
-        ChatText.setVisible(false);
-        //Quando viene scelto un gruppo dalla tabella, msotrare il bottone per aprire la chat
-        TableGroups.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-            if (newSelection != null) {
-                OpenButton.setVisible(true);
-                OpenButton.setDisable(false);
-                ChatText.setVisible(true);
-            }else {
-                OpenButton.setVisible(false);
-                ChatText.setVisible(false);
-                OpenButton.setDisable(true);
-            }
-        });
-        OpenButton.setOnAction(this::goToGroupChat);
-        UninaWebSite.setOnAction(e -> {
-                try {
-                    Desktop.getDesktop().browse(new URI("https://www.unina.it/home;jsessionid=DC037C4CC141CFA2AFBB715EF93B8997.node_publisher12"));
-                } catch (IOException | URISyntaxException er) {
-                    er.printStackTrace();
-                }
-        });
-        Segrepass.setOnAction(e -> {
-            try {
-                Desktop.getDesktop().browse(new URI("https://www.segrepass1.unina.it/logout.do?dove=Uscita"));
-            } catch (IOException | URISyntaxException er) {
-                er.printStackTrace();
-            }
-        });
     }
 
-    /**
-     * goToProfileTab
-     * Metodo che viene chiamato quando viene cliccata la prima gif a sinistra
-     * Porta al tab del profilo
-     */
-    public @FXML void goToProfileTab(ActionEvent event) {
-        tabPane.getSelectionModel().select(ProfileTab);;
-    }
-
-    /**
-     * goToGroupsTab
-     * Metodo che viene chiamato quando viene cliccata la second gif a sinistra
-     * Porta al tab dell'elenco gruppi
-     */
-    public @FXML void goToGroupsTab(ActionEvent event) {
+    public void goToGroupsTab(ActionEvent event) {
         tabPane.getSelectionModel().select(GroupsTab);
     }
-
-    /**
-     * goToReportTab
-     * Metodo che viene chiamato quando viene cliccata la terza gif a sinistra
-     * Porta al tab dei report mensili
-     */
-    public @FXML void goToReportTab(ActionEvent event) {
+    private void goToReportTab(ActionEvent actionEvent) {
         tabPane.getSelectionModel().select(ReportTab);
+    }
+
+    private void goToProfileTab(ActionEvent actionEvent) {
+        tabPane.getSelectionModel().select(ProfileTab);
     }
 
     /**
@@ -274,27 +297,6 @@ public class HomePageBoundary {
             switchScene.loadSceneAndShow(event, loader);
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
-
-    /**
-     * onSearch
-     * Metodo che viene chiamato quando viene usata la searchBar
-     * Mostra i gruppi cercati per nome o categoria
-     */
-    public @FXML void onSearch(KeyEvent event) {
-        String searchText = searchField.getText().toLowerCase();
-
-        if (searchText.isEmpty()) {
-            groupListView.setVisible(false);
-        } else {
-            groupListView.setVisible(true);
-            //TODO
-            ObservableList<Group> filteredGroups = allGroups.filtered(group ->
-                    group.getNomeGruppo().toLowerCase().contains(searchText) ||
-                            group.getCategoriaGruppo().toLowerCase().contains(searchText)
-            );
-            groupListView.setItems(filteredGroups);
         }
     }
 

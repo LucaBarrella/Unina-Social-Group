@@ -58,6 +58,7 @@ public class GroupChatBoundary {
         String currentUserName = logic.getNameUser() + " " + logic.getSurnameUser();
 
         //Controlla se l'utente fa parte del gruppo che si sta visualizzando
+        //Controlla se l'utente fa parte del gruppo che si sta visualizzando
         //TODO
         boolean isUserInMembers = false;
         for (User member : members.getItems()) {

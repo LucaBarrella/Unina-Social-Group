@@ -55,19 +55,10 @@ public class GroupChatBoundary {
             }
         });
         displayMembers();
-        String currentUserName = logic.getNameUser() + " " + logic.getSurnameUser();
 
         //Controlla se l'utente fa parte del gruppo che si sta visualizzando
-        //Controlla se l'utente fa parte del gruppo che si sta visualizzando
-        //TODO
         boolean isUserInMembers = false;
-        for (User member : members.getItems()) {
-            String memberName = member.getNome() + " " + member.getCognome();
-            if (memberName.equals(currentUserName)) {
-                isUserInMembers = true;
-                break;
-            }
-        }
+        isUserInMembers = logic.isUserMemberOfGroup();
 
         //Se l'utente non fa parte del gruppo, allora si impedisce di pubblicare post
         //e si impedisce di cliccare il tasto per abbandonare il gruppo

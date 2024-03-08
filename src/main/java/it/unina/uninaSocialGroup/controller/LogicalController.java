@@ -69,11 +69,6 @@ public class LogicalController {
         return user.getDataDiRegistrazione().toString();
     }
 
-    public List<Group> getGroupsBySF(String searchField) {
-        List<Group> groups = groupDAO.getGroupsBySearchField(searchField);
-        return groups;
-    }
-
     public List<Group> getUserGroups() {
         groupDAO.getUserGroups(user);
         List<Group> dati = user.getGruppiUtente();
@@ -101,10 +96,6 @@ public class LogicalController {
     }
 
     public void setGroup(Group group) {
-        this.group = group;
-    }
-
-    public void setGroup(Group group, String searchField) {
         this.group = group;
     }
 

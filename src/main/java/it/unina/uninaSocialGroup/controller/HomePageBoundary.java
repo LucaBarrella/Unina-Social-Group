@@ -87,7 +87,7 @@ public class HomePageBoundary {
             allGroups = logic.getGroupsBySearchField(searchField.getText());
             groupListView.getItems().clear();
             for (Group group : allGroups) {
-                loadVBoxFromFXML(group);
+                loadHBoxFromFXML(group);
             }
         }
     }
@@ -95,12 +95,11 @@ public class HomePageBoundary {
     public void updateByCategoryButton(List<Group> filtredListByCategory) {
         groupListView.getItems().clear();
         for (Group group : filtredListByCategory) {
-            loadVBoxFromFXML(group);
+            loadHBoxFromFXML(group);
         }
     }
 
-    //TODO: Leggere come funziona questo metodo!
-    public HBox loadVBoxFromFXML(Group group) {
+    public HBox loadHBoxFromFXML(Group group) {
         HBox hBox = null;
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/it/unina/uninaSocialGroup/view/SearchBar.fxml"));
@@ -184,6 +183,7 @@ public class HomePageBoundary {
         openWebLink("https://www.segrepass1.unina.it/logout.do?dove=Uscita");
     }
 
+
     private void openWebLink(String url) {
         try {
             Desktop.getDesktop().browse(new URI(url));
@@ -192,6 +192,11 @@ public class HomePageBoundary {
         }
     }
 
+    /**
+     * setupToggleButtonListener
+     * Metodo che viene chiamato quando viene cliccato il togglebutton
+     * Effettua una transizione del cerchio verso destra se il bottone è attivo
+     */
     private void setupToggleButtonListener() {
         TranslateTransition transition = new TranslateTransition(Duration.seconds(0.4), Circle);
         CreatedGroups.selectedProperty().addListener((observable, oldValue, newValue) -> {

@@ -14,9 +14,6 @@ public class LogicalController {
     private static Post post;
     private static Comment comment;
 
-
-    //TODO: Al momento provo con questi sopra, poi casomai implemento ulteriormente;
-    //    private static Comment comment;
     AuthenticationDAO authenticateDAO;
     UserDAO userDAO;
     GroupDAO groupDAO;
@@ -31,10 +28,6 @@ public class LogicalController {
         this.reportDAO = new ReportDAO();
         this.postDAO = new PostDAO();
         this.commentDAO = new CommentDAO();
-    }
-
-    public static Group getGroup() {
-        return group;
     }
 
     public boolean checkCredentials(String email, String password) {

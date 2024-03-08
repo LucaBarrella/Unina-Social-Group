@@ -99,7 +99,7 @@ public class HomePageBoundary {
         }
     }
 
-    //TODO: Leggere come funziona questo metodo
+    //TODO: Leggere come funziona questo metodo!
     public HBox loadVBoxFromFXML(Group group) {
         HBox hBox = null;
         try {

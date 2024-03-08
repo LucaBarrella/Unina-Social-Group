@@ -1,7 +1,6 @@
-package it.unina.uninaSocialGroup.controller;
+package it.unina.uninaSocialGroup.Boundary;
 
-import it.unina.uninaSocialGroup.DAO.GroupDAO;
-import it.unina.uninaSocialGroup.DAO.UserDAO;
+import it.unina.uninaSocialGroup.LogicalController;
 import it.unina.uninaSocialGroup.Model.SwitchScene;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;

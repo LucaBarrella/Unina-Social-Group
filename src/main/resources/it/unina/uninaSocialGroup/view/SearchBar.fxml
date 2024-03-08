@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 
-<HBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unina.uninaSocialGroup.controller.SearchBarDetailsBoundary">
+<HBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unina.uninaSocialGroup.Boundary.SearchBarDetailsBoundary">
    <children>
        <Button fx:id="groupNameButton" styleClass="label-button" stylesheets="@../style/searchBar.css">
          <HBox.margin>

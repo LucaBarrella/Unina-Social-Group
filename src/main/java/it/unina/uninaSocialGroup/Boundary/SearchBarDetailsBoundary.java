@@ -1,5 +1,6 @@
-package it.unina.uninaSocialGroup.controller;
+package it.unina.uninaSocialGroup.Boundary;
 
+import it.unina.uninaSocialGroup.LogicalController;
 import it.unina.uninaSocialGroup.Model.Group;
 import it.unina.uninaSocialGroup.Model.SwitchScene;
 import javafx.application.Platform;
@@ -9,7 +10,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Optional;
 
 

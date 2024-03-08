@@ -1,11 +1,8 @@
-package it.unina.uninaSocialGroup.controller;
+package it.unina.uninaSocialGroup.Boundary;
 
+import it.unina.uninaSocialGroup.LogicalController;
 import javafx.application.Platform;
-import it.unina.uninaSocialGroup.DAO.GroupDAO;
-import it.unina.uninaSocialGroup.DAO.UserDAO;
-import it.unina.uninaSocialGroup.Model.Group;
 import it.unina.uninaSocialGroup.Model.Post;
-import it.unina.uninaSocialGroup.DAO.PostDAO;
 import it.unina.uninaSocialGroup.Model.SwitchScene;
 import it.unina.uninaSocialGroup.Model.User;
 import javafx.collections.FXCollections;

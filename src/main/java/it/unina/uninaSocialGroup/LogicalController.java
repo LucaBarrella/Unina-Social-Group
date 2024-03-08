@@ -1,13 +1,10 @@
-package it.unina.uninaSocialGroup.controller;
+package it.unina.uninaSocialGroup;
 
 import it.unina.uninaSocialGroup.DAO.*;
 import it.unina.uninaSocialGroup.Model.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.image.Image;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class LogicalController {

@@ -1,10 +1,8 @@
 package it.unina.uninaSocialGroup.Model;
 
 public class Authentication {
-    private String IDAutenticazione;
     private String Email;
     private String Password;
-    private User Matricola;
 
     public String getEmail() {
         return Email;

@@ -1,7 +1,5 @@
 package it.unina.uninaSocialGroup.controller;
 
-import it.unina.uninaSocialGroup.DAO.CommentDAO;
-import it.unina.uninaSocialGroup.DAO.PostDAO;
 import it.unina.uninaSocialGroup.Model.Comment;
 import it.unina.uninaSocialGroup.Model.Post;
 import it.unina.uninaSocialGroup.Model.SwitchScene;
@@ -26,16 +24,24 @@ public class CommentSectionBoundary {
     private @FXML Label usernameAuthor;
     private @FXML Text postText;
     private  @FXML HBox HBoxComment;
-    private static String postID;
     private static LogicalController logic = new LogicalController();
-    private String matricola = logic.getMatricolaUser();
     private SwitchScene switchScene = new SwitchScene();
 
-    @FXML
-    public void initialize() {
+
+    public @FXML void initialize() {
+        setupHBoxCommentVisibility();
+        setupButtonActions();
+        setupCommentTextArea();
+        setOriginalPost();
+    }
+
+    private void setupHBoxCommentVisibility() {
         HBoxComment.setVisible(false);
-        commentButton.setOnAction(event -> HBoxComment.setVisible(true));
+    }
+
+    private void setupButtonActions() {
         BackButton.setOnAction(this::BackToGroupChat);
+        commentButton.setOnAction(event -> HBoxComment.setVisible(true));
         CommentTextArea.setOnKeyPressed(event -> {
             switch (event.getCode()) {
                 case ENTER:
@@ -48,6 +54,10 @@ public class CommentSectionBoundary {
         });
     }
 
+    private void setupCommentTextArea() {
+        CommentTextArea.setWrapText(true);
+    }
+
     /**
      * CreateComment
      * Metodo che viene chiamato quando viene cliccato INVIO sulla tastiera
@@ -57,8 +67,6 @@ public class CommentSectionBoundary {
         String text = CommentTextArea.getText();
         if (text != null && !text.trim().isEmpty()) {
             //TODO
-            CommentDAO commentDAO = new CommentDAO();
-            commentDAO.createNewComment(text, matricola, postID);
             CommentTextArea.clear();
             //Ricarica la lista dei commenti
             fillListView();
@@ -77,19 +85,9 @@ public class CommentSectionBoundary {
      * setOriginalPost
      * Metodo che mostra i dati del post, ovvero l'autore e il messaggio scritto
      */
-    public void setOriginalPost(String creatorePost, String messaggioTestuale) {
-        this.usernameAuthor.setText(creatorePost);
-        this.postText.setText(messaggioTestuale);
-    }
-
-    /**
-     * setPostID
-     * Metodo che viene chiamato nel PostDetailsController
-     * Utilizzato per ottenere l'id del post
-     */
-        public void setPostID(String postId) {
-        this.postID = postId;
-        fillListView();
+    public void setOriginalPost() {
+        this.usernameAuthor.setText(logic.getAuthor());
+        this.postText.setText(logic.getPostContent());
     }
 
     /**
@@ -119,17 +117,10 @@ public class CommentSectionBoundary {
      */
     public void fillListView() {
         ObservableList<VBox> vBoxList = FXCollections.observableArrayList();
-        //TODO
-        CommentDAO commentDAO = new CommentDAO();
-        PostDAO postDAO = new PostDAO();
-        Post post = postDAO.getPostByID(postID);
-        commentDAO.getCommentByPost(post);
-        List<Comment> comments = post.getCommenti();
-
+        List <Comment> comments = logic.ListComments();
         for (Comment comment : comments) {
             vBoxList.add(loadVBoxFromFXML(comment));
         }
-
         commentListView.setItems(vBoxList);
     }
 

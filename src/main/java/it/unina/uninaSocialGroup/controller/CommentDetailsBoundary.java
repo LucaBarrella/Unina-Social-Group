@@ -11,6 +11,7 @@ public class CommentDetailsBoundary {
     private Label usernameAuthor;
     @FXML
     private Text commentText;
+    private static LogicalController logic = new LogicalController();
 
     /**
      * setComment
@@ -18,26 +19,27 @@ public class CommentDetailsBoundary {
      * ovvero l'autore e il contenuto del post
      */
     public void setComment(Comment comment) {
-        this.comment = comment;
-        //TODO
-        setLabelAuthor(comment.getAutoreCommento());
-        setLabelContent(comment.getTesto());
+        comment = this.comment;
+        logic.setComment(comment);
+        setLabelAuthor();
+        setLabelContent();
     }
 
     /**
      * setLabelAuthor
-     * Metodo che mostra l'autore del post
+     * Metodo che mostra l'autore del commento
      */
-    public void setLabelAuthor(String title) {
-        this.usernameAuthor.setText(title);
+    public void setLabelAuthor() {
+        logic.setComment(comment);
+        this.usernameAuthor.setText(logic.getAuthorOfComment());
     }
 
     /**
      * setLabelContent
-     * Metodo che mostra il contenuto del post
+     * Metodo che mostra il contenuto del commento
      */
-    public void setLabelContent(String content) {
-        this.commentText.setText(content);
+    public void setLabelContent() {
+        logic.setComment(comment);
+        this.commentText.setText(logic.getCommentContent());
     }
-
 }

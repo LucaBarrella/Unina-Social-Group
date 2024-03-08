@@ -4,6 +4,7 @@ import it.unina.uninaSocialGroup.DAO.*;
 import it.unina.uninaSocialGroup.Model.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.image.Image;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,16 +13,18 @@ public class LogicalController {
     private static String userEmail;
     private static User user;
     private static Group group;
+    private static Post post;
+    private static Comment comment;
+
 
     //TODO: Al momento provo con questi sopra, poi casomai implemento ulteriormente;
-
-    //    private static Post post;
     //    private static Comment comment;
     AuthenticationDAO authenticateDAO;
     UserDAO userDAO;
     GroupDAO groupDAO;
     ReportDAO reportDAO;
     PostDAO postDAO;
+    CommentDAO commentDAO;
 
     public LogicalController() {
         this.authenticateDAO = new AuthenticationDAO();
@@ -29,6 +32,7 @@ public class LogicalController {
         this.groupDAO = new GroupDAO();
         this.reportDAO = new ReportDAO();
         this.postDAO = new PostDAO();
+        this.commentDAO = new CommentDAO();
     }
 
     public static Group getGroup() {
@@ -148,5 +152,56 @@ public class LogicalController {
     public ObservableList<Group> getGroupsBySearchField(String searchFieldText) {
         //Prende i gruppi che corrispondono alla stringa di ricerca.
         return FXCollections.observableArrayList(groupDAO.getGroupsBySearchField(searchFieldText));
+    }
+
+    public void setPost(Post post) {
+        this.post = post;
+    }
+
+    public String getNumberOfLike(String idPost) {
+        return String.valueOf(postDAO.getNumberOfLike(idPost));
+    }
+
+    public String getNumberOfComments(String idPost) {
+        return String.valueOf(postDAO.getNumberOfComment(idPost));
+    }
+
+    public String getAuthor() {
+        return post.getCreatorePost();
+    }
+
+    public String getPostContent() {
+        return post.getMessaggioTestuale();
+    }
+
+    public boolean isLikeAlreadyAdd() {
+        return postDAO.isLikeAlreadyAdd(user.getMatricola(), post.getIDPost());
+    }
+
+    public void removeLike() {
+        postDAO.removeLike(user.getMatricola(), post.getIDPost());
+    }
+
+    public void addLike() {
+        postDAO.addLike(user.getMatricola(), post.getIDPost());
+    }
+
+    public List<Comment> ListComments() {
+        commentDAO.getCommentByPost(post);
+        return post.getCommenti();
+    }
+
+    public String getAuthorOfComment() {
+        commentDAO.getCommentByPost(post);
+        return comment.getAutoreCommento();
+    }
+
+    public String getCommentContent() {
+        commentDAO.getCommentByPost(post);
+        return comment.getTesto();
+    }
+
+    public void setComment(Comment comment) {
+        this.comment = comment;
     }
 }

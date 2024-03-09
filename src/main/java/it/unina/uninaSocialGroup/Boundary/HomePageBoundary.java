@@ -7,7 +7,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
@@ -18,9 +20,12 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.awt.*;
+import javafx.scene.paint.Color;
+import javafx.stage.StageStyle;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -300,7 +305,13 @@ public class HomePageBoundary {
     public @FXML void Logout(ActionEvent event) {
         try {
             FXMLLoader loader = switchScene.createFXML("/it/unina/uninaSocialGroup/view/LoginPage.fxml");
-            switchScene.loadSceneAndShow(event, loader);
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.resizableProperty().setValue(false);
+            stage.centerOnScreen();
+            stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }

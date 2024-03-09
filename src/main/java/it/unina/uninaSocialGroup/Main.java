@@ -38,8 +38,6 @@ public class Main extends javafx.application.Application {
                 System.out.println("There was a security exception.");
             }
         }
-        //TODO: custom fonts?
-        //TODO: Togliere per il login i pulsanti, voglio che sia una finestra trasparente (quindi senza bottoni)
 
         primaryStage.setTitle("Unina Social Group");
         primaryStage.setScene(new Scene(root));

@@ -24,11 +24,10 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.awt.*;
-import javafx.scene.paint.Color;
-import javafx.stage.StageStyle;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Arrays;
 import java.util.List;
 
 public class HomePageBoundary {
@@ -129,7 +128,7 @@ public class HomePageBoundary {
     private void setupChoiceBox() {
         MonthBox.getItems().addAll(Months);
         MonthBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            int monthInt = java.util.Arrays.asList(Months).indexOf(newValue) + 1;
+            int monthInt = Arrays.asList(Months).indexOf(newValue) + 1;
             LoadDataTableReport(monthInt);
         });
     }

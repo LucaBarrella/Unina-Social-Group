@@ -89,11 +89,9 @@ public class PostDetailsBoundary extends ListCell<Post> {
     public void handleLikeButton(ActionEvent actionEvent) {
         logic.setPost(post);
         if (logic.isLikeAlreadyAdd()){
-            System.out.println("Like removed");
             likeButtonImage.setImage(new Image("file:src/main/resources/it/unina/uninaSocialGroup/images/LikeIsNotPressed.png"));
             logic.removeLike();
         } else {
-            System.out.println("Like added");
             likeButtonImage.setImage(new Image("file:src/main/resources/it/unina/uninaSocialGroup/images/LikeIsPressed.png"));
             logic.addLike();
         }
